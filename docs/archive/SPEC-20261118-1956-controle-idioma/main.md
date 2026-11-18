@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: controle idioma
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:47
-**Concluída:** —
+**Concluída:** 2026-11-18 20:51
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `8b8f1aa`
 **Keywords:** gamepad, controle, acessibilidade, idioma, ingles, i18n
 **Features:** base
 **Branch:** spec/controle-idioma
@@ -54,5 +54,5 @@ core/gamepad.js com laço requestAnimationFrame só enquanto há controle conect
 
 ## Critério de aceite
 
-- [ ] Mapeamento de botões para ações e dicionários de idioma completos (sem chave faltando) | verify: `node --test tests/unit/gamepad-i18n.test.js`
-- [ ] Com controle simulado, o foco anda e troca de aba; trocar para inglês muda a interface e persiste | verify: `npx playwright test tests/e2e/controle-idioma.spec.js`
+- [x] Mapeamento de botões para ações e dicionários de idioma completos (sem chave faltando) (2026-11-18 20:50, commit `8b8f1aa`, verify: exit 0) | verify: `node --test tests/unit/gamepad-i18n.test.js`
+- [x] Com controle simulado, o foco anda e troca de aba; trocar para inglês muda a interface e persiste (2026-11-18 20:50, commit `8b8f1aa`, verify: exit 0) | verify: `npx playwright test tests/e2e/controle-idioma.spec.js`
