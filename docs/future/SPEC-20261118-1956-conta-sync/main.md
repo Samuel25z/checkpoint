@@ -1,12 +1,12 @@
 # SPEC-20261118-1956: conta sync
 
-**Status:** active
+**Status:** paused
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:44
 **Concluída:** —
-**Pausada em:** —
+**Pausada em:** 2026-11-18 20:47 — aguardando o Samuel criar a conta Supabase e ligar o Google para o teste real
 **Commit final:** —
 **Keywords:** login, conta, supabase, google, sincronizacao, rls
 **Features:** conta
@@ -58,6 +58,6 @@ services/supabase.js (SDK via CDN ESM) + sync.js puro (mescla por atualizadoEm).
 
 ## Critério de aceite
 
-- [ ] A mescla local×nuvem é correta (mais recente vence, nada é perdido) | verify: `node --test tests/unit/sync.test.js`
-- [ ] Sem configuração do Supabase o site funciona e o botão de login explica que a conta não está configurada | verify: `npx playwright test tests/e2e/conta.spec.js -g "sem-config"`
+- [x] A mescla local×nuvem é correta (mais recente vence, nada é perdido) (2026-11-18 20:47, commit `4a2c80e`, verify: exit 0) | verify: `node --test tests/unit/sync.test.js`
+- [x] Sem configuração do Supabase o site funciona e o botão de login explica que a conta não está configurada (2026-11-18 20:47, commit `4a2c80e`, verify: exit 0) | verify: `npx playwright test tests/e2e/conta.spec.js -g "sem-config"`
 - [ ] Login real com Google e isolamento entre dois usuários (RLS) conferidos | evidence: manual @samuel

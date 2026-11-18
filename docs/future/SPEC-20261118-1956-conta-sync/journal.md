@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-18 20:44
+**Última atualização:** 2026-11-18 20:47
 **Onde tô:** início — nada feito ainda
 **Próximo passo:** <primeiro passo concreto>
 **Última decisão:** —
@@ -34,3 +34,14 @@
 <!-- tipos: ativação descoberta decisão tentativa blocker unblock refactor nota conclusão | entrada nova: specctl log -->
 
 ## 2026-11-18 20:44 — [ativação] SPEC ativada (branch spec/conta-sync, base main)
+
+## 2026-11-18 20:47 — [nota] verify: 2/2 critérios passaram (commit `4a2c80e`)
+
+- PASS: A mescla local×nuvem é correta (mais recente vence, nada é …
+- PASS: Sem configuração do Supabase o site funciona e o botão de l…
+
+## 2026-11-18 20:47 — [nota] código pronto; falta teste real
+
+⎿ commit 4a2c80e+dirty · 2 files changed, 8 insertions(+), 3 deletions(-)
+
+## 2026-11-18 20:47 — [nota] Pausada: aguardando o Samuel criar a conta Supabase e ligar o Google para o teste real
