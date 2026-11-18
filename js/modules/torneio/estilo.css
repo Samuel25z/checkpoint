@@ -1,0 +1,44 @@
+/* Torneio */
+.torneio-form { display: grid; gap: var(--esp-4); max-width: 720px; }
+.linha-dica { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .82rem; }
+.avatar { position: relative; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; flex: none; overflow: hidden;
+  background: hsl(var(--tom) 40% 32%); color: #fff; font: 700 .66rem/1 var(--fonte-titulo); }
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.avatar.vazio { background: var(--superficie-2); }
+
+.chave-rolagem { overflow-x: auto; padding-bottom: var(--esp-3); margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+.chave { display: grid; grid-template-columns: repeat(var(--rodadas), minmax(200px, 1fr)); gap: var(--esp-5); min-width: min-content; }
+.rodada { display: flex; flex-direction: column; }
+.rodada h3 { font-size: .74rem; color: var(--texto-3); text-transform: uppercase; letter-spacing: .06em; margin-bottom: var(--esp-3); }
+.rodada.atual h3 { color: var(--acento); }
+:root[data-tema='claro'] .rodada.atual h3 { color: var(--texto); }
+.partidas { display: flex; flex-direction: column; justify-content: space-around; flex: 1; gap: var(--esp-3); }
+.partida { position: relative; display: grid; border-radius: 10px; background: var(--superficie); border: 1px solid var(--linha); overflow: hidden; }
+.rodada:not(:last-child) .partida::after { content: ''; position: absolute; right: calc(-1 * var(--esp-5) / 2 - 1px); top: 50%; width: calc(var(--esp-5) / 2); height: 1px; background: var(--linha-forte); }
+.lado { display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 8px 10px; border: 0; background: transparent; color: var(--texto); text-align: left; font-weight: 600; cursor: pointer; transition: background var(--rapido), opacity var(--rapido); }
+.lado + .lado { border-top: 1px solid var(--linha); }
+.lado:not([disabled]):hover { background: var(--superficie-2); }
+.lado[disabled] { cursor: default; }
+.lado.vazio { min-height: 46px; padding-left: 12px; font-size: .84rem; }
+.lado-nome { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lado.ganhou { background: var(--acento-suave); box-shadow: inset 3px 0 0 var(--acento); }
+.lado.perdeu { opacity: .45; }
+.lado-check .ic { width: 16px; height: 16px; color: var(--acento); }
+:root[data-tema='claro'] .lado-check .ic { color: var(--st-jogando); }
+
+.campeao { position: relative; display: grid; justify-items: center; gap: 6px; padding: var(--esp-6) var(--esp-4); margin-bottom: var(--esp-5); border-radius: 16px; overflow: hidden; text-align: center;
+  background: radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--acento) 26%, transparent), transparent 70%), var(--superficie); border: 1px solid color-mix(in srgb, var(--acento) 40%, var(--linha)); animation: subir var(--medio) var(--curva); }
+.campeao-icone .ic { width: 40px; height: 40px; color: var(--acento); }
+:root[data-tema='claro'] .campeao-icone .ic { color: var(--st-jogando); }
+.campeao-rotulo { font: 700 .72rem/1 var(--fonte-titulo); text-transform: uppercase; letter-spacing: .1em; color: var(--texto-3); }
+.campeao .avatar { width: 56px; height: 56px; border-radius: 14px; font-size: 1rem; }
+.campeao h2 { font-size: clamp(1.6rem, 1rem + 2.5vw, 2.4rem); }
+.confete { position: absolute; inset: 0; pointer-events: none; }
+.confete i { position: absolute; top: -10px; left: var(--x); width: 8px; height: 12px; border-radius: 2px; animation: cair var(--d) var(--a) ease-in forwards; }
+@keyframes cair { to { transform: translateY(420px) rotate(var(--r)); opacity: 0; } }
+
+.historico-torneios { list-style: none; margin: 0; padding: 0; display: grid; }
+.linha-torneio { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 4px; border: 0; border-bottom: 1px solid var(--linha); background: none; color: inherit; text-align: left; cursor: pointer; }
+.linha-torneio > span { flex: 1; }
+.linha-torneio:hover { background: var(--superficie-2); }
+.torneio-cartao strong { font-size: 1.3rem; }

@@ -77,11 +77,11 @@ function telaCronometro(el, ctx, trocar) {
 
   function pintarPlacar() {
     const wr = rota.categoria?.wr;
-    placar.replaceChildren(
+    placar.replaceChildren(...[
       h('div', {}, h('dt', {}, 'Recorde pessoal'), h('dd', { class: 'numero', id: 'pb' }, formatarTempo(rota.pbTotal))),
       h('div', {}, h('dt', {}, 'Soma dos melhores'), h('dd', { class: 'numero' }, formatarTempo(somaMelhores(rota)))),
       h('div', {}, h('dt', {}, 'Tentativas'), h('dd', { class: 'numero' }, `${rota.concluidas}/${rota.tentativas}`)),
-      wr ? h('div', { class: 'placar-wr' }, h('dt', {}, 'Recorde mundial'), h('dd', { class: 'numero' }, formatarTempo(wr.tempo), h('span', { class: 'texto-3' }, ` ${wr.jogador}`))) : null);
+      wr ? h('div', { class: 'placar-wr' }, h('dt', {}, 'Recorde mundial'), h('dd', { class: 'numero' }, formatarTempo(wr.tempo), h('span', { class: 'texto-3' }, ` ${wr.jogador}`))) : null].filter(Boolean));
   }
 
   function pintarSplits(agora) {

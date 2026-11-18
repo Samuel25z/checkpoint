@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: torneio
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:34
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** torneio, chaveamento, bracket, campeonato, eliminacao
 **Features:** torneio
-**Branch:** —
+**Branch:** spec/torneio
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

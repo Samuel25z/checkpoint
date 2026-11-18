@@ -171,6 +171,8 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .capa img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .capa-iniciais { font: 800 2rem/1 var(--fonte-titulo); color: rgba(255, 255, 255, .88); letter-spacing: -.02em; }
 .capa.com-imagem .capa-iniciais { visibility: hidden; }
+.capa-mini { width: 44px; aspect-ratio: 3 / 4; border-radius: 5px; flex: none; }
+.capa-mini .capa-iniciais { font-size: .8rem; }
 .grade-capas { display: grid; gap: var(--esp-4); grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 @media (max-width: 480px) { .grade-capas { grid-template-columns: repeat(3, 1fr); gap: 10px; } }
 .carta {
