@@ -9,6 +9,7 @@ export const MODULOS = [
   { id: 'recomps', titulo: 'Recomps', icone: 'ramo', rota: 'recomps', carregar: () => import('./recomps/index.js') },
   { id: 'roda-no-pc', titulo: 'Roda no PC?', icone: 'chip', rota: 'roda-no-pc', carregar: () => import('./roda-no-pc/index.js') },
   { id: 'torneio', titulo: 'Torneio', icone: 'trofeu', rota: 'torneio', carregar: () => import('./torneio/index.js') },
+  { id: 'recomendador', titulo: 'Recomenda', icone: 'brilho', rota: 'recomendador', carregar: () => import('./recomendador/index.js') },
 ];
 
 /** Valida e organiza uma lista de módulos (exportado para testes e para quem quiser montar outro registro). */

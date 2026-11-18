@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: recomendador
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:37
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** recomendador, sugestao, etiquetas, trailer, humor
 **Features:** recomendador
-**Branch:** —
+**Branch:** spec/recomendador
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

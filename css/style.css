@@ -61,6 +61,12 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .palco { flex: 1; width: 100%; max-width: calc(var(--largura) + 32px); margin: 0 auto; padding: var(--esp-6) 16px var(--esp-7); outline: none; }
 .rodape { border-top: 1px solid var(--linha); padding: var(--esp-5) 16px calc(var(--esp-5) + env(safe-area-inset-bottom)); text-align: center; color: var(--texto-3); font-size: .85rem; display: grid; gap: 4px; }
 
+@media (min-width: 761px) and (max-width: 1180px) {
+  .topo { gap: var(--esp-3); }
+  .nav-item { padding: 0 9px; font-size: .88rem; }
+  .nav-item .ic { display: none; }
+  .nav-item::after { left: 8px; right: 8px; }
+}
 @media (max-width: 760px) {
   /* sem backdrop-filter: ele prenderia a barra fixa de abas dentro do topo */
   .topo { gap: var(--esp-3); backdrop-filter: none; background: var(--fundo); }
