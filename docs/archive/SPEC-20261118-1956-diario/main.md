@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: diario
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:15
-**Concluída:** —
+**Concluída:** 2026-11-18 20:21
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `70469ce`
 **Keywords:** diario, jogos, backlog, capa, wikipedia, favoritos, historico
 **Features:** diario
 **Branch:** spec/diario
@@ -61,7 +61,7 @@ Módulo js/modules/diario com logic.js puro (validação, filtros, ordenação, 
 
 ## Critério de aceite
 
-- [ ] Validação, filtros, ordenação e histórico do diário funcionam (lógica pura) | verify: `node --test tests/unit/diario.test.js`
-- [ ] A busca da Wikipedia é convertida em capa + resumo e falha sem quebrar (sem rede usa fallback) | verify: `node --test tests/unit/wikipedia.test.js`
-- [ ] Adicionar, editar, favoritar, filtrar e excluir um jogo funciona na tela e persiste ao recarregar | verify: `npx playwright test tests/e2e/diario.spec.js -g "fluxo"`
-- [ ] Estados vazio, carregando e erro aparecem corretamente no diário | verify: `npx playwright test tests/e2e/diario.spec.js -g "estados"`
+- [x] Validação, filtros, ordenação e histórico do diário funcionam (lógica pura) (2026-11-18 20:21, commit `70469ce`, verify: exit 0) | verify: `node --test tests/unit/diario.test.js`
+- [x] A busca da Wikipedia é convertida em capa + resumo e falha sem quebrar (sem rede usa fallback) (2026-11-18 20:21, commit `70469ce`, verify: exit 0) | verify: `node --test tests/unit/wikipedia.test.js`
+- [x] Adicionar, editar, favoritar, filtrar e excluir um jogo funciona na tela e persiste ao recarregar (2026-11-18 20:21, commit `70469ce`, verify: exit 0) | verify: `npx playwright test tests/e2e/diario.spec.js -g "fluxo"`
+- [x] Estados vazio, carregando e erro aparecem corretamente no diário (2026-11-18 20:21, commit `70469ce`, verify: exit 0) | verify: `npx playwright test tests/e2e/diario.spec.js -g "estados"`
