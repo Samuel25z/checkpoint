@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: roda no pc
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:31
-**Concluída:** —
+**Concluída:** 2026-11-18 20:34
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `ef298ae`
 **Keywords:** hardware, requisitos, gpu, webgl, desempenho, pc
 **Features:** hardware
 **Branch:** spec/roda-no-pc
@@ -58,5 +58,5 @@ logic.js puro com tabelas de pontuação de CPU/GPU e função de classificaçã
 
 ## Critério de aceite
 
-- [ ] A classificação (não roda/baixo/médio/alto/ultra) e a busca de peças estão corretas | verify: `node --test tests/unit/hardware.test.js`
-- [ ] Na tela, a detecção preenche o formulário, salva dois PCs e mostra o resultado por jogo | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`
+- [x] A classificação (não roda/baixo/médio/alto/ultra) e a busca de peças estão corretas (2026-11-18 20:34, commit `ef298ae`, verify: exit 0) | verify: `node --test tests/unit/hardware.test.js`
+- [x] Na tela, a detecção preenche o formulário, salva dois PCs e mostra o resultado por jogo (2026-11-18 20:34, commit `ef298ae`, verify: exit 0) | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`

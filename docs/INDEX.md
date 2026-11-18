@@ -6,5 +6,6 @@
 
 - **base** — fundacao, casca, registro, router, tema, storage
 - **diario** — diario, jogos, capa, wikipedia, status, nota
+- **hardware** — hardware, requisitos, gpu, cpu, webgl, pc
 - **recomps** — recomps, ports, decomp, github, releases, golpe
 - **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com
