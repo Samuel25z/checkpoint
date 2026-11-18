@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: conta sync
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:44
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** login, conta, supabase, google, sincronizacao, rls
 **Features:** conta
-**Branch:** —
+**Branch:** spec/conta-sync
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

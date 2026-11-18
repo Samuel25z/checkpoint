@@ -4,6 +4,7 @@ import { registro } from './modules/registry.js';
 import { criarRoteador, irPara } from './core/router.js';
 import { icone } from './core/icons.js';
 import { h, toast } from './core/ui.js';
+import { iniciarConta } from './core/conta.js';
 
 const raiz = document.documentElement;
 
@@ -55,6 +56,7 @@ function iniciar() {
   window.checkpoint = ctx; // ponto de acesso para extensões (sync, controle)
   const roteador = criarRoteador({ registro, palco: document.getElementById('palco'), ctx, aoTrocar: marcarMenu });
   ctx.roteador = roteador;
+  ctx.conta = iniciarConta(ctx);
   window.addEventListener('error', (e) => console.error('[checkpoint]', e.message));
   roteador.navegar();
   document.dispatchEvent(new CustomEvent('checkpoint:pronto', { detail: ctx }));
