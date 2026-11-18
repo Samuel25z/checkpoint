@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: wrapped
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:40
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** wrapped, resumo-anual, estatisticas, animacao, card
 **Features:** wrapped
-**Branch:** —
+**Branch:** spec/wrapped
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

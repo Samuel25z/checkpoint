@@ -26,7 +26,8 @@ if (!soSintaxe) {
   const proibidos = [
     [/href=["']#["']/, 'link sem destino (href="#")'],
     [/\balert\s*\(|\bconfirm\s*\(|\bprompt\s*\(/, 'alert/confirm/prompt nativo'],
-    [/\bTODO\b|\bFIXME\b|lorem ipsum/i, 'resto de rascunho (TODO/FIXME/lorem)'],
+    [/\bTODO\b|\bFIXME\b|\bXXX\b/, 'resto de rascunho (TODO/FIXME)'],
+    [/lorem ipsum/i, 'texto de exemplo (lorem ipsum)'],
     [/em breve/i, 'texto "em breve" (botão morto)'],
     [/\bdebugger\b/, 'debugger esquecido']
   ];
