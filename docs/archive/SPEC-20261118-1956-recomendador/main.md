@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: recomendador
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:37
-**Concluída:** —
+**Concluída:** 2026-11-18 20:40
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `25e705d`
 **Keywords:** recomendador, sugestao, etiquetas, trailer, humor
 **Features:** recomendador
 **Branch:** spec/recomendador
@@ -55,5 +55,5 @@ logic.js puro com função de pontuação explicável (retorna motivo junto da n
 
 ## Critério de aceite
 
-- [ ] Pontuação, exclusões, motivo e 'outra sugestão' estão corretos | verify: `node --test tests/unit/recomendador.test.js`
-- [ ] Na tela, responder as perguntas, ver 3 sugestões com motivo e adicionar uma ao diário | verify: `npx playwright test tests/e2e/recomendador.spec.js`
+- [x] Pontuação, exclusões, motivo e 'outra sugestão' estão corretos (2026-11-18 20:40, commit `25e705d`, verify: exit 0) | verify: `node --test tests/unit/recomendador.test.js`
+- [x] Na tela, responder as perguntas, ver 3 sugestões com motivo e adicionar uma ao diário (2026-11-18 20:40, commit `25e705d`, verify: exit 0) | verify: `npx playwright test tests/e2e/recomendador.spec.js`
