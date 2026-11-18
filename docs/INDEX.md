@@ -6,3 +6,4 @@
 
 - **base** — fundacao, casca, registro, router, tema, storage
 - **diario** — diario, jogos, capa, wikipedia, status, nota
+- **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com

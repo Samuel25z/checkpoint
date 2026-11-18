@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: speedrun
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:22
-**Concluída:** —
+**Concluída:** 2026-11-18 20:28
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `153fb80`
 **Keywords:** speedrun, cronometro, splits, recorde, speedrun.com, pb
 **Features:** speedrun
 **Branch:** spec/speedrun
@@ -59,7 +59,7 @@ logic.js puro com máquina de estados do cronômetro (parado, correndo, pausado,
 
 ## Critério de aceite
 
-- [ ] Cronômetro, splits, deltas e PB funcionam (lógica pura, incluindo desfazer e run incompleta) | verify: `node --test tests/unit/speedrun.test.js`
-- [ ] Conversão da resposta do speedrun.com em ranking (tempos, jogadores, vídeos) está correta | verify: `node --test tests/unit/speedrun-api.test.js`
-- [ ] Na tela, criar rota, rodar com atalhos de teclado, terminar e ver o PB salvo após recarregar | verify: `npx playwright test tests/e2e/speedrun.spec.js -g "cronometro"`
-- [ ] O ranking de um jogo aparece com dados simulados de rede e mostra erro amigável quando a API falha | verify: `npx playwright test tests/e2e/speedrun.spec.js -g "ranking"`
+- [x] Cronômetro, splits, deltas e PB funcionam (lógica pura, incluindo desfazer e run incompleta) (2026-11-18 20:28, commit `153fb80`, verify: exit 0) | verify: `node --test tests/unit/speedrun.test.js`
+- [x] Conversão da resposta do speedrun.com em ranking (tempos, jogadores, vídeos) está correta (2026-11-18 20:28, commit `153fb80`, verify: exit 0) | verify: `node --test tests/unit/speedrun-api.test.js`
+- [x] Na tela, criar rota, rodar com atalhos de teclado, terminar e ver o PB salvo após recarregar (2026-11-18 20:28, commit `153fb80`, verify: exit 0) | verify: `npx playwright test tests/e2e/speedrun.spec.js -g "cronometro"`
+- [x] O ranking de um jogo aparece com dados simulados de rede e mostra erro amigável quando a API falha (2026-11-18 20:28, commit `153fb80`, verify: exit 0) | verify: `npx playwright test tests/e2e/speedrun.spec.js -g "ranking"`
