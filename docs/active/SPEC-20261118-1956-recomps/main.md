@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: recomps
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:31
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** recomps, ports, decomp, github, catalogo, releases
 **Features:** recomps
-**Branch:** —
+**Branch:** spec/recomps
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

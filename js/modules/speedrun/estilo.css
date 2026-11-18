@@ -45,8 +45,6 @@ kbd { font: 600 .78rem var(--fonte-texto); padding: 2px 7px; border-radius: 6px;
 .sem-rolagem { overflow: hidden; }
 
 /* recordes */
-.sr-busca { display: flex; gap: var(--esp-2); margin-bottom: var(--esp-4); }
-.sr-busca .busca { flex: 1; }
 .sr-jogos { display: grid; gap: var(--esp-4); grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 .sr-detalhe { margin-top: var(--esp-6); display: grid; gap: var(--esp-4); scroll-margin-top: 90px; }
 .sr-jogo-topo { display: flex; align-items: center; gap: var(--esp-3); }

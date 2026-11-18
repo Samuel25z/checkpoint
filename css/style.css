@@ -118,6 +118,8 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .busca { position: relative; }
 .busca .ic { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--texto-3); pointer-events: none; }
 .busca .entrada { padding-left: 40px; }
+.sr-busca { display: flex; gap: var(--esp-2); margin-bottom: var(--esp-4); }
+.sr-busca .busca { flex: 1; min-width: 0; }
 
 /* filtros: abas de menu de console, traço embaixo na cor do item */
 .chips { display: flex; flex-wrap: wrap; gap: 4px 2px; border-bottom: 1px solid var(--linha); }
