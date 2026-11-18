@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: wrapped
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:40
-**Concluída:** —
+**Concluída:** 2026-11-18 20:44
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `b6cf932`
 **Keywords:** wrapped, resumo-anual, estatisticas, animacao, card
 **Features:** wrapped
 **Branch:** spec/wrapped
@@ -53,5 +53,5 @@ logic.js puro calcula as estatísticas; telas com CSS transitions; card em <canv
 
 ## Critério de aceite
 
-- [ ] As estatísticas do ano batem com um diário de exemplo (horas, zerados, gênero, plataforma, mês) | verify: `node --test tests/unit/wrapped.test.js`
-- [ ] Na tela, o Wrapped percorre as telas e baixa o card PNG | verify: `npx playwright test tests/e2e/wrapped.spec.js`
+- [x] As estatísticas do ano batem com um diário de exemplo (horas, zerados, gênero, plataforma, mês) (2026-11-18 20:44, commit `b6cf932`, verify: exit 0) | verify: `node --test tests/unit/wrapped.test.js`
+- [x] Na tela, o Wrapped percorre as telas e baixa o card PNG (2026-11-18 20:44, commit `b6cf932`, verify: exit 0) | verify: `npx playwright test tests/e2e/wrapped.spec.js`

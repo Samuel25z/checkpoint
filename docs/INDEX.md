@@ -11,3 +11,4 @@
 - **recomps** — recomps, ports, decomp, github, releases, golpe
 - **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com
 - **torneio** — torneio, chaveamento, bracket, campeao, eliminacao
+- **wrapped** — wrapped, resumo-anual, estatisticas, stories, card, canvas
