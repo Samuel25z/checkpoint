@@ -9,3 +9,4 @@
 - **hardware** — hardware, requisitos, gpu, cpu, webgl, pc
 - **recomps** — recomps, ports, decomp, github, releases, golpe
 - **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com
+- **torneio** — torneio, chaveamento, bracket, campeao, eliminacao

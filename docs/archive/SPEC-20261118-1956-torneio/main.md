@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: torneio
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:34
-**Concluída:** —
+**Concluída:** 2026-11-18 20:37
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `16f6cfb`
 **Keywords:** torneio, chaveamento, bracket, campeonato, eliminacao
 **Features:** torneio
 **Branch:** spec/torneio
@@ -56,5 +56,5 @@ logic.js puro: geração da chave com byes, avanço, desfazer e campeão; render
 
 ## Critério de aceite
 
-- [ ] Geração da chave com byes, avanço, desfazer e campeão estão corretos para 4 a 32 jogadores | verify: `node --test tests/unit/torneio.test.js`
-- [ ] Na tela, criar torneio de 6, jogar até o campeão, recarregar e ver no histórico | verify: `npx playwright test tests/e2e/torneio.spec.js`
+- [x] Geração da chave com byes, avanço, desfazer e campeão estão corretos para 4 a 32 jogadores (2026-11-18 20:37, commit `16f6cfb`, verify: exit 0) | verify: `node --test tests/unit/torneio.test.js`
+- [x] Na tela, criar torneio de 6, jogar até o campeão, recarregar e ver no histórico (2026-11-18 20:37, commit `16f6cfb`, verify: exit 0) | verify: `npx playwright test tests/e2e/torneio.spec.js`

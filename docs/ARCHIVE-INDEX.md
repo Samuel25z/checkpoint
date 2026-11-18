@@ -7,3 +7,4 @@ SPEC-20261118-1956-fundacao | done | base | fundacao, base, modulos, design-syst
 SPEC-20261118-1956-recomps | done | recomps | recomps, ports, decomp, github, catalogo, releases | Catálogo de recomps e ports que se atualiza sozinho pela API do GitHub, com destaques, busca e 'seguir projeto'.
 SPEC-20261118-1956-roda-no-pc | done | hardware | hardware, requisitos, gpu, webgl, desempenho, pc | 'Roda no meu PC?': detecta a placa de vídeo pelo navegador, compara com requisitos do catálogo e diz em que qualidade roda.
 SPEC-20261118-1956-speedrun | done | speedrun | speedrun, cronometro, splits, recorde, speedrun.com, pb | Central de speedrun: recordes ao vivo do speedrun.com e cronômetro com splits, PB e atalhos.
+SPEC-20261118-1956-torneio | done | torneio | torneio, chaveamento, bracket, campeonato, eliminacao | Chaveamento animado de 4 a 32 jogadores com sorteio, avanço por clique, campeão e histórico.
