@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: diario
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:15
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** diario, jogos, backlog, capa, wikipedia, favoritos, historico
 **Features:** diario
-**Branch:** —
+**Branch:** spec/diario
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56
