@@ -24,10 +24,10 @@ function selo(status) {
 }
 
 function cartaJogo(j, aoAbrir) {
-  return h('button', { class: 'carta', type: 'button', 'data-id': j.id, 'aria-label': `${j.nome}, ${ROTULO_STATUS[j.status]}`, onclick: () => aoAbrir(j) },
-    h('span', { class: 'carta-selo selo st-' + j.status }, h('span', { class: 'ponto' }), ROTULO_STATUS[j.status]),
-    j.favorito ? h('span', { class: 'carta-fav', html: icone('coracao'), title: 'Favorito' }) : null,
-    capa(j.capa, j.nome),
+  const caixa = capa(j.capa, j.nome);
+  caixa.prepend(h('span', { class: `faixa st-${j.status}` }, ROTULO_STATUS[j.status], j.favorito ? h('span', { html: icone('coracao'), title: 'Favorito' }) : null));
+  return h('button', { class: 'carta', type: 'button', 'data-id': j.id, 'aria-label': `${j.nome}, ${ROTULO_STATUS[j.status]}${j.favorito ? ', favorito' : ''}`, onclick: () => aoAbrir(j) },
+    caixa,
     h('span', { class: 'carta-nome' }, j.nome),
     h('span', { class: 'carta-meta' }, j.nota !== null && j.nota !== undefined ? estrelas(j.nota, 'mini') : null, j.horas ? `${String(j.horas).replace('.', ',')} h` : null));
 }

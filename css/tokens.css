@@ -1,7 +1,7 @@
 /* tokens.css — cores, tipos e medidas do Checkpoint.
    Escuro: grafite azulado (base Backloggd). Claro: limpo e arredondado (Switch). */
 :root {
-  --fonte-titulo: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --fonte-titulo: 'Unbounded', 'Segoe UI', system-ui, sans-serif;
   --fonte-texto: 'Figtree', 'Segoe UI', system-ui, sans-serif;
 
   --raio-p: 8px;
@@ -28,46 +28,48 @@
 
 :root[data-tema='escuro'] {
   color-scheme: dark;
-  --fundo: #161a21;
-  --superficie: #1d222b;
-  --superficie-2: #252b36;
-  --superficie-3: #2e3542;
-  --linha: #313846;
-  --linha-forte: #434c5d;
-  --texto: #e9edf3;
-  --texto-2: #a3adbd;
-  --texto-3: #747f93;
-  --acento: #5b9dff;
-  --acento-hover: #7fb2ff;
-  --acento-texto: #0b1424;
-  --acento-suave: rgba(91, 157, 255, .14);
+  --fundo: #121319;
+  --superficie: #1a1c24;
+  --superficie-2: #22252f;
+  --superficie-3: #2b2f3b;
+  --linha: #2c303c;
+  --linha-forte: #424757;
+  --texto: #f1efe9;
+  --texto-2: #aeb0b9;
+  --texto-3: #7a7d8a;
+  --acento: #ffb21a;
+  --acento-hover: #ffc54d;
+  --acento-texto: #1a1300;
+  --acento-suave: rgba(255, 178, 26, .13);
+  --pontos: rgba(255, 255, 255, .045);
   --perigo: #ff7a8a;
   --perigo-suave: rgba(255, 122, 138, .14);
   --sucesso: #45c08a;
   --sombra: 0 10px 30px rgba(0, 0, 0, .35);
-  --foco: 0 0 0 3px #161a21, 0 0 0 5px #5b9dff;
+  --foco: 0 0 0 3px #121319, 0 0 0 5px #ffb21a;
 }
 
 :root[data-tema='claro'] {
   color-scheme: light;
-  --fundo: #f4f5f8;
+  --fundo: #f3f1ec;
   --superficie: #ffffff;
-  --superficie-2: #eceef3;
-  --superficie-3: #e1e5ec;
-  --linha: #dde1e8;
-  --linha-forte: #c3c9d4;
-  --texto: #1a1f29;
-  --texto-2: #566073;
-  --texto-3: #7d8697;
-  --acento: #2a6ff0;
-  --acento-hover: #1f5fd6;
-  --acento-texto: #ffffff;
-  --acento-suave: rgba(42, 111, 240, .1);
+  --superficie-2: #ebe8e1;
+  --superficie-3: #e0dcd3;
+  --linha: #dcd8cf;
+  --linha-forte: #bdb8ad;
+  --texto: #17171c;
+  --texto-2: #55555f;
+  --texto-3: #82828c;
+  --acento: #17171c;
+  --acento-hover: #33333b;
+  --acento-texto: #ffb21a;
+  --acento-suave: rgba(23, 23, 28, .07);
+  --pontos: rgba(0, 0, 0, .05);
   --perigo: #d33a4e;
   --perigo-suave: rgba(211, 58, 78, .1);
   --sucesso: #1f9a63;
   --sombra: 0 10px 28px rgba(26, 31, 41, .12);
-  --foco: 0 0 0 3px #f4f5f8, 0 0 0 5px #2a6ff0;
+  --foco: 0 0 0 3px #f3f1ec, 0 0 0 5px #17171c;
   --st-quero: #6b778c;
   --st-jogando: #c98a12;
   --st-zerado: #1f9a63;

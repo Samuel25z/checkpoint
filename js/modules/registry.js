@@ -5,6 +5,7 @@
 export const MODULOS = [
   { id: 'inicio', titulo: 'Início', icone: 'casa', rota: 'inicio', carregar: () => import('./inicio/index.js') },
   { id: 'diario', titulo: 'Diário', icone: 'livro', rota: 'diario', carregar: () => import('./diario/index.js') },
+  { id: 'speedrun', titulo: 'Speedrun', icone: 'cronometro', rota: 'speedrun', carregar: () => import('./speedrun/index.js') },
 ];
 
 /** Valida e organiza uma lista de módulos (exportado para testes e para quem quiser montar outro registro). */

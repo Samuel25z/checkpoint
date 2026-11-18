@@ -1,0 +1,65 @@
+/* Speedrun */
+.centro { text-align: center; }
+.rota-barra { display: flex; gap: var(--esp-2); flex-wrap: wrap; align-items: center; margin-bottom: var(--esp-4); }
+.rota-seletor { flex: 1 1 240px; }
+.cronometro-grade { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: var(--esp-4); align-items: start; }
+@media (max-width: 860px) { .cronometro-grade { grid-template-columns: 1fr; } }
+
+.painel-tempo { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-g); padding: var(--esp-5); display: grid; gap: var(--esp-3); justify-items: center; text-align: center; }
+.rota-nome { font-weight: 700; }
+.relogio { font: 800 clamp(3.2rem, 2rem + 6vw, 6rem)/1 var(--fonte-titulo); letter-spacing: -.03em; color: var(--texto); transition: color var(--rapido); }
+.relogio.correndo { color: var(--acento); }
+.relogio.correndo.ganhou { color: var(--st-zerado); }
+.relogio.correndo.perdeu { color: var(--st-larguei); }
+.relogio.terminado { color: var(--texto); }
+.relogio.pb-novo { color: var(--st-jogando); animation: pulso 1.2s var(--curva) 2; }
+@keyframes pulso { 50% { transform: scale(1.06); } }
+.relogio-estado { color: var(--texto-2); min-height: 1.5em; }
+.controles { display: flex; gap: var(--esp-2); flex-wrap: wrap; justify-content: center; }
+.btn-grande { min-height: 52px; padding: 0 32px; font-size: 1.1rem; min-width: 160px; }
+.atalhos-teclado { font-size: .84rem; }
+kbd { font: 600 .78rem var(--fonte-texto); padding: 2px 7px; border-radius: 6px; border: 1px solid var(--linha-forte); background: var(--superficie-2); color: var(--texto-2); }
+.placar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--esp-3); width: 100%; margin: var(--esp-2) 0 0; padding-top: var(--esp-3); border-top: 1px solid var(--linha); }
+.placar:not(:has(.placar-wr)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 520px) { .placar, .placar:not(:has(.placar-wr)) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.placar dt { font-size: .8rem; color: var(--texto-3); }
+.placar dd { margin: 0; font-weight: 700; font-size: 1.1rem; }
+.placar-wr dd { color: var(--st-jogando); }
+
+.painel-splits { background: var(--superficie); border: 1px solid var(--linha); border-radius: var(--raio-g); padding: var(--esp-2); }
+.splits { list-style: none; margin: 0; padding: 0; }
+.split { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: var(--esp-3); padding: 10px 12px; border-radius: var(--raio-p); align-items: center; }
+.split + .split { border-top: 1px solid var(--linha); }
+.split.atual { background: var(--acento-suave); }
+.split-nome { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.split-delta { min-width: 56px; text-align: right; font-weight: 700; font-size: .9rem; }
+.split-delta.ganhou { color: var(--st-zerado); }
+.split-delta.perdeu { color: var(--st-larguei); }
+.split-delta.ouro { color: var(--st-jogando); }
+.split-tempo { min-width: 76px; text-align: right; color: var(--texto-2); }
+.split.feito .split-tempo { color: var(--texto); font-weight: 600; }
+
+/* modo foco (tela cheia estilo console) */
+.painel-tempo.foco { position: fixed; inset: 0; z-index: 40; border-radius: 0; border: 0; align-content: center; background: var(--fundo); }
+.painel-tempo.foco .relogio { font-size: clamp(4rem, 3rem + 10vw, 11rem); }
+.sem-rolagem { overflow: hidden; }
+
+/* recordes */
+.sr-busca { display: flex; gap: var(--esp-2); margin-bottom: var(--esp-4); }
+.sr-busca .busca { flex: 1; }
+.sr-jogos { display: grid; gap: var(--esp-4); grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+.sr-detalhe { margin-top: var(--esp-6); display: grid; gap: var(--esp-4); scroll-margin-top: 90px; }
+.sr-jogo-topo { display: flex; align-items: center; gap: var(--esp-3); }
+.sr-acoes { display: flex; gap: var(--esp-2); flex-wrap: wrap; margin-bottom: var(--esp-3); }
+.ranking { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.ranking th { text-align: left; font-size: .8rem; color: var(--texto-3); font-weight: 600; padding: 8px 10px; border-bottom: 1px solid var(--linha); }
+.ranking td { padding: 10px; border-bottom: 1px solid var(--linha); }
+.ranking tr.wr td { font-weight: 700; }
+.ranking tr.wr .ic { color: var(--st-jogando); width: 18px; height: 18px; }
+@media (max-width: 560px) { .col-data { display: none; } }
+
+/* painel da Início */
+.pbs { display: grid; gap: var(--esp-3); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.pb-cartao { display: grid; gap: 4px; padding: var(--esp-4); border-radius: var(--raio-g); background: var(--superficie); border: 1px solid var(--linha); color: var(--texto); text-decoration: none; }
+.pb-cartao strong { font: 800 1.8rem/1.1 var(--fonte-titulo); }
+.pb-cartao:hover { border-color: var(--linha-forte); }

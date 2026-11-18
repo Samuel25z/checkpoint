@@ -4,7 +4,7 @@
 @media (max-width: 640px) { .diario-controles { grid-template-columns: 1fr 1fr; } .diario-controles .busca { grid-column: 1 / -1; } }
 .chip-num { font-size: .76rem; opacity: .7; font-variant-numeric: tabular-nums; }
 .chip[class*='st-'] .ponto { color: var(--cor); }
-.chip[class*='st-'][aria-pressed='true'] { background: color-mix(in srgb, var(--cor) 22%, transparent); color: var(--texto); border-color: var(--cor); }
+.diario-barra .chips .chip { padding-bottom: 12px; }
 .sem-resultado { grid-column: 1 / -1; padding: var(--esp-6) 0; text-align: center; }
 
 .carta-fav { position: absolute; top: 8px; right: 8px; z-index: 1; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: color-mix(in srgb, var(--fundo) 70%, transparent); color: #ff6b8a; }

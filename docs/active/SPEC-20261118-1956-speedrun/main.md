@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: speedrun
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:22
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** speedrun, cronometro, splits, recorde, speedrun.com, pb
 **Features:** speedrun
-**Branch:** —
+**Branch:** spec/speedrun
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

@@ -30,6 +30,13 @@
 - **Aplicação:** base visual Backloggd com toques de PS5 (carta em foco) e Switch (botões arredondados, tema claro).
 - **Adaptações:** "Faz suave" — animações curtas e desligadas para quem prefere menos movimento.
 
+## P06 — Fugir do visual "feito por IA"
+- **Objetivo:** deixar a interface com identidade própria.
+- **Prompt:** "Eu tô gostando, mas ao mesmo tempo achando genérico, parece todo site que faz assim, você olha e fala: usou IA."
+- **Resposta da IA:** apontou o que deixava genérico (pílulas em tudo, cartões iguais, azul padrão, fonte neutra) e propôs uma identidade tirada do mundo dos jogos: cada jogo vira uma caixinha com faixa no topo, fonte de menu de console (Unbounded), cor âmbar própria e filtros como abas de console.
+- **Aplicação:** novo sistema visual em css/tokens.css e css/style.css.
+- **Adaptações:** "Dá pra melhorar essas partes coloridas" — as faixas passaram de blocos coloridos para um topo preto com filete e ponto na cor do status, deixando a capa em destaque.
+
 ## P05 — Projeto evolutivo
 - **Objetivo:** que o site possa crescer depois do trabalho.
 - **Prompt:** "Faz um projeto estruturado para evoluir... lançando novas abas, novas atualizações."
