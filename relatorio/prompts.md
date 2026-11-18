@@ -37,6 +37,48 @@
 - **Aplicação:** novo sistema visual em css/tokens.css e css/style.css.
 - **Adaptações:** "Dá pra melhorar essas partes coloridas" — as faixas passaram de blocos coloridos para um topo preto com filete e ponto na cor do status, deixando a capa em destaque.
 
+## P07 — Mais ideias de tema
+- **Objetivo:** ampliar as opções antes de decidir.
+- **Prompt:** "Dê mais ideias."
+- **Resposta da IA:** listou central de speedrun, show do milhão gamer, "Roda no meu PC?", gerador de campeonato, montador de time Pokémon, diário com Wrapped e navegação por controle de videogame (Gamepad API) como diferencial.
+- **Aplicação:** cinco dessas ideias viraram abas do Checkpoint, e o controle virou funcionalidade extra.
+- **Adaptações:** o quiz e o montador de time Pokémon ficaram de fora.
+
+## P08 — Juntar várias ferramentas num site só
+- **Objetivo:** definir o escopo final.
+- **Prompt:** "Gostei muito da central de speedrun... a questão do Roda no meu PC também... uma nova aba, vai ser tipo um site que vai ter várias informações e utilidades."
+- **Resposta da IA:** organizou o projeto como um hub com uma aba por ferramenta e mostrou o que era viável sem servidor em cada uma (APIs gratuitas, limites e alternativas).
+- **Aplicação:** arquitetura de abas e a lista de funcionalidades da SPEC.
+- **Adaptações:** o grupo decidiu fazer todas as abas ("nós temos a capacidade de fazer todas elas, falta 1 semana").
+
+## P09 — Recomps atualizando sozinhos
+- **Objetivo:** não cadastrar projetos à mão.
+- **Prompt:** "Ter uma área onde vai ter os recomps sempre atualizando... de alguma forma, não sei se seria possível com bot ou com API, sem precisar fazer isso manualmente."
+- **Resposta da IA:** usar a API pública do GitHub, buscando vários projetos numa consulta só (para respeitar o limite de 60 pedidos/hora) e guardando cache de 1 hora.
+- **Aplicação:** aba Recomps com dados ao vivo e aviso de versão nova para projetos seguidos.
+- **Adaptações:** acrescentado um selo de "verificado" e um alerta de golpe para promessas de jogos recentes rodando no PC.
+
+## P10 — Diário com capa automática
+- **Objetivo:** registrar jogos sem precisar anexar imagem.
+- **Prompt:** "Aí eu pesquiso o nome, aí como vai ter aquela barra de pesquisa lá, que já puxa da wiki, eu já coloco a capa sem precisar anexar."
+- **Resposta da IA:** busca na API da Wikipedia (com o parâmetro que libera capas de jogos) e catálogo próprio com capas da Steam.
+- **Aplicação:** busca do Diário com resultados do catálogo e da Wikipedia, e resumo em português quando existe.
+- **Adaptações:** filtro para tirar da busca personagens, trilhas sonoras e comunidades.
+
+## P11 — Chaveamento divertido
+- **Objetivo:** organizar campeonatos pequenos entre amigos.
+- **Prompt:** "Se eu fizer um chaveamento organizado, bem feito, sem muito trabalho, de forma dinâmica, divertida e animada."
+- **Resposta da IA:** chave de eliminação simples de 4 a 32 jogadores com folgas automáticas, clique no vencedor, desfazer e campeão com confete.
+- **Aplicação:** aba Torneio.
+- **Adaptações:** a dupla eliminação ficou para uma versão futura.
+
+## P12 — Apresentação no computador da faculdade
+- **Objetivo:** garantir que a apresentação funcione em outro PC.
+- **Prompt:** "Eu planejo criar um link provavelmente no Cloudflare para a apresentação, e eu botar o link no computador da apresentação e abrir e fazer tudo bonitinho."
+- **Resposta da IA:** alertou que os dados ficam no navegador de quem usa e propôs login com sincronização, mantendo o site funcionando sem conta.
+- **Aplicação:** login com Google pelo Supabase, com regras de segurança no banco.
+- **Adaptações:** Cloudflare Pages ligado ao mesmo repositório do GitHub Pages.
+
 ## P05 — Projeto evolutivo
 - **Objetivo:** que o site possa crescer depois do trabalho.
 - **Prompt:** "Faz um projeto estruturado para evoluir... lançando novas abas, novas atualizações."

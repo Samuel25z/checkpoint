@@ -47,6 +47,7 @@ export default {
       try {
         const { default: mod } = await m.carregar();
         if (typeof mod.painelInicio !== 'function') continue;
+        usarEstilo(`js/modules/${m.id}/estilo.css`); // o painel usa o visual da própria aba
         const painel = await mod.painelInicio(ctx);
         if (!painel) continue;
         paineis.append(h('section', { class: `secao inicio-painel painel-${m.id}` },
