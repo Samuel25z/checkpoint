@@ -5,6 +5,9 @@ import { criarRoteador, irPara } from './core/router.js';
 import { icone } from './core/icons.js';
 import { h, toast } from './core/ui.js';
 import { iniciarConta } from './core/conta.js';
+import { iniciarIdioma } from './core/i18n.js';
+import { iniciarControle } from './core/gamepad.js';
+import { iniciarConfiguracoes } from './core/configuracoes.js';
 
 const raiz = document.documentElement;
 
@@ -57,6 +60,9 @@ function iniciar() {
   const roteador = criarRoteador({ registro, palco: document.getElementById('palco'), ctx, aoTrocar: marcarMenu });
   ctx.roteador = roteador;
   ctx.conta = iniciarConta(ctx);
+  iniciarConfiguracoes(ctx);
+  ctx.controle = iniciarControle(ctx);
+  ctx.idioma = iniciarIdioma(ctx);
   window.addEventListener('error', (e) => console.error('[checkpoint]', e.message));
   roteador.navegar();
   document.dispatchEvent(new CustomEvent('checkpoint:pronto', { detail: ctx }));

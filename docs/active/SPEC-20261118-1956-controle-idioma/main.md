@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: controle idioma
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:47
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** gamepad, controle, acessibilidade, idioma, ingles, i18n
 **Features:** base
-**Branch:** —
+**Branch:** spec/controle-idioma
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56
