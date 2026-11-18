@@ -2,4 +2,6 @@
 
 > GERADO — specctl index — NÃO EDITAR
 
-_Sem features ainda._
+## geral
+
+- **base** — fundacao, casca, registro, router, tema, storage

@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: fundacao
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 19:59
-**Concluída:** —
+**Concluída:** 2026-11-18 20:13
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `545b89d`
 **Keywords:** fundacao, base, modulos, design-system, router, storage, catalogo
 **Features:** base
 **Branch:** spec/fundacao
@@ -67,9 +67,9 @@ HTML/CSS/JS puro com ES modules, sem build, publicável direto no GitHub Pages. 
 
 ## Critério de aceite
 
-- [ ] O registro de módulos carrega todas as abas registradas e uma aba nova entra só por pasta + 1 linha | verify: `node --test tests/unit/registry.test.js`
-- [ ] storage.js grava, lê, versiona e emite evento de mudança com namespace checkpoint: | verify: `node --test tests/unit/storage.test.js`
-- [ ] Catálogo tem pelo menos 60 jogos válidos (campos obrigatórios, ids únicos, requisitos completos) | verify: `node --test tests/unit/games.test.js`
-- [ ] A navegação abre cada aba pelo menu e pela URL (#/rota) sem erro no console, no celular (375px) e no PC (1280px) | verify: `npx playwright test tests/e2e/fundacao.spec.js -g "navegacao"`
-- [ ] O tema claro/escuro alterna, persiste ao recarregar e o HTML não tem botão morto nem alert nativo | verify: `npx playwright test tests/e2e/fundacao.spec.js -g "tema"`
-- [ ] Checagens estáticas do código passam (sintaxe JS, sem TODO/lorem/href=#/alert) | verify: `npm run lint`
+- [x] O registro de módulos carrega todas as abas registradas e uma aba nova entra só por pasta + 1 linha (2026-11-18 20:12, commit `545b89d`, verify: exit 0) | verify: `node --test tests/unit/registry.test.js`
+- [x] storage.js grava, lê, versiona e emite evento de mudança com namespace checkpoint: (2026-11-18 20:12, commit `545b89d`, verify: exit 0) | verify: `node --test tests/unit/storage.test.js`
+- [x] Catálogo tem pelo menos 60 jogos válidos (campos obrigatórios, ids únicos, requisitos completos) (2026-11-18 20:12, commit `545b89d`, verify: exit 0) | verify: `node --test tests/unit/games.test.js`
+- [x] A navegação abre cada aba pelo menu e pela URL (#/rota) sem erro no console, no celular (375px) e no PC (1280px) (2026-11-18 20:12, commit `545b89d`, verify: exit 0) | verify: `npx playwright test tests/e2e/fundacao.spec.js -g "navegacao"`
+- [x] O tema claro/escuro alterna, persiste ao recarregar e o HTML não tem botão morto nem alert nativo (2026-11-18 20:13, commit `545b89d`, verify: exit 0) | verify: `npx playwright test tests/e2e/fundacao.spec.js -g "tema"`
+- [x] Checagens estáticas do código passam (sintaxe JS, sem TODO/lorem/href=#/alert) (2026-11-18 20:13, commit `545b89d`, verify: exit 0) | verify: `npm run lint`
