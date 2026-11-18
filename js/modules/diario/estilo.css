@@ -27,8 +27,6 @@
 .busca-resultados .estado { padding: var(--esp-3); grid-auto-flow: column; justify-content: start; }
 .resultado { display: flex; align-items: center; gap: 12px; padding: 8px; border-radius: var(--raio); border: 1px solid transparent; background: transparent; text-align: left; cursor: pointer; color: inherit; }
 .resultado:hover, .resultado:focus-visible { background: var(--superficie-2); border-color: var(--linha); }
-.capa-mini { width: 44px; aspect-ratio: 3 / 4; border-radius: 8px; flex: none; }
-.capa-mini .capa-iniciais { font-size: .9rem; }
 .resultado-manual .capa-mini { background: var(--superficie-2); color: var(--texto-2); display: grid; place-items: center; }
 .resultado-texto { display: grid; line-height: 1.3; }
 .resultado-texto .texto-3 { font-size: .82rem; }

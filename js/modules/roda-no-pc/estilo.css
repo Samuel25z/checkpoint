@@ -1,0 +1,40 @@
+/* Roda no meu PC? */
+.nivel-nao { --cor: var(--st-larguei); } .nivel-baixo { --cor: #f08a3c; } .nivel-medio { --cor: var(--st-jogando); }
+.nivel-alto { --cor: var(--st-zerado); } .nivel-ultra { --cor: var(--st-platinado); }
+
+.pc-cartao { display: grid; gap: var(--esp-4); padding: var(--esp-5); border-radius: 14px; background: var(--superficie); border: 1px solid var(--linha); }
+.pc-abas { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--linha); }
+.pc-abas button { position: relative; border: 0; background: none; color: var(--texto-3); font-weight: 700; padding: 0 12px 12px; cursor: pointer; }
+.pc-abas button[aria-selected='true'] { color: var(--texto); }
+.pc-abas button[aria-selected='true']::after { content: ''; position: absolute; left: 10px; right: 10px; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: var(--acento); }
+.pc-pecas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--esp-4); margin: 0; }
+@media (max-width: 640px) { .pc-pecas { grid-template-columns: 1fr; } }
+.pc-pecas dt { font-size: .8rem; color: var(--texto-3); }
+.pc-pecas dd { margin: 2px 0 0; font: 700 .95rem/1.3 var(--fonte-titulo); letter-spacing: -.02em; }
+.pc-acoes { display: flex; gap: 6px; }
+
+.pc-resumo { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: var(--esp-5) 0 var(--esp-4); }
+@media (max-width: 560px) { .pc-resumo { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pc-total { display: grid; gap: 2px; justify-items: start; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--linha); background: var(--superficie); color: var(--texto-2); cursor: pointer; text-align: left; border-top: 3px solid var(--cor); }
+.pc-total strong { font: 800 1.6rem/1 var(--fonte-titulo); color: var(--texto); }
+.pc-total span { font-size: .84rem; font-weight: 600; }
+.pc-total[aria-pressed='true'] { background: color-mix(in srgb, var(--cor) 14%, var(--superficie)); border-color: var(--cor); }
+.pc-busca { display: block; margin-bottom: var(--esp-3); }
+
+.pc-lista { list-style: none; margin: 0; padding: 0; display: grid; }
+.pc-jogo { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--linha); }
+.pc-jogo .capa-mini { width: 40px; }
+.pc-jogo-texto { display: grid; line-height: 1.3; }
+.pc-jogo-texto .texto-3 { font-size: .84rem; }
+.nivel { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .86rem; color: var(--cor); min-width: 108px; }
+.barras { display: inline-flex; gap: 3px; align-items: flex-end; }
+.barras i { width: 5px; border-radius: 2px; background: var(--linha-forte); }
+.barras i:nth-child(1) { height: 7px; } .barras i:nth-child(2) { height: 10px; } .barras i:nth-child(3) { height: 13px; } .barras i:nth-child(4) { height: 16px; }
+.barras i.cheia { background: var(--cor); }
+.pc-nota { margin-top: var(--esp-4); font-size: .84rem; }
+
+.form-pc { display: grid; gap: var(--esp-3); }
+.deteccao { display: flex; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--superficie-2); }
+.deteccao .ic { color: var(--acento); flex: none; margin-top: 2px; }
+:root[data-tema='claro'] .deteccao .ic { color: var(--texto); }
+.deteccao p { font-size: .84rem; margin-top: 2px; word-break: break-word; }
