@@ -1,0 +1,76 @@
+/* tokens.css — cores, tipos e medidas do Checkpoint.
+   Escuro: grafite azulado (base Backloggd). Claro: limpo e arredondado (Switch). */
+:root {
+  --fonte-titulo: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --fonte-texto: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+
+  --raio-p: 8px;
+  --raio: 14px;
+  --raio-g: 20px;
+  --raio-pilula: 999px;
+
+  --esp-1: 4px; --esp-2: 8px; --esp-3: 12px; --esp-4: 16px; --esp-5: 24px; --esp-6: 32px; --esp-7: 48px;
+
+  --largura: 1200px;
+  --topo-altura: 64px;
+
+  --rapido: 140ms;
+  --medio: 220ms;
+  --curva: cubic-bezier(.2, .7, .2, 1);
+
+  /* cores de status do diário: significado fixo nos dois temas */
+  --st-quero: #8c98ad;
+  --st-jogando: #f0b43c;
+  --st-zerado: #45c08a;
+  --st-larguei: #e46b7d;
+  --st-platinado: #b39cff;
+}
+
+:root[data-tema='escuro'] {
+  color-scheme: dark;
+  --fundo: #161a21;
+  --superficie: #1d222b;
+  --superficie-2: #252b36;
+  --superficie-3: #2e3542;
+  --linha: #313846;
+  --linha-forte: #434c5d;
+  --texto: #e9edf3;
+  --texto-2: #a3adbd;
+  --texto-3: #747f93;
+  --acento: #5b9dff;
+  --acento-hover: #7fb2ff;
+  --acento-texto: #0b1424;
+  --acento-suave: rgba(91, 157, 255, .14);
+  --perigo: #ff7a8a;
+  --perigo-suave: rgba(255, 122, 138, .14);
+  --sucesso: #45c08a;
+  --sombra: 0 10px 30px rgba(0, 0, 0, .35);
+  --foco: 0 0 0 3px #161a21, 0 0 0 5px #5b9dff;
+}
+
+:root[data-tema='claro'] {
+  color-scheme: light;
+  --fundo: #f4f5f8;
+  --superficie: #ffffff;
+  --superficie-2: #eceef3;
+  --superficie-3: #e1e5ec;
+  --linha: #dde1e8;
+  --linha-forte: #c3c9d4;
+  --texto: #1a1f29;
+  --texto-2: #566073;
+  --texto-3: #7d8697;
+  --acento: #2a6ff0;
+  --acento-hover: #1f5fd6;
+  --acento-texto: #ffffff;
+  --acento-suave: rgba(42, 111, 240, .1);
+  --perigo: #d33a4e;
+  --perigo-suave: rgba(211, 58, 78, .1);
+  --sucesso: #1f9a63;
+  --sombra: 0 10px 28px rgba(26, 31, 41, .12);
+  --foco: 0 0 0 3px #f4f5f8, 0 0 0 5px #2a6ff0;
+  --st-quero: #6b778c;
+  --st-jogando: #c98a12;
+  --st-zerado: #1f9a63;
+  --st-larguei: #d04a5e;
+  --st-platinado: #7f63e0;
+}

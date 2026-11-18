@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: fundacao
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 19:59
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** fundacao, base, modulos, design-system, router, storage, catalogo
 **Features:** base
-**Branch:** —
+**Branch:** spec/fundacao
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56

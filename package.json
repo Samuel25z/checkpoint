@@ -1,0 +1,17 @@
+{
+  "name": "checkpoint",
+  "version": "1.0.0",
+  "description": "Checkpoint — hub de utilidades para jogadores",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test \"tests/unit/*.test.js\"",
+    "e2e": "playwright test",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "node scripts/lint.mjs --syntax"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}
