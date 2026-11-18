@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: recomps
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:31
-**Concluída:** —
+**Concluída:** 2026-11-18 20:31
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `7463bf6`
 **Keywords:** recomps, ports, decomp, github, catalogo, releases
 **Features:** recomps
 **Branch:** spec/recomps
@@ -60,5 +60,5 @@ services/github.js com cache de 1h no LocalStorage e tratamento do limite (403/4
 
 ## Critério de aceite
 
-- [ ] Normalização dos repositórios, regra de ativo e detecção de versão nova estão corretas | verify: `node --test tests/unit/recomps.test.js`
-- [ ] A aba mostra destaques e busca com rede simulada, segue um projeto e trata limite da API sem quebrar | verify: `npx playwright test tests/e2e/recomps.spec.js`
+- [x] Normalização dos repositórios, regra de ativo e detecção de versão nova estão corretas (2026-11-18 20:31, commit `7463bf6`, verify: exit 0) | verify: `node --test tests/unit/recomps.test.js`
+- [x] A aba mostra destaques e busca com rede simulada, segue um projeto e trata limite da API sem quebrar (2026-11-18 20:31, commit `7463bf6`, verify: exit 0) | verify: `npx playwright test tests/e2e/recomps.spec.js`
