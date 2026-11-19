@@ -1,13 +1,13 @@
 # SPEC-20261118-1956: entrega
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:51
-**Concluída:** —
+**Concluída:** 2026-11-18 21:04
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `f92826e`
 **Keywords:** entrega, github-pages, cloudflare, readme, relatorio, prompts, slides
 **Features:** entrega
 **Branch:** spec/entrega
@@ -54,6 +54,6 @@ Script de captura de telas com Playwright; relatório gerado com a skill docx; s
 
 ## Critério de aceite
 
-- [ ] O site publicado no GitHub Pages responde e contém a versão atual | verify: `node scripts/check-publicado.mjs`
-- [ ] README tem link ativo, instruções e receita de nova aba | verify: `node scripts/check-readme.mjs`
-- [ ] Relatório .docx e slides gerados com Apêndice A de pelo menos 10 prompts | verify: `node scripts/check-entregaveis.mjs`
+- [x] O site publicado no GitHub Pages responde e contém a versão atual (2026-11-18 21:04, commit `f92826e`, verify: exit 0) | verify: `node scripts/check-publicado.mjs`
+- [x] README tem link ativo, instruções e receita de nova aba (2026-11-18 21:04, commit `f92826e`, verify: exit 0) | verify: `node scripts/check-readme.mjs`
+- [x] Relatório .docx e slides gerados com Apêndice A de pelo menos 10 prompts (2026-11-18 21:04, commit `f92826e`, verify: exit 0) | verify: `node scripts/check-entregaveis.mjs`

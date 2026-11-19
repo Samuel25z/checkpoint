@@ -4,6 +4,7 @@
 
 SPEC-20261118-1956-controle-idioma | done | base | gamepad, controle, acessibilidade, idioma, ingles, i18n | Navegação por controle de videogame (Gamepad API) e opção de idioma inglês nas configurações.
 SPEC-20261118-1956-diario | done | diario | diario, jogos, backlog, capa, wikipedia, favoritos, historico | Diário do jogador: registrar jogos com capa automática da Wikipedia, status, nota, horas, datas, resenha, vídeo e favoritos.
+SPEC-20261118-1956-entrega | done | entrega | entrega, github-pages, cloudflare, readme, relatorio, prompts, slides | Publicação no GitHub Pages e Cloudflare, README com link ativo, relatório em Word com Apêndice A de prompts e slides.
 SPEC-20261118-1956-fundacao | done | base | fundacao, base, modulos, design-system, router, storage, catalogo | Base modular do Checkpoint: casca do site, sistema de abas plugáveis, visual, tema claro/escuro, armazenamento e catálogo de jogos.
 SPEC-20261118-1956-recomendador | done | recomendador | recomendador, sugestao, etiquetas, trailer, humor | 'Que jogo eu jogo hoje?': recomendação sem IA por etiquetas, humor, tempo e notas do diário, com trailer e motivo.
 SPEC-20261118-1956-recomps | done | recomps | recomps, ports, decomp, github, catalogo, releases | Catálogo de recomps e ports que se atualiza sozinho pela API do GitHub, com destaques, busca e 'seguir projeto'.

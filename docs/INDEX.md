@@ -6,6 +6,7 @@
 
 - **base** — fundacao, casca, registro, router, tema, storage
 - **diario** — diario, jogos, capa, wikipedia, status, nota
+- **entrega** — entrega, github-pages, readme, relatorio, slides, capturas
 - **hardware** — hardware, requisitos, gpu, cpu, webgl, pc
 - **recomendador** — recomendador, sugestao, etiquetas, humor, trailer
 - **recomps** — recomps, ports, decomp, github, releases, golpe
