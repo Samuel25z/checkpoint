@@ -104,6 +104,30 @@ Sem configuração, o site salva tudo no navegador. Para ligar o login e a sincr
 
 A chave anon é pública por natureza. Quem protege os dados são as regras de segurança do banco.
 
+## Importar da Steam (opcional)
+
+O botão **Importar da Steam** do Diário traz a biblioteca com horas e conquistas. Ele só sugere status por fatos:
+- **Quero jogar:** 0 h.
+- **Jogando:** jogou nas últimas 2 semanas.
+- **Platinado:** 100% das conquistas.
+
+O resto a pessoa escolhe. A chave da Steam fica num ajudante (Cloudflare Worker), nunca no site.
+
+1. Crie a chave grátis em [steamcommunity.com/dev/apikey](https://steamcommunity.com/dev/apikey). No campo de domínio pode pôr `samuel25z.github.io`.
+2. Publique o ajudante (precisa de uma conta grátis da Cloudflare):
+
+   ```bash
+   cd servidor/steam-worker
+   npx wrangler login
+   npx wrangler secret put STEAM_KEY
+   npx wrangler deploy
+   ```
+
+   O `secret put` pede a chave do passo 1.
+3. Copie o endereço que o `deploy` mostrar (algo como `https://checkpoint-steam.<seu-usuario>.workers.dev`) para `STEAM_AJUDANTE` em `js/config.js`.
+
+Quem for importar precisa deixar o perfil e os **Detalhes do jogo** como públicos na Steam. A Steam não informa horas por ano, então o Checkpoint mostra as horas totais de cada jogo.
+
 ## Créditos
 
 - Capas e resumos: [Wikipedia](https://www.wikipedia.org) e Steam.

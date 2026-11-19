@@ -35,9 +35,11 @@ export function criarRoteador({ registro, palco, ctx, aoTrocar }) {
       area.className = 'aba aba-' + mod.id;
       palco.replaceChildren(area);
       atual = { mod, instancia };
-      await instancia.montar(area, { ...ctx, params, modulo: mod });
+      // foco vai para o conteúdo ANTES de montar: se a pessoa (ou o controle) mover o foco
+      // enquanto a aba ainda carrega, ninguém rouba o foco de volta no fim
       palco.focus({ preventScroll: true });
       window.scrollTo({ top: 0 });
+      await instancia.montar(area, { ...ctx, params, modulo: mod });
     } catch (e) {
       console.error(e);
       if (minha !== geracao) return;

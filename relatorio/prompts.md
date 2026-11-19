@@ -79,6 +79,13 @@
 - **Aplicação:** login com Google pelo Supabase, com regras de segurança no banco.
 - **Adaptações:** Cloudflare Pages ligado ao mesmo repositório do GitHub Pages.
 
+## P13 — Importar a biblioteca da Steam
+- **Objetivo:** não precisar cadastrar à mão os jogos do ano.
+- **Prompt:** "Teria como fazer alguma sincronização com a Steam? ... quem não quiser ficar adicionando manualmente... pode ter a opção de fazer automático ou manualmente."
+- **Resposta da IA:** explicou o que a API da Steam informa (biblioteca, horas totais, última vez, conquistas), o que não informa (horas por ano) e por que precisa de um servidor ajudante para guardar a chave. Também explicou que PlayStation e Xbox só têm APIs não oficiais ou de terceiros, e que ler os jogos instalados no PC exige um programa instalado.
+- **Aplicação:** botão "Importar da Steam" no Diário, com tela de revisão, e um Cloudflare Worker que guarda a chave.
+- **Adaptações:** "Coisas que não deu pra fazer, você não faz" — o grupo vetou status por suposição. Só fatos viram sugestão (0 h, últimas 2 semanas, 100% das conquistas), e o resto a pessoa escolhe, um por um ou em massa.
+
 ## P05 — Projeto evolutivo
 - **Objetivo:** que o site possa crescer depois do trabalho.
 - **Prompt:** "Faz um projeto estruturado para evoluir... lançando novas abas, novas atualizações."

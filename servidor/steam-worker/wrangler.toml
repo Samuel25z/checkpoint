@@ -1,0 +1,9 @@
+name = "checkpoint-steam"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+ORIGENS = "https://samuel25z.github.io,http://localhost:5173,http://localhost:5174"
+
+# A chave da Steam NÃO fica aqui. Grave como segredo:
+#   npx wrangler secret put STEAM_KEY

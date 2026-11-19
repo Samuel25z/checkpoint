@@ -67,5 +67,27 @@
 .historico li:last-child { border-bottom: 0; }
 .historico time { white-space: nowrap; font-size: .86rem; }
 
+/* importar da Steam */
+.steam-perfil { display: grid; gap: var(--esp-3); }
+.steam-progresso { min-height: 160px; display: grid; place-items: center; }
+.steam-topo { display: flex; align-items: center; gap: 12px; }
+.steam-avatar { width: 40px; height: 40px; border-radius: 10px; }
+.steam-massa { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.steam-massa .entrada { width: auto; min-width: 200px; }
+.steam-lista { list-style: none; margin: 0; padding: 0; max-height: min(52vh, 520px); overflow-y: auto; border: 1px solid var(--linha); border-radius: 12px; }
+.steam-linha { display: grid; grid-template-columns: auto 40px minmax(0, 1fr) minmax(130px, 170px); gap: 12px; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--linha); }
+.steam-linha:last-child { border-bottom: 0; }
+.steam-linha .capa-mini { width: 40px; }
+.steam-linha input[type='checkbox'] { width: 18px; height: 18px; accent-color: var(--acento); }
+.steam-linha.existente { opacity: .6; }
+.steam-texto { display: grid; line-height: 1.3; min-width: 0; }
+.steam-texto strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.steam-texto .texto-3 { font-size: .82rem; }
+.steam-sug { font-size: .78rem; font-weight: 700; color: var(--st-zerado); }
+.steam-status { min-height: 36px; padding: 6px 10px; font-size: .88rem; }
+.steam-rodape { align-items: center; }
+.steam-conta { margin-right: auto; display: grid; font-size: .9rem; }
+@media (max-width: 600px) { .steam-linha { grid-template-columns: auto 36px minmax(0, 1fr); } .steam-status { grid-column: 2 / -1; } }
+
 /* painel da Início */
 .painel-vazio { display: flex; align-items: center; justify-content: space-between; gap: var(--esp-3); flex-wrap: wrap; }

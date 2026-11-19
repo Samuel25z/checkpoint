@@ -107,6 +107,7 @@ export function textoAtividade(a) {
     case 'status': return a.status === 'zerado' ? `zerou ${a.nome}` : a.status === 'platinado' ? `platinou ${a.nome}` : `marcou ${a.nome} como “${ROTULO_STATUS[a.status]}”`;
     case 'nota': return `deu ${String(a.nota).replace('.', ',')} estrelas para ${a.nome}`;
     case 'favoritou': return `favoritou ${a.nome}`;
+    case 'importou': return `importou ${a.quantos} ${a.quantos === 1 ? 'jogo' : 'jogos'} da ${a.nome}${a.atualizados ? ` e atualizou ${a.atualizados}` : ''}`;
     default: return a.nome;
   }
 }

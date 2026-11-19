@@ -21,7 +21,7 @@ export async function abrir(page, rota = 'inicio', { dados = {} } = {}) {
 export async function semBotaoMorto(page) {
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
   await expect(page.getByText(/em breve/i)).toHaveCount(0);
-  const textoSolto = await page.locator('#palco').evaluate((p) => /(^|\s)(null|undefined|NaN|\[object Object\])(\s|$)/.test(p.innerText));
+  const textoSolto = await page.locator('body').evaluate((p) => /(^|\s)(null|undefined|NaN|\[object Object\])(\s|$)/.test(p.innerText));
   expect(textoSolto, 'texto "null/undefined" aparecendo na tela').toBe(false);
   const semNome = await page.locator('button').evaluateAll((bs) => bs.filter((b) => b.offsetParent && !(b.textContent.trim() || b.getAttribute('aria-label'))).length);
   expect(semNome, 'botão visível sem texto nem aria-label').toBe(0);

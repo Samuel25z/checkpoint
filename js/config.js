@@ -8,4 +8,8 @@ export const SUPABASE = {
   chaveAnon: ''
 };
 
-export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
+// Endereço do ajudante da Steam (servidor/steam-worker, publicado no Cloudflare).
+// Vazio = o botão "Importar da Steam" explica que a importação ainda não foi ligada.
+export const STEAM_AJUDANTE = '';
+
+export const SUPABASE_SDK ='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';

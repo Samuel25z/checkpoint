@@ -71,14 +71,14 @@ export function modal({ titulo, conteudo, acoes = [{ rotulo: 'Fechar', valor: nu
         else if (!e.shiftKey && document.activeElement === u) { e.preventDefault(); p.focus(); }
       }
     };
-    caixa.append(
+    caixa.append(...[
       h('div', { class: 'modal-topo' },
         h('h2', { id: 'modal-titulo' }, titulo),
         h('button', { class: 'btn-icone', 'aria-label': 'Fechar', onclick: () => fechar(null), html: icone('fechar') })),
       h('div', { class: 'modal-corpo' }, typeof conteudo === 'string' ? h('p', {}, conteudo) : conteudo),
       acoes.length ? h('div', { class: 'modal-acoes' }, acoes.map((a) =>
         h('button', { class: `btn ${a.tipo === 'perigo' ? 'btn-perigo' : a.tipo === 'primario' ? 'btn-primario' : ''}`, 'data-acao': a.valor ?? 'fechar', onclick: () => fechar(a.valor) }, a.rotulo))) : null
-    );
+    ].filter(Boolean));
     fundo.append(caixa);
     fundo.addEventListener('mousedown', (e) => { if (e.target === fundo) fechar(null); });
     document.addEventListener('keydown', teclas);

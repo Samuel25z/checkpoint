@@ -29,7 +29,12 @@ export const EN = {
   'Recomps que você segue': 'Recomps you follow', 'Abrir recomps': 'Open recomps', 'Nada em andamento. O que você está jogando agora?': 'Nothing in progress. What are you playing right now?',
   // diário
   'Tudo o que você joga, zera e quer jogar, com capa automática.': 'Everything you play, beat and want to play, with automatic covers.', 'Adicionar jogo': 'Add game',
-  'Comece seu diário': 'Start your journal', 'Adicione o jogo que você está jogando agora. A capa aparece sozinha.': 'Add the game you are playing now. The cover shows up by itself.', 'Adicionar primeiro jogo': 'Add first game',
+  'Comece seu diário': 'Start your journal', 'Adicione o jogo que você está jogando agora. A capa aparece sozinha.': 'Add the game you are playing now. The cover shows up by itself.',
+  'Adicione o jogo que você está jogando agora, ou traga sua biblioteca da Steam. A capa aparece sozinha.': 'Add the game you are playing now, or bring your Steam library. The cover shows up by itself.',
+  'Importar da Steam': 'Import from Steam', 'Perfil da Steam': 'Steam profile', 'Buscar minha biblioteca': 'Fetch my library', 'Abrir privacidade da Steam': 'Open Steam privacy settings',
+  'A importação da Steam ainda não foi ligada neste site.': 'Steam import is not enabled on this site yet.', 'Escolher status…': 'Choose status…', 'Já no diário': 'Already in journal', 'Escolha um status…': 'Choose a status…', 'Aplicar aos sem status': 'Apply to games without status', 'Atualizar horas': 'Update hours',
+  'Cole o link do seu perfil da Steam. O Checkpoint traz seus jogos com as horas e as conquistas. Nada é marcado como zerado por suposição: só o que a Steam confirma.': 'Paste your Steam profile link. Checkpoint brings your games with hours and achievements. Nothing is marked as beaten by guesswork: only what Steam confirms.',
+  'O perfil e os “Detalhes do jogo” precisam estar públicos. ': 'Your profile and “Game details” must be public. ', 'Adicionar primeiro jogo': 'Add first game',
   'Todos': 'All', 'Jogando': 'Playing', 'Zerado': 'Beaten', 'Quero jogar': 'Want to play', 'Platinado': 'Platinum', 'Larguei': 'Dropped', 'Favoritos': 'Favorites', 'Favorito': 'Favorite',
   'Buscar no diário': 'Search journal', 'Todas as plataformas': 'All platforms', 'Mais recentes': 'Most recent', 'Maior nota': 'Highest rating', 'Mais horas': 'Most hours', 'Nome (A–Z)': 'Name (A–Z)',
   'Nenhum jogo com esses filtros.': 'No games match these filters.', 'Histórico': 'History', 'As mudanças no diário aparecem aqui.': 'Journal changes show up here.',

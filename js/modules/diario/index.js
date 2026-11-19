@@ -187,11 +187,17 @@ function desenhar(el, ctx) {
   const adicionar = async () => { const s = await abrirBusca(ctx); if (s) { ctx.toast(`${s.nome} adicionado ao diário`, 'sucesso'); desenhar(el, ctx); } };
   const redesenhar = () => desenhar(el, ctx);
 
+  const importar = async () => {
+    const { importarDaSteam } = await import('./steam.js');
+    const r = await importarDaSteam(ctx);
+    if (r) { ctx.toast(r.criados ? `${r.criados} ${r.criados === 1 ? 'jogo importado' : 'jogos importados'} da Steam` : 'Horas atualizadas pela Steam', 'sucesso'); desenhar(el, ctx); }
+  };
   const topo = cabecalho('Diário', 'Tudo o que você joga, zera e quer jogar, com capa automática.',
+    h('button', { class: 'btn', id: 'botao-steam', onclick: importar, html: `${icone('download')}<span>Importar da Steam</span>` }),
     h('button', { class: 'btn btn-primario', id: 'botao-adicionar', onclick: adicionar, html: `${icone('mais')}<span>Adicionar jogo</span>` }));
 
   if (!todos.length) {
-    el.replaceChildren(topo, vazio({ titulo: 'Comece seu diário', texto: 'Adicione o jogo que você está jogando agora. A capa aparece sozinha.', acao: { rotulo: 'Adicionar primeiro jogo', onclick: adicionar } }));
+    el.replaceChildren(topo, vazio({ titulo: 'Comece seu diário', texto: 'Adicione o jogo que você está jogando agora, ou traga sua biblioteca da Steam. A capa aparece sozinha.', acao: { rotulo: 'Adicionar primeiro jogo', onclick: adicionar } }));
     return;
   }
 

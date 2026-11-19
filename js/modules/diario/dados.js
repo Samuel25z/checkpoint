@@ -22,6 +22,19 @@ export function salvarJogo(storage, registro) {
   return salvo;
 }
 
+/** Grava vários registros de uma vez (importação) com uma única linha no histórico. */
+export function salvarVarios(storage, novos, atualizados, origem = 'Steam') {
+  const agora = new Date().toISOString();
+  const porId = new Map(atualizados.map((r) => [r.id, { ...r, atualizadoEm: agora }]));
+  const lista = lerJogos(storage).map((r) => porId.get(r.id) || r);
+  const criados = novos.map((r) => ({ ...r, id: novoId(), criadoEm: agora, atualizadoEm: agora }));
+  storage.gravar(CHAVE_JOGOS, [...criados, ...lista]);
+  if (criados.length || porId.size) {
+    storage.gravar(CHAVE_ATIVIDADES, empilhar(lerAtividades(storage), { tipo: 'importou', nome: origem, quantos: criados.length, atualizados: porId.size, quando: agora }));
+  }
+  return { criados: criados.length, atualizados: porId.size };
+}
+
 export function removerJogo(storage, id) {
   const lista = lerJogos(storage);
   const antes = lista.find((j) => j.id === id);
