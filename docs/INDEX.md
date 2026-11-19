@@ -5,6 +5,7 @@
 ## geral
 
 - **base** — fundacao, casca, registro, router, tema, storage
+- **conta** — conta, login, supabase, sincronizacao, rls, remocoes
 - **diario** — diario, jogos, capa, wikipedia, status, nota
 - **entrega** — entrega, github-pages, readme, relatorio, slides, capturas
 - **hardware** — hardware, requisitos, gpu, cpu, webgl, pc

@@ -12,3 +12,4 @@ SPEC-20261118-1956-roda-no-pc | done | hardware | hardware, requisitos, gpu, web
 SPEC-20261118-1956-speedrun | done | speedrun | speedrun, cronometro, splits, recorde, speedrun.com, pb | Central de speedrun: recordes ao vivo do speedrun.com e cronômetro com splits, PB e atalhos.
 SPEC-20261118-1956-torneio | done | torneio | torneio, chaveamento, bracket, campeonato, eliminacao | Chaveamento animado de 4 a 32 jogadores com sorteio, avanço por clique, campeão e histórico.
 SPEC-20261118-1956-wrapped | done | wrapped | wrapped, resumo-anual, estatisticas, animacao, card | Wrapped do ano: resumo animado em telas tipo stories a partir do diário, com card final para baixar como imagem.
+SPEC-20261118-2106-revisao-final | done | conta | revisao, seguranca, sync, tombstone, links | Corrige os achados do revisor cético: vazamento entre contas no PC compartilhado, perda de edição e ressurreição na sincronização, link de downloads para projeto não verificado e links sem http.

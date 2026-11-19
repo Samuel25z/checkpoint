@@ -1,13 +1,13 @@
 # SPEC-20261118-2106: revisao final
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 21:06
 **Ativada:** 2026-11-18 21:06
-**Concluída:** —
+**Concluída:** 2026-11-18 21:10
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `98d751a`
 **Keywords:** revisao, seguranca, sync, tombstone, links
 **Features:** conta
 **Branch:** spec/revisao-final
@@ -60,7 +60,7 @@ js/core/sync.js passa a mesclar listas por id com marcas de remoção (chave `sy
 
 ## Critério de aceite
 
-- [ ] Mescla por item mantém adições feitas em dois aparelhos, respeita marcas de remoção e troca de usuário | verify: `node --test tests/unit/sync.test.js`
-- [ ] Links de API sem http/https são descartados e recomps não verificado não aponta para downloads | verify: `node --test tests/unit/recomps.test.js tests/unit/speedrun-api.test.js`
-- [ ] Sair da conta limpa o navegador e outra conta que entra não recebe os dados da anterior | verify: `npx playwright test tests/e2e/conta.spec.js`
-- [ ] Catálogo de recomps com rede simulada mostra "Ver no GitHub" para não verificado e esconde link de golpe | verify: `npx playwright test tests/e2e/recomps.spec.js`
+- [x] Mescla por item mantém adições feitas em dois aparelhos, respeita marcas de remoção e troca de usuário (2026-11-18 21:10, commit `98d751a`, verify: exit 0) | verify: `node --test tests/unit/sync.test.js`
+- [x] Links de API sem http/https são descartados e recomps não verificado não aponta para downloads (2026-11-18 21:10, commit `98d751a`, verify: exit 0) | verify: `node --test tests/unit/recomps.test.js tests/unit/speedrun-api.test.js`
+- [x] Sair da conta limpa o navegador e outra conta que entra não recebe os dados da anterior (2026-11-18 21:10, commit `98d751a`, verify: exit 0) | verify: `npx playwright test tests/e2e/conta.spec.js`
+- [x] Catálogo de recomps com rede simulada mostra "Ver no GitHub" para não verificado e esconde link de golpe (2026-11-18 21:10, commit `98d751a`, verify: exit 0) | verify: `npx playwright test tests/e2e/recomps.spec.js`
