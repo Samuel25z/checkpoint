@@ -11,7 +11,7 @@ test('destaques, busca com alerta de golpe, seguir projeto e limite da API', asy
     const q = new URL(r.request().url()).searchParams.get('q');
     const items = q.includes('repo:')
       ? [repo('Zelda64Recomp/Zelda64Recomp', { stargazers_count: 7736 }), repo('HarbourMasters/Shipwright')]
-      : [repo('golpista/totk-pc-recomp', { description: 'Tears of the Kingdom PC port download' }), repo('zeldaret/oot')];
+      : [repo('golpista/totk-pc-recomp', { description: 'Tears of the Kingdom PC port download' }), repo('zeldaret/oot'), repo('fulano/zelda-fan-port', { description: 'A fan port' })];
     r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ items }), headers: { 'access-control-allow-origin': '*' } });
   });
   await page.route(/api\.github\.com\/repos\/.+\/releases\/latest/, (r) => r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ tag_name: versao, name: versao, published_at: new Date().toISOString(), html_url: 'https://github.com/x/releases' }), headers: { 'access-control-allow-origin': '*' } }));
@@ -29,6 +29,11 @@ test('destaques, busca com alerta de golpe, seguir projeto e limite da API', asy
   const golpe = page.locator('#resultado-busca .projeto[data-repo="golpista/totk-pc-recomp"]');
   await expect(golpe).toContainText('costuma ser golpe');
   await expect(golpe.getByRole('link', { name: 'Página oficial' })).toHaveCount(0);
+  await expect(golpe.getByRole('link', { name: 'Ver no GitHub' })).toHaveCount(0);
+  const naoVerificado = page.locator('#resultado-busca .projeto[data-repo="fulano/zelda-fan-port"]');
+  await expect(naoVerificado).toContainText('Não verificado');
+  await expect(naoVerificado.getByRole('link', { name: 'Página oficial' })).toHaveCount(0);
+  await expect(naoVerificado.getByRole('link', { name: 'Ver no GitHub' })).toHaveAttribute('href', 'https://github.com/fulano/zelda-fan-port');
 
   // seguir e receber aviso de versão nova
   await zelda.getByRole('button', { name: 'Seguir' }).click();

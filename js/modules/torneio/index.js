@@ -9,6 +9,7 @@ const CH_ATUAL = 'torneio:atual';
 
 const lerLista = (s) => s.ler(CH_LISTA, []);
 function salvar(s, t) {
+  t.atualizadoEm = new Date().toISOString(); // a sincronização usa para saber a versão mais nova
   const lista = lerLista(s);
   const i = lista.findIndex((x) => x.id === t.id);
   if (i >= 0) lista[i] = t; else lista.unshift(t);

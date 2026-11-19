@@ -15,6 +15,8 @@ export const EN = {
   'Controle de videogame': 'Game controller', 'Conecte um controle de Xbox ou PlayStation e aperte qualquer botão. Direcional move, A confirma, B volta, LB/RB trocam de aba, X marca o split.': 'Plug in an Xbox or PlayStation controller and press any button. D-pad moves, A confirms, B goes back, LB/RB switch tabs, X marks a split.',
   // conta
   'Entrar na sua conta': 'Sign in', 'Entrar': 'Sign in', 'Conta': 'Account', 'Sua conta': 'Your account', 'Entrar no Checkpoint': 'Sign in to Checkpoint', 'Entrar com Google': 'Sign in with Google', 'Agora não': 'Not now', 'Sair': 'Sign out', 'Sincronizar agora': 'Sync now',
+  'Sair da conta?': 'Sign out?', 'Seus jogos, recordes e torneios saem deste navegador e continuam salvos na sua conta. Assim, a próxima pessoa que usar este computador não vê nada seu.': 'Your games, records and tournaments leave this browser and stay saved in your account, so the next person using this computer sees nothing of yours.',
+  'Você saiu da conta. Seus dados foram tirados deste navegador.': 'You signed out. Your data was removed from this browser.',
   'O login com Google ainda não foi configurado neste site.': 'Google sign-in is not set up on this site yet.',
   'Tudo funciona normalmente: seus jogos, recordes e torneios ficam salvos neste navegador.': 'Everything still works: your games, records and tournaments are saved in this browser.',
   // início
@@ -48,7 +50,7 @@ export const EN = {
   'Jogador': 'Runner', 'Tempo': 'Time', 'Data': 'Date', 'Vídeo': 'Video', 'Assistir': 'Watch', 'O speedrun.com não respondeu': 'speedrun.com did not respond', 'Buscando jogos…': 'Searching games…', 'Carregando ranking…': 'Loading leaderboard…', 'Carregando categorias…': 'Loading categories…',
   // recomps
   'Recomps e ports': 'Recomps and ports', 'Projetos de código aberto que fazem jogos clássicos rodarem no PC, atualizados direto do GitHub.': 'Open source projects that bring classic games to PC, updated straight from GitHub.',
-  'Projetos verificados': 'Verified projects', 'Verificado': 'Verified', 'Não verificado': 'Unverified', 'Seguir': 'Follow', 'Seguindo': 'Following', 'Página oficial': 'Official page', 'Última versão': 'Latest version',
+  'Projetos verificados': 'Verified projects', 'Verificado': 'Verified', 'Não verificado': 'Unverified', 'Seguir': 'Follow', 'Ver no GitHub': 'View on GitHub', 'Seguindo': 'Following', 'Página oficial': 'Official page', 'Última versão': 'Latest version',
   'Ativo': 'Active', 'Parado': 'Inactive', 'Arquivado': 'Archived', 'Precisa da sua cópia original do jogo.': 'Needs your own original copy of the game.', 'Funciona com arquivos gratuitos.': 'Works with free files.',
   'Nome do jogo (ex.: Zelda, Mario, Sonic)': 'Game name (e.g. Zelda, Mario, Sonic)', 'Buscando projetos no GitHub…': 'Searching GitHub projects…', 'Marcar como vista': 'Mark as seen', 'O GitHub pediu uma pausa': 'GitHub asked for a break',
   'O Checkpoint não hospeda nem distribui jogos.': 'Checkpoint does not host or distribute games.',

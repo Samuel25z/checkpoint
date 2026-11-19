@@ -8,17 +8,19 @@ const FAKE = `
 export function createClient() {
   const ouvintes = [];
   let sessao = JSON.parse(localStorage.getItem('fake-sessao') || 'null');
-  const nuvem = () => JSON.parse(localStorage.getItem('fake-nuvem') || '{}');
+  const quem = () => (sessao ? sessao.user.id : 'ninguem');
+  const chave = () => (quem() === 'u1' ? 'fake-nuvem' : 'fake-nuvem-' + quem());
+  const nuvem = () => JSON.parse(localStorage.getItem(chave()) || '{}');
   return {
     auth: {
       onAuthStateChange(cb) { ouvintes.push(cb); setTimeout(() => cb('INITIAL_SESSION', sessao)); return { data: { subscription: { unsubscribe() {} } } }; },
-      async signInWithOAuth() { sessao = { user: { id: 'u1', email: 'jogador@exemplo.com', user_metadata: { full_name: 'Jogador Teste' } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { error: null }; },
+      async signInWithOAuth() { const id = localStorage.getItem('fake-proximo') || 'u1'; sessao = { user: { id, email: id + '@exemplo.com', user_metadata: { full_name: 'Jogador ' + id } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { error: null }; },
       async signOut() { sessao = null; localStorage.removeItem('fake-sessao'); ouvintes.forEach((f) => f('SIGNED_OUT', null)); return { error: null }; }
     },
     from() {
       return {
         select() { return { in: async () => ({ data: Object.entries(nuvem()).map(([chave, v]) => ({ chave, valor: v.valor, atualizado_em: v.em })), error: null }) }; },
-        async upsert(linhas) { const n = nuvem(); for (const l of linhas) n[l.chave] = { valor: l.valor, em: l.atualizado_em }; localStorage.setItem('fake-nuvem', JSON.stringify(n)); return { error: null }; }
+        async upsert(linhas) { const n = nuvem(); for (const l of linhas) n[l.chave] = { valor: l.valor, em: l.atualizado_em }; localStorage.setItem(chave(), JSON.stringify(n)); return { error: null }; }
       };
     }
   };
@@ -69,6 +71,18 @@ test.describe('com-conta', () => {
     await page.getByRole('button', { name: 'Sair' }).click();
     await page.getByRole('dialog', { name: 'Sair da conta?' }).getByRole('button', { name: 'Sair' }).click();
     await expect(page.locator('#botao-conta')).toHaveAttribute('aria-label', 'Entrar na sua conta');
+    // PC compartilhado: ao sair, os dados saem do navegador
+    await expect(page.getByText('Comece seu diário')).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem('checkpoint:diario:jogos'))).toBeNull();
+
+    // outra pessoa entra no mesmo navegador: não recebe nada da anterior
+    await page.evaluate(() => localStorage.setItem('fake-proximo', 'u2'));
+    await page.locator('#botao-conta').click();
+    await page.getByRole('button', { name: 'Entrar com Google' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    await expect(page.getByText('Comece seu diário')).toBeVisible();
+    const nuvemU2 = await page.evaluate(() => JSON.parse(localStorage.getItem('fake-nuvem-u2') || '{}'));
+    expect(nuvemU2['diario:jogos']?.valor || []).toEqual([]);
     await semBotaoMorto(page);
     expect(erros).toEqual([]);
   });

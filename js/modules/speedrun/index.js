@@ -43,7 +43,7 @@ function telaCronometro(el, ctx, trocar) {
   const criar = async (base = {}) => {
     const dados = base.nome ? base : await formularioRota(null);
     if (!dados) return;
-    const nova = { id: novoId(), ...novaRota(dados), categoria: base.categoria || null };
+    const nova = { id: novoId(), ...novaRota(dados), categoria: base.categoria || null, atualizadoEm: new Date().toISOString() };
     gravarRotas(s, [nova, ...lerRotas(s)]);
     s.gravar(CH_ATUAL, nova.id);
     ctx.toast('Rota criada', 'sucesso');
@@ -70,6 +70,7 @@ function telaCronometro(el, ctx, trocar) {
   const placar = h('dl', { class: 'placar' });
 
   function salvarRota(nova) {
+    nova = { ...nova, atualizadoEm: new Date().toISOString() };
     rotas = lerRotas(s).map((r) => (r.id === nova.id ? nova : r));
     gravarRotas(s, rotas);
     rota = nova;
@@ -258,7 +259,7 @@ function telaRecordes(el, ctx, trocar) {
   function criarDaCategoria(jogo, cat, wr) {
     const s = ctx.storage;
     const nova = { id: novoId(), ...novaRota({ nome: `${jogo.nome} — ${cat.nome}`, jogo: jogo.nome, splits: ['Fim'] }),
-      categoria: { jogoId: jogo.id, categoriaId: cat.id, nome: cat.nome, link: cat.link, wr: wr ? { tempo: wr.tempo, jogador: wr.jogador } : null } };
+      categoria: { jogoId: jogo.id, categoriaId: cat.id, nome: cat.nome, link: cat.link, wr: wr ? { tempo: wr.tempo, jogador: wr.jogador } : null }, atualizadoEm: new Date().toISOString() };
     s.gravar(CH_ROTAS, [nova, ...lerRotas(s)]);
     s.gravar(CH_ATUAL, nova.id);
     ctx.toast('Rota criada. Edite os splits quando quiser.', 'sucesso');

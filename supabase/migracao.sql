@@ -6,7 +6,7 @@ create table if not exists public.checkpoint_dados (
   user_id uuid not null references auth.users (id) on delete cascade,
   chave text not null check (chave in (
     'diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista',
-    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas'
+    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'sync:removidos'
   )),
   valor jsonb not null,
   atualizado_em timestamptz not null default now(),

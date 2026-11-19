@@ -49,7 +49,7 @@ function desenhar(el, ctx) {
   const novo = async () => {
     const v = await formularioPc(null);
     if (!v) return;
-    const pc = { id: novoId(), ...v };
+    const pc = { id: novoId(), ...v, atualizadoEm: new Date().toISOString() };
     s.gravar(CH_PCS, [...s.ler(CH_PCS, []), pc]);
     s.gravar(CH_ATUAL, pc.id);
     ctx.toast(`${pc.nome} salvo`, 'sucesso');
@@ -66,7 +66,7 @@ function desenhar(el, ctx) {
   const editar = async () => {
     const v = await formularioPc(atual);
     if (!v) return;
-    s.gravar(CH_PCS, s.ler(CH_PCS, []).map((p) => (p.id === atual.id ? { ...p, ...v } : p)));
+    s.gravar(CH_PCS, s.ler(CH_PCS, []).map((p) => (p.id === atual.id ? { ...p, ...v, atualizadoEm: new Date().toISOString() } : p)));
     desenhar(el, ctx);
   };
   const excluir = async () => {

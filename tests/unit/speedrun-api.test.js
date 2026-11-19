@@ -25,6 +25,14 @@ test('ranking: ordena por posição, converte tempo e resolve jogadores', () => 
   assert.deepEqual(converterRanking({}), []);
 });
 
+test('links da API que não são http/https são descartados', () => {
+  const r = converterRanking({ data: { runs: [{ place: 1, run: { times: { primary_t: 10 }, players: [{ rel: 'guest', name: 'x' }], videos: { links: [{ uri: 'javascript:alert(1)' }] }, weblink: 'data:text/html,oi' } }], players: { data: [] } } });
+  assert.equal(r[0].video, null);
+  assert.equal(r[0].link, null);
+  const c = converterCategorias({ data: [{ id: 'a', name: 'Any%', type: 'per-game', weblink: 'javascript:void(0)' }] });
+  assert.equal(c[0].link, 'https://www.speedrun.com');
+});
+
 test('jogos e categorias (categorias principais antes das extras)', () => {
   const jogos = converterJogos({ data: [{ id: 'g1', names: { international: 'Hollow Knight' }, released: 2017, assets: { 'cover-large': { uri: 'https://c/x' } }, weblink: 'https://speedrun.com/hk' }] });
   assert.deepEqual(jogos[0], { id: 'g1', nome: 'Hollow Knight', ano: 2017, capa: 'https://c/x', link: 'https://speedrun.com/hk' });

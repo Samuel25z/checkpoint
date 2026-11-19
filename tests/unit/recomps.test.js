@@ -18,6 +18,9 @@ test('normaliza repositório e marca verificados com jogo e console', () => {
   assert.equal(outro.verificado, false);
   assert.equal(outro.ativo, false);
   assert.equal(outro.precisaRom, null);
+  assert.equal(outro.releases, null, 'não verificado nunca aponta para downloads');
+  assert.equal(outro.url, 'https://github.com/fulano/coisa');
+  assert.equal(normalizarRepo({ ...item('x/y', null), html_url: 'javascript:alert(1)' }).url, 'https://github.com/x/y');
 });
 
 test('regra de ativo: mexido nos últimos 6 meses', () => {

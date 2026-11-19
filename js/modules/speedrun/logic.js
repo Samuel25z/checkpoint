@@ -107,16 +107,22 @@ export function registrarRun(rota, run) {
 }
 
 /* ---------- API do speedrun.com ---------- */
+/** Só aceita links http/https vindos de fora (bloqueia "javascript:" e afins). */
+export function httpSeguro(url) {
+  return typeof url === 'string' && /^https?:\/\//i.test(url.trim()) ? url.trim() : null;
+}
+
 export function converterJogos(json) {
   return (json?.data || []).map((g) => ({
     id: g.id, nome: g.names?.international || g.names?.twitch || g.abbreviation, ano: g.released || null,
-    capa: g.assets?.['cover-large']?.uri || g.assets?.['cover-medium']?.uri || null, link: g.weblink
+    capa: httpSeguro(g.assets?.['cover-large']?.uri || g.assets?.['cover-medium']?.uri), link: httpSeguro(g.weblink)
   }));
 }
 
 export function converterCategorias(json) {
-  return (json?.data || []).filter((c) => c.type === 'per-game' && !c.miscellaneous).map((c) => ({ id: c.id, nome: c.name, link: c.weblink }))
-    .concat((json?.data || []).filter((c) => c.type === 'per-game' && c.miscellaneous).map((c) => ({ id: c.id, nome: c.name, link: c.weblink, extra: true })));
+  const cat = (c, extra) => ({ id: c.id, nome: c.name, link: httpSeguro(c.weblink) || 'https://www.speedrun.com', ...(extra ? { extra: true } : {}) });
+  return (json?.data || []).filter((c) => c.type === 'per-game' && !c.miscellaneous).map((c) => cat(c, false))
+    .concat((json?.data || []).filter((c) => c.type === 'per-game' && c.miscellaneous).map((c) => cat(c, true)));
 }
 
 function nomeJogador(p, jogadores) {
@@ -134,7 +140,7 @@ export function converterRanking(json) {
     jogador: (run.players || []).map((p) => nomeJogador(p, jogadores)).join(' & ') || 'Jogador',
     tempo: Math.round((run.times?.primary_t ?? 0) * 1000),
     data: run.date || null,
-    video: run.videos?.links?.[0]?.uri || null,
-    link: run.weblink
+    video: httpSeguro(run.videos?.links?.[0]?.uri),
+    link: httpSeguro(run.weblink)
   })).filter((r) => r.posicao > 0).sort((a, b) => a.posicao - b.posicao);
 }

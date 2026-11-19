@@ -1,13 +1,14 @@
 // conta.js — login com Google (Supabase) e sincronização entre aparelhos.
 // O site funciona sem login; ao entrar, os dados deste navegador sobem e os da conta descem.
 import { SUPABASE, SUPABASE_SDK } from '../config.js';
-import { SINCRONIZAVEIS, sincronizavel, planejar } from './sync.js';
+import { SINCRONIZAVEIS, LISTAS, CHAVE_REMOVIDOS, sincronizavel, planejar, registrarRemocoes, formatoValido } from './sync.js';
 import { h, modal, confirmar, capaGerada } from './ui.js';
 import { icone } from './icons.js';
 
 const META_EM = 'meta:sync:em';
 const META_USUARIO = 'meta:sync:usuario';
 const META_ULTIMA = 'meta:sync:ultima';
+const META_IDS = 'meta:sync:ids';
 const TABELA = 'checkpoint_dados';
 
 export const configurado = () => Boolean(SUPABASE.url && SUPABASE.chaveAnon);
@@ -41,10 +42,24 @@ export function iniciarConta(ctx) {
     }
   }
 
+  // ids conhecidos de cada lista: ao sumir um id, nasce uma marca de remoção (exclusão sincroniza)
+  const idsDe = (chave) => (storage.ler(chave, []) || []).map((x) => x.id);
+  const lembrarIds = () => storage.gravar(META_IDS, Object.fromEntries(LISTAS.map((c) => [c, idsDe(c)])), { silencioso: true });
+  if (!storage.ler(META_IDS)) lembrarIds();
+
   // registra quando cada dado mudou (para saber quem é mais novo)
   storage.aoMudar(({ nome }) => {
     if (!sincronizavel(nome) || aplicandoRemoto) return;
-    storage.gravar(META_EM, { ...storage.ler(META_EM, {}), [nome]: new Date().toISOString() }, { silencioso: true });
+    const em = new Date().toISOString();
+    if (LISTAS.includes(nome)) {
+      const ids = storage.ler(META_IDS, {});
+      const depois = idsDe(nome);
+      const antes = storage.ler(CHAVE_REMOVIDOS, {});
+      const removidos = registrarRemocoes(antes, nome, ids[nome] || [], depois, em);
+      storage.gravar(META_IDS, { ...ids, [nome]: depois }, { silencioso: true });
+      if (removidos !== antes) storage.gravar(CHAVE_REMOVIDOS, removidos);
+    }
+    storage.gravar(META_EM, { ...storage.ler(META_EM, {}), [nome]: em }, { silencioso: true });
     if (usuario) { fila.add(nome); clearTimeout(tempo); tempo = setTimeout(enviarFila, 1200); }
   });
 
@@ -86,7 +101,11 @@ export function iniciarConta(ctx) {
     try {
       const { data, error } = await cliente.from(TABELA).select('chave, valor, atualizado_em').in('chave', SINCRONIZAVEIS);
       if (error) throw error;
-      const nuvem = Object.fromEntries((data || []).map((l) => [l.chave, { valor: l.valor, em: l.atualizado_em }]));
+      const nuvem = Object.fromEntries((data || []).filter((l) => {
+        const ok = formatoValido(l.chave, l.valor);
+        if (!ok) console.warn(`[conta] "${l.chave}" na nuvem está num formato inesperado e foi ignorado`);
+        return ok;
+      }).map((l) => [l.chave, { valor: l.valor, em: l.atualizado_em }]));
       const em = storage.ler(META_EM, {});
       const local = {};
       for (const chave of SINCRONIZAVEIS) {
@@ -100,6 +119,7 @@ export function iniciarConta(ctx) {
         const novasDatas = {};
         for (const [chave, valor] of Object.entries(gravarLocal)) { storage.gravar(chave, valor); novasDatas[chave] = nuvem[chave]?.em || new Date().toISOString(); }
         storage.gravar(META_EM, { ...storage.ler(META_EM, {}), ...novasDatas }, { silencioso: true });
+        lembrarIds();
         aplicandoRemoto = false;
       }
       await enviar(subir);
@@ -127,10 +147,19 @@ export function iniciarConta(ctx) {
   }
 
   async function sair() {
-    if (!await confirmar('Sair da conta?', 'Seus dados continuam neste navegador e na sua conta. Para levar para outro aparelho, é só entrar lá.', 'Sair')) return;
+    if (!await confirmar('Sair da conta?', 'Seus jogos, recordes e torneios saem deste navegador e continuam salvos na sua conta. Assim, a próxima pessoa que usar este computador não vê nada seu.', 'Sair')) return;
+    clearTimeout(tempo);
+    if (fila.size) await enviarFila(); // nada fica sem subir
     await cliente.auth.signOut();
-    usuario = null; estado = 'desligado'; storage.remover(META_USUARIO); pintar();
-    ctx.toast('Você saiu da conta');
+    usuario = null; estado = 'desligado';
+    aplicandoRemoto = true;
+    for (const chave of SINCRONIZAVEIS) storage.remover(chave);
+    for (const meta of [META_USUARIO, META_EM, META_ULTIMA]) storage.remover(meta);
+    lembrarIds();
+    aplicandoRemoto = false;
+    pintar();
+    ctx.roteador?.navegar();
+    ctx.toast('Você saiu da conta. Seus dados foram tirados deste navegador.');
   }
 
   botao.addEventListener('click', async () => {

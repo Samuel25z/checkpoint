@@ -28,8 +28,11 @@ export function ativo(data, agora = Date.now()) {
 }
 
 /** Converte um repositório da API em um card. */
+const httpsGithub = (url, repo) => (typeof url === 'string' && /^https:\/\/github\.com\//i.test(url) ? url : `https://github.com/${repo}`);
+
 export function normalizarRepo(item, agora = Date.now()) {
   const v = POR_REPO[String(item.full_name).toLowerCase()];
+  const url = httpsGithub(item.html_url, item.full_name);
   return {
     repo: item.full_name,
     nome: item.name,
@@ -38,8 +41,9 @@ export function normalizarRepo(item, agora = Date.now()) {
     linguagem: item.language || null,
     atualizado: item.pushed_at || item.updated_at || null,
     ativo: ativo(item.pushed_at || item.updated_at, agora),
-    url: item.html_url || `https://github.com/${item.full_name}`,
-    releases: `${item.html_url || `https://github.com/${item.full_name}`}/releases`,
+    url,
+    // página de downloads só para projetos conferidos; os outros apontam só para o repositório
+    releases: v ? `${url}/releases` : null,
     arquivado: Boolean(item.archived),
     verificado: Boolean(v),
     jogo: v?.jogo || null,

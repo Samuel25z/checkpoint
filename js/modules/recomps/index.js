@@ -59,7 +59,9 @@ function cartaoProjeto(p, ctx, gh, aoMudar) {
     p.precisaRom ? h('p', { class: 'texto-3 projeto-rom' }, 'Precisa da sua cópia original do jogo.') : p.precisaRom === false ? h('p', { class: 'texto-3 projeto-rom' }, 'Funciona com arquivos gratuitos.') : null,
     versao,
     h('div', { class: 'projeto-acoes' },
-      alerta ? null : h('a', { class: 'btn btn-pequeno', href: p.releases, target: '_blank', rel: 'noopener', html: `${icone('externo')}<span>Página oficial</span>` }),
+      alerta ? null : p.releases
+        ? h('a', { class: 'btn btn-pequeno', href: p.releases, target: '_blank', rel: 'noopener', html: `${icone('externo')}<span>Página oficial</span>` })
+        : h('a', { class: 'btn btn-pequeno btn-fantasma', href: p.url, target: '_blank', rel: 'noopener', html: `${icone('externo')}<span>Ver no GitHub</span>` }),
       verBtn,
       h('button', { class: `btn btn-pequeno ${seguindo ? 'btn-primario' : ''}`, type: 'button', 'aria-pressed': String(seguindo), 'data-acao': 'seguir', onclick: seguir }, seguindo ? 'Seguindo' : 'Seguir')));
 }

@@ -34,7 +34,7 @@ export function converterBusca(json) {
       return {
         titulo: limparTitulo(p.title),
         tituloWiki: p.title,
-        capa: p.thumbnail?.source ? p.thumbnail.source.replace(/\?.*$/, '') : null,
+        capa: /^https:\/\/upload\.wikimedia\.org\//.test(p.thumbnail?.source || '') ? p.thumbnail.source.replace(/\?.*$/, '') : null,
         resumo: (p.extract || '').trim(),
         ano: ano ? Number(ano[1]) : null,
         tituloPt: p.langlinks?.[0]?.['*'] || null
