@@ -1,12 +1,12 @@
 # SPEC-20261118-2129: importar steam
 
-**Status:** active
+**Status:** paused
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 21:29
 **Ativada:** 2026-11-18 21:29
 **Concluída:** —
-**Pausada em:** —
+**Pausada em:** 2026-11-18 21:37 — aguardando o Samuel criar a chave da Steam e publicar o ajudante no Cloudflare
 **Commit final:** —
 **Keywords:** steam, importar, biblioteca, conquistas, worker
 **Features:** diario
@@ -62,7 +62,7 @@ servidor/steam-worker (Cloudflare Worker, sem dependências) com rotas /perfil, 
 
 ## Critério de aceite
 
-- [ ] Sugestões só por fato, conversão para registro, duplicados e reimportação estão corretos | verify: `node --test tests/unit/steam.test.js`
-- [ ] Worker resolve perfil, lista jogos, resume conquistas, esconde a chave e só aceita origens permitidas | verify: `node --test tests/unit/steam-worker.test.js`
-- [ ] Na tela, colar o perfil, revisar, escolher status em massa e importar sem duplicar; sem servidor explica que não está ligado | verify: `npx playwright test tests/e2e/steam.spec.js`
+- [x] Sugestões só por fato, conversão para registro, duplicados e reimportação estão corretos (2026-11-18 21:36, commit `18a4175`, verify: exit 0) | verify: `node --test tests/unit/steam.test.js`
+- [x] Worker resolve perfil, lista jogos, resume conquistas, esconde a chave e só aceita origens permitidas (2026-11-18 21:36, commit `18a4175`, verify: exit 0) | verify: `node --test tests/unit/steam-worker.test.js`
+- [x] Na tela, colar o perfil, revisar, escolher status em massa e importar sem duplicar; sem servidor explica que não está ligado (2026-11-18 21:37, commit `18a4175`, verify: exit 0) | verify: `npx playwright test tests/e2e/steam.spec.js`
 - [ ] Importação real com a chave e o perfil do Samuel conferida | evidence: manual @samuel

@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-18 21:29
+**Última atualização:** 2026-11-18 21:37
 **Onde tô:** início — nada feito ainda
 **Próximo passo:** <primeiro passo concreto>
 **Última decisão:** —
@@ -34,3 +34,15 @@
 <!-- tipos: ativação descoberta decisão tentativa blocker unblock refactor nota conclusão | entrada nova: specctl log -->
 
 ## 2026-11-18 21:29 — [ativação] SPEC criada e ativada (@samuel, branch spec/importar-steam, base main)
+
+## 2026-11-18 21:37 — [nota] verify: 3/3 critérios passaram (commit `18a4175`)
+
+- PASS: Sugestões só por fato, conversão para registro, duplicados …
+- PASS: Worker resolve perfil, lista jogos, resume conquistas, esco…
+- PASS: Na tela, colar o perfil, revisar, escolher status em massa …
+
+## 2026-11-18 21:37 — [nota] código pronto; falta teste real
+
+⎿ commit 18a4175+dirty · 2 files changed, 10 insertions(+), 4 deletions(-)
+
+## 2026-11-18 21:37 — [nota] Pausada: aguardando o Samuel criar a chave da Steam e publicar o ajudante no Cloudflare
