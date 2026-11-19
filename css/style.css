@@ -72,10 +72,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .conta-estado { font-weight: 700; }
 .conta-estado.est-ok { color: var(--st-zerado); } .conta-estado.est-erro { color: var(--perigo); }
 
+.palco:focus, .palco:focus-visible { box-shadow: none; outline: none; }
 .palco { flex: 1; width: 100%; max-width: calc(var(--largura) + 32px); margin: 0 auto; padding: var(--esp-6) 16px var(--esp-7); outline: none; }
 .rodape { border-top: 1px solid var(--linha); padding: var(--esp-5) 16px calc(var(--esp-5) + env(safe-area-inset-bottom)); text-align: center; color: var(--texto-3); font-size: .85rem; display: grid; gap: 4px; }
 
-@media (min-width: 761px) and (max-width: 1180px) {
+@media (min-width: 761px) and (max-width: 1400px) {
   .topo { gap: var(--esp-3); }
   .nav-item { padding: 0 9px; font-size: .88rem; }
   .nav-item .ic { display: none; }
@@ -93,6 +94,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .nav-item.ativo { color: var(--texto); }
   .nav-item.ativo .ic { color: var(--acento); }
   .palco { padding-top: var(--esp-5); padding-bottom: 96px; }
+  .topo-acoes { margin-left: auto; gap: 0; }
   .rodape { padding-bottom: 84px; }
 }
 
@@ -182,6 +184,7 @@ textarea.entrada { min-height: 88px; resize: vertical; }
   position: absolute; z-index: 1; top: 0; left: 0; right: 0; height: 22px; display: flex; align-items: center; gap: 6px; padding: 0 8px 0 11px;
   background: #0b0c10; color: var(--cor); border-top: 2px solid var(--cor);
   font: 700 .58rem/1 var(--fonte-titulo); letter-spacing: .06em; text-transform: uppercase;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .faixa::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cor); box-shadow: 0 0 8px var(--cor); flex: none; }
 :root[data-tema='claro'] .faixa { --st-quero: #a9b2c3; --st-jogando: #f0b43c; --st-zerado: #45c08a; --st-larguei: #ef7d8f; --st-platinado: #b9a4ff; }
@@ -247,6 +250,14 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .modo-controle :focus { outline: none; box-shadow: 0 0 0 3px var(--fundo), 0 0 0 6px var(--acento), 0 0 22px 4px color-mix(in srgb, var(--acento) 45%, transparent) !important; border-radius: 10px; }
 .modo-controle .carta:focus .capa { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 0 3px var(--acento), 0 18px 30px -12px rgba(0, 0, 0, .8); }
 .modo-controle .carta:focus { box-shadow: none !important; }
+
+/* ---------- celular: filtros rolam para o lado em vez de quebrar linha ---------- */
+@media (max-width: 760px) {
+  .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: -16px; margin-right: -16px; padding: 0 16px; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip { flex: none; }
+  .faixa { font-size: .5rem; padding: 0 6px 0 8px; gap: 4px; }
+}
 
 /* ---------- movimento reduzido ---------- */
 @media (prefers-reduced-motion: reduce) {

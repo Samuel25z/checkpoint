@@ -1,16 +1,16 @@
 # SPEC-20261118-1956: entrega
 
-**Status:** draft
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
-**Ativada:** —
+**Ativada:** 2026-11-18 20:51
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
 **Keywords:** entrega, github-pages, cloudflare, readme, relatorio, prompts, slides
 **Features:** entrega
-**Branch:** —
+**Branch:** spec/entrega
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56
