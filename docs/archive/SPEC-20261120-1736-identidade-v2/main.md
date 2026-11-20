@@ -1,13 +1,13 @@
 # SPEC-20261120-1736: identidade v2
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-20 17:36
 **Ativada:** 2026-11-20 17:36
-**Concluída:** —
+**Concluída:** 2026-11-20 17:47
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `eaaf13e`
 **Keywords:** identidade, visual, logo, deck, palco, joy, tema
 **Features:** base
 **Branch:** spec/identidade-v2
@@ -61,6 +61,6 @@ css/tokens.css define tokens por `data-visual` (deck|palco|joy) e `data-tema` (e
 
 ## Critério de aceite
 
-- [ ] Escolha de visual aplica, persiste e todas as abas abrem sem erro e sem rolagem lateral nos 3 visuais e 2 temas | verify: `npx playwright test tests/e2e/visual.spec.js`
-- [ ] Início mostra o banner do jogo em andamento com a arte e a estante; página do jogo mostra a arte grande | verify: `npx playwright test tests/e2e/diario.spec.js tests/e2e/visual.spec.js -g "banner|arte"`
-- [ ] Suíte completa continua passando | verify: `npx playwright test`
+- [x] Escolha de visual aplica, persiste e todas as abas abrem sem erro e sem rolagem lateral nos 3 visuais e 2 temas (2026-11-20 17:46, commit `eaaf13e`, verify: exit 0) | verify: `npx playwright test tests/e2e/visual.spec.js`
+- [x] Início mostra o banner do jogo em andamento com a arte e a estante; página do jogo mostra a arte grande (2026-11-20 17:46, commit `eaaf13e`, verify: exit 0) | verify: `npx playwright test tests/e2e/diario.spec.js tests/e2e/visual.spec.js -g "banner|arte"`
+- [x] Suíte completa continua passando (2026-11-20 17:47, commit `eaaf13e`, verify: exit 0) | verify: `npx playwright test`
