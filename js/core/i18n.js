@@ -99,6 +99,8 @@ const PADROES_EN = [
   [/^(\d+) de (\d+)$/, '$1 of $2'],
   [/^(\d+(?:,\d)?) de 5 estrelas$/, '$1 out of 5 stars'],
   [/^há (\d+) dias$/, '$1 days ago'], [/^há (\d+) (mês|meses)$/, '$1 month(s) ago'], [/^há (\d+) (ano|anos)$/, '$1 year(s) ago'], [/^hoje$/, 'today'], [/^ontem$/, 'yesterday'],
+  [/^Parecido com (.+), que você deu ([\d,]+)$/, 'Similar to $1, which you rated $2'], [/^Nota (\d+) no Metacritic$/, 'Metacritic score $1'],
+  [/^(\d+) mil recomendações na Steam$/, '$1k recommendations on Steam'], [/^Combina com seu humor: (.+)$/, 'Matches your mood: $1'],
   [/^Seu (\d{4}) até agora$/, 'Your $1 so far'], [/^(\d{4}) até agora$/, '$1 so far'], [/^Sua nota média: (.+)$/, 'Your average rating: $1'], [/^Seu perfil · (.+)$/, 'Your profile · $1'],
   [/^Nada registrado: (.+)$/, 'Nothing logged: $1'],
   [/^Seu (\d{4})$/, 'Your $1'], [/^Nada registrado em (\d{4})$/, 'Nothing logged in $1'], [/^Seu perfil em (\d{4})$/, 'Your $1 profile'],

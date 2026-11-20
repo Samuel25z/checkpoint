@@ -1,5 +1,6 @@
 // Lógica pura do Recomendador: pontuação explicável por etiquetas, sem IA.
 import { normalizar } from '../../games.js';
+import { AVALIACOES } from '../../data/avaliacoes.js';
 
 export const HUMORES = [
   { id: 'relaxar', rotulo: 'Relaxar', etiquetas: ['relaxante', 'aconchegante', 'fazenda', 'construcao', 'leve'] },
@@ -62,38 +63,86 @@ const comAmigos = (jogo) => jogo.etiquetas.some((e) => e === 'coop' || e === 'mu
  * Recomenda até `quantos` jogos. Sempre o mesmo resultado para as mesmas respostas.
  * Retorna [{ jogo, pontos, motivos: [texto] }].
  */
-export function recomendar({ humor, tempo, companhia, plataforma }, diario, jogos, { excluir = [], quantos = 3 } = {}) {
+/** Qualidade a partir de dados reais da loja (sem dado, zero: nunca inventa nota). */
+export function qualidade(jogo, avaliacoes = AVALIACOES) {
+  const a = jogo.steam ? avaliacoes[jogo.steam] : null;
+  if (a?.metacritic) return { pontos: Math.max(-3, Math.min(5, (a.metacritic - 78) / 3.5)), motivo: `Nota ${a.metacritic} no Metacritic` };
+  if (a?.recomendacoes >= 100000) return { pontos: 1.5, motivo: `${Math.round(a.recomendacoes / 1000)} mil recomendações na Steam` };
+  return { pontos: 0, motivo: null };
+}
+
+/** Semelhança entre dois jogos pelas etiquetas (0 a 1). */
+export function semelhanca(a, b) {
+  const A = new Set(a.etiquetas);
+  const B = new Set(b.etiquetas);
+  const comum = [...A].filter((e) => B.has(e)).length;
+  return comum / (A.size + B.size - comum || 1);
+}
+
+/** Escolhe os melhores sem repetir o gênero principal, quando houver opção. */
+function variados(ordenados, quantos) {
+  const escolhidos = [];
+  const generos = new Set();
+  for (const r of ordenados) {
+    if (escolhidos.length >= quantos) break;
+    if (generos.has(r.jogo.generos[0])) continue;
+    escolhidos.push(r); generos.add(r.jogo.generos[0]);
+  }
+  for (const r of ordenados) { if (escolhidos.length >= quantos) break; if (!escolhidos.includes(r)) escolhidos.push(r); }
+  return escolhidos;
+}
+
+/**
+ * Recomenda até `quantos` jogos. Sempre o mesmo resultado para as mesmas respostas.
+ * Retorna [{ jogo, pontos, motivos: [texto] }] — cada motivo é um fato (humor, gosto, nota real, duração).
+ */
+export function recomendar({ humor, tempo, companhia, plataforma }, diario, jogos, { excluir = [], quantos = 3, avaliacoes = AVALIACOES } = {}) {
   const ligados = ligarDiario(diario, jogos);
   const jaTem = new Set(ligados.filter((l) => EXCLUIR_STATUS.has(l.registro.status)).map((l) => l.jogo.id));
   const gosto = gostoDoDiario(ligados);
-  const favoritos = ligados.filter((l) => l.registro.nota >= 4).sort((a, b) => b.registro.nota - a.registro.nota);
+  const curtidos = ligados.filter((l) => l.registro.nota >= 4);
+  const naoCurtidos = ligados.filter((l) => l.registro.nota !== null && l.registro.nota !== undefined && l.registro.nota <= 2);
   const alvo = HUMORES.find((h) => h.id === humor)?.etiquetas || [];
   const fora = new Set(excluir);
 
-  const candidatos = jogos.filter((j) => !jaTem.has(j.id) && !fora.has(j.id) && naPlataforma(j, plataforma) && (companhia !== 'amigos' || comAmigos(j)));
+  let candidatos = jogos.filter((j) => !jaTem.has(j.id) && !fora.has(j.id) && naPlataforma(j, plataforma) && (companhia !== 'amigos' || comAmigos(j)));
+  // humor é filtro: só entra o que combina (com reserva se sobrar pouco)
+  if (alvo.length) {
+    const principal = candidatos.filter((j) => j.etiquetas.includes(alvo[0]));
+    const doHumor = candidatos.filter((j) => j.etiquetas.some((e) => alvo.includes(e)));
+    if (principal.length >= quantos) candidatos = principal;
+    else if (doHumor.length >= quantos) candidatos = doHumor;
+  }
 
-  return candidatos.map((j) => {
+  const pontuados = candidatos.map((j) => {
     const doHumor = j.etiquetas.filter((e) => alvo.includes(e));
-    let pontos = doHumor.length * 4 + cabeNoTempo(j, tempo);
+    const q = qualidade(j, avaliacoes);
+    // a 1ª etiqueta de cada humor é a principal (ex.: "terror" em Sentir medo) e vale o dobro
+    let pontos = doHumor.length * 3 + (alvo.length && j.etiquetas.includes(alvo[0]) ? 4 : 0) + cabeNoTempo(j, tempo) + q.pontos;
     if (companhia === 'sozinho' && j.etiquetas.includes('solo')) pontos += 1;
     let doGosto = 0;
     for (const e of j.etiquetas) doGosto += gosto[e] || 0;
-    pontos += Math.max(-6, Math.min(8, doGosto * 0.5));
+    pontos += Math.max(-4, Math.min(4, doGosto * 0.3));
 
     const motivos = [];
+    const parecido = curtidos.filter((f) => f.jogo.id !== j.id).map((f) => ({ f, s: semelhanca(f.jogo, j) })).sort((a, b) => b.s - a.s || b.f.registro.nota - a.f.registro.nota)[0];
+    const evitar = naoCurtidos.map((f) => semelhanca(f.jogo, j)).sort((a, b) => b - a)[0] || 0;
+    if (evitar >= 0.4) pontos -= evitar * 6;
     if (doHumor.length) motivos.push(`Combina com seu humor: ${doHumor.slice(0, 3).map(nomeEtiqueta).join(', ')}`);
-    const parecido = favoritos.map((f) => ({ f, comum: f.jogo.etiquetas.filter((e) => j.etiquetas.includes(e)) })).filter((x) => x.comum.length >= 2 && x.f.jogo.id !== j.id).sort((a, b) => b.comum.length - a.comum.length)[0];
-    if (parecido) { motivos.push(`Porque você deu ${String(parecido.f.registro.nota).replace('.', ',')} para ${parecido.f.jogo.nome}`); pontos += 2; }
+    if (parecido && parecido.s >= 0.25) { pontos += parecido.s * 5; motivos.push(`Parecido com ${parecido.f.jogo.nome}, que você deu ${String(parecido.f.registro.nota).replace('.', ',')}`); }
+    if (q.motivo) motivos.push(q.motivo);
     if (tempo === 'rapido' && cabeNoTempo(j, tempo) > 0) motivos.push(j.etiquetas.includes('partidas-curtas') ? 'Partidas curtas' : `Dá para terminar em cerca de ${j.horas} h`);
     if (tempo === 'longo' && cabeNoTempo(j, tempo) > 0) motivos.push(`Rende umas ${j.horas} h ou mais`);
     if (companhia === 'amigos') motivos.push(j.etiquetas.includes('coop') ? 'Dá para jogar em cooperativo' : 'Bom para jogar com amigos');
-    return { jogo: j, pontos: Math.round(pontos * 10) / 10, motivos };
-  }).sort((a, b) => b.pontos - a.pontos || a.jogo.id.localeCompare(b.jogo.id)).slice(0, quantos);
+    return { jogo: j, pontos: Math.round(pontos * 10) / 10, motivos: motivos.slice(0, 3) };
+  }).sort((a, b) => b.pontos - a.pontos || a.jogo.id.localeCompare(b.jogo.id));
+
+  return variados(pontuados, quantos);
 }
 
-/** Sugestão do dia: muda a cada dia, igual para o dia todo. */
-export function sugestaoDoDia(diario, jogos, data = new Date()) {
-  const lista = recomendar({ humor: null, tempo: null, companhia: null, plataforma: 'Qualquer' }, diario, jogos, { quantos: 15 });
+/** Sugestão do dia: entre as 7 melhores para o gosto da pessoa; muda a cada dia, igual o dia todo. */
+export function sugestaoDoDia(diario, jogos, data = new Date(), avaliacoes = AVALIACOES) {
+  const lista = recomendar({ humor: null, tempo: null, companhia: null, plataforma: 'Qualquer' }, diario, jogos, { quantos: 7, avaliacoes });
   if (!lista.length) return null;
   const dia = Math.floor(Date.UTC(data.getFullYear(), data.getMonth(), data.getDate()) / 86400000);
   return lista[dia % lista.length];

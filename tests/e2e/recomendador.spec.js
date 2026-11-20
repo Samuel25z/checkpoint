@@ -9,7 +9,8 @@ test('responde as perguntas, vê 3 sugestões com motivo e adiciona uma ao diár
   await page.locator('#recomendar').click();
   const cartoes = page.locator('#sugestoes .sugestao');
   await expect(cartoes).toHaveCount(3);
-  await expect(page.locator('#sugestoes')).toContainText('Porque você deu 5 para Hollow Knight');
+  await expect(page.locator('#sugestoes')).toContainText('Parecido com Hollow Knight, que você deu 5');
+  await expect(page.locator('#sugestoes')).toContainText('no Metacritic');
   await expect(page.locator('#sugestoes .sugestao[data-jogo="hollow-knight"]')).toHaveCount(0);
   await expect(cartoes.first().getByRole('link', { name: 'Ver trailer' })).toHaveAttribute('href', /youtube\.com\/results/);
 

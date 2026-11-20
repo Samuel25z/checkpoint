@@ -22,7 +22,7 @@ test('determinístico e com motivo legível', () => {
   assert.deepEqual(a.map((x) => x.jogo.id), b.map((x) => x.jogo.id));
   assert.equal(a.length, 3);
   assert.ok(a.every((x) => x.motivos.length > 0));
-  assert.ok(a.some((x) => x.motivos.some((m) => /Porque você deu 5 para Hollow Knight/.test(m))), JSON.stringify(a.map((x) => x.motivos)));
+  assert.ok(a.some((x) => x.motivos.some((m) => /Parecido com Hollow Knight, que você deu 5/.test(m))), JSON.stringify(a.map((x) => x.motivos)));
 });
 
 test('"outra sugestão" não repete as já mostradas', () => {
@@ -52,6 +52,38 @@ test('gosto do diário: nota alta soma, nota baixa subtrai', () => {
   const g = gostoDoDiario(ligados);
   assert.ok(g.dificil > 0);
   assert.ok(g['mundo-aberto'] < 0);
+});
+
+test('qualidade vem de dado real; sem dado, sem nota', async () => {
+  const { qualidade } = await import('../../js/modules/recomendador/logic.js');
+  const q = qualidade({ steam: 1 }, { 1: { metacritic: 95, recomendacoes: 10 } });
+  assert.equal(q.motivo, 'Nota 95 no Metacritic');
+  assert.ok(q.pontos > 4);
+  assert.deepEqual(qualidade({ steam: 2 }, {}), { pontos: 0, motivo: null });
+  assert.deepEqual(qualidade({ steam: null }, {}), { pontos: 0, motivo: null });
+  assert.match(qualidade({ steam: 3 }, { 3: { recomendacoes: 500000 } }).motivo, /500 mil recomendações/);
+});
+
+test('jogo parecido com o que a pessoa deu nota alta sobe e diz por quê', () => {
+  const r = recomendar({ humor: 'desafio', tempo: null, companhia: 'sozinho', plataforma: 'PC' }, [{ nome: 'Hollow Knight', jogoId: 'hollow-knight', status: 'zerado', nota: 5 }], JOGOS);
+  assert.ok(r.some((x) => x.motivos.some((m) => /Parecido com Hollow Knight, que você deu 5/.test(m))), JSON.stringify(r.map((x) => [x.jogo.id, x.motivos])));
+  assert.ok(['silksong', 'ori-wotw', 'tunic', 'dead-cells', 'celeste', 'cuphead'].includes(r[0].jogo.id), `primeiro foi ${r[0].jogo.id}`);
+});
+
+test('humor é filtro e as 3 sugestões variam de gênero', () => {
+  const r = recomendar({ humor: 'medo', tempo: null, companhia: null, plataforma: 'Qualquer' }, [], JOGOS);
+  assert.ok(r.every((x) => x.jogo.etiquetas.includes('terror')), 'medo traz terror quando há opções suficientes');
+  const h = recomendar({ humor: 'historia', tempo: null, companhia: null, plataforma: 'Qualquer' }, [], JOGOS);
+  const generos = h.map((x) => x.jogo.generos[0]);
+  assert.equal(new Set(generos).size, generos.length, `gêneros repetidos: ${generos}`);
+});
+
+test('sugestão do dia sem diário é um jogo aclamado (nota real alta), não um empate qualquer', async () => {
+  const { AVALIACOES } = await import('../../js/data/avaliacoes.js');
+  for (let d = 1; d <= 20; d++) {
+    const s = sugestaoDoDia([], JOGOS, new Date(2026, 10, d));
+    assert.ok((AVALIACOES[s.jogo.steam]?.metacritic || 0) >= 88, `${s.jogo.nome} no dia ${d}`);
+  }
 });
 
 test('sugestão do dia é estável no mesmo dia e muda entre dias', () => {
