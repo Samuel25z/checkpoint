@@ -1,13 +1,13 @@
 # SPEC-20261120-1907: roda fps
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel25z
 **Criada:** 2026-11-20 19:07
 **Ativada:** 2026-11-20 19:07
-**Concluída:** —
+**Concluída:** 2026-11-20 19:14
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `28bf50b`
 **Keywords:** roda-no-pc, fps, resolucao, upgrade, detalhes
 **Features:** roda-no-pc
 **Branch:** spec/roda-fps
@@ -56,5 +56,5 @@ logic.js ganha estimarFps(pc, requisitos, {qualidade, resolucao}), tabelaFps, co
 
 ## Critério de aceite
 
-- [ ] estimarFps, tabela, comparação e placa para 60 FPS testados | verify: `node --test tests/unit/hardware.test.js`
-- [ ] lista com FPS, seletor de resolução e detalhe do jogo funcionam na tela | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`
+- [x] estimarFps, tabela, comparação e placa para 60 FPS testados (2026-11-20 19:14, commit `28bf50b`, verify: exit 0) | verify: `node --test tests/unit/hardware.test.js`
+- [x] lista com FPS, seletor de resolução e detalhe do jogo funcionam na tela (2026-11-20 19:14, commit `28bf50b`, verify: exit 0) | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`

@@ -51,3 +51,8 @@
 
 FPS estimado e detalhe por jogo entregues. 2/2 critérios verificados.
 ⎿ commit 32eb688+dirty · 6 files changed, 295 insertions(+), 5 deletions(-)
+
+## 2026-11-20 19:14 — [nota] verify: 2/2 critérios passaram (commit `28bf50b`)
+
+- PASS: estimarFps, tabela, comparação e placa para 60 FPS testados…
+- PASS: lista com FPS, seletor de resolução e detalhe do jogo funci…
