@@ -4,7 +4,7 @@ import { encontrarGpu, encontrarCpu, classificar, explicar, resultado, resumo, v
 import { JOGOS, POR_ID } from '../../js/games.js';
 
 test('reconhece a placa de vídeo no texto do WebGL', () => {
-  assert.equal(encontrarGpu('ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Laptop GPU Direct3D11 vs_5_0 ps_5_0, D3D11)'), 'NVIDIA GeForce RTX 3060');
+  assert.equal(encontrarGpu('ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Laptop GPU Direct3D11 vs_5_0 ps_5_0, D3D11)'), 'NVIDIA GeForce RTX 3060 Laptop', 'versão de notebook é mais fraca');
   assert.equal(encontrarGpu('ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Ti Direct3D11 vs_5_0)'), 'NVIDIA GeForce RTX 3060 Ti', 'prefere o modelo mais específico');
   assert.equal(encontrarGpu('ANGLE (AMD, AMD Radeon RX 580 2048SP Direct3D11)'), 'AMD Radeon RX 580');
   assert.equal(encontrarGpu('ANGLE (Intel, Intel(R) UHD Graphics 620 Direct3D11)'), 'Intel UHD Graphics 620');
@@ -48,6 +48,16 @@ test('resultado cobre todos os jogos de PC, do melhor nível para o pior', () =>
   for (let i = 1; i < lista.length; i++) assert.ok(ordem.indexOf(lista[i - 1].nivel) <= ordem.indexOf(lista[i].nivel));
   const c = resumo(lista);
   assert.equal(Object.values(c).reduce((a, b) => a + b, 0), lista.length);
+});
+
+test('base grande: desktop, notebook, integradas e portáteis', async () => {
+  const { CPUS, GPUS } = await import('../../js/data/hardware.js');
+  assert.ok(Object.keys(CPUS).length >= 150, `só ${Object.keys(CPUS).length} CPUs`);
+  assert.ok(Object.keys(GPUS).length >= 120, `só ${Object.keys(GPUS).length} GPUs`);
+  for (const nome of ['Intel Core i5-1135G7', 'AMD Ryzen 7 5800H', 'Intel Core Ultra 7 155H', 'Steam Deck (APU)']) assert.ok(nome in CPUS, nome);
+  for (const nome of ['NVIDIA GeForce RTX 4060 Laptop', 'Intel Iris Xe Graphics', 'AMD Radeon 780M', 'Intel Arc B580', 'NVIDIA GeForce RTX 5090']) assert.ok(nome in GPUS, nome);
+  for (const [n, v] of [...Object.entries(CPUS), ...Object.entries(GPUS)]) assert.ok(Number.isFinite(v) && v > 0, `pontuação inválida: ${n}`);
+  assert.equal(encontrarGpu('ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU Direct3D11)'), 'NVIDIA GeForce RTX 4060 Laptop');
 });
 
 test('valida o formulário do PC', () => {

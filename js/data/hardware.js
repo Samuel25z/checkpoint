@@ -1,29 +1,57 @@
-// hardware.js — peças conhecidas e uma pontuação relativa de desempenho.
-// Valores aproximados para comparação entre si (não são benchmarks oficiais).
+// hardware.js — peças conhecidas e uma pontuação relativa de desempenho (RTX 2080 ≈ 100 nas placas).
+// Valores aproximados para comparar peças entre si, não benchmarks oficiais.
+// Peça nova = acrescentar "Modelo:pontos" na família certa.
 
-export const GPUS = {
-  'Intel UHD Graphics 620': 8, 'Intel Iris Xe Graphics': 15, 'AMD Radeon Vega 8': 13, 'AMD Radeon 780M': 30,
-  'NVIDIA GeForce GT 1030': 14, 'NVIDIA GeForce GTX 750 Ti': 17, 'NVIDIA GeForce GTX 950': 24, 'NVIDIA GeForce GTX 960': 28,
-  'NVIDIA GeForce GTX 970': 38, 'NVIDIA GeForce GTX 1050': 26, 'NVIDIA GeForce GTX 1050 Ti': 32, 'NVIDIA GeForce GTX 1060 3GB': 44,
-  'NVIDIA GeForce GTX 1060 6GB': 46, 'NVIDIA GeForce GTX 1070': 60, 'NVIDIA GeForce GTX 1080': 72, 'NVIDIA GeForce GTX 1650': 37,
-  'NVIDIA GeForce GTX 1660': 52, 'NVIDIA GeForce GTX 1660 Super': 58, 'NVIDIA GeForce RTX 2060': 72, 'NVIDIA GeForce RTX 2070': 85,
-  'NVIDIA GeForce RTX 2070 Super': 93, 'NVIDIA GeForce RTX 2080': 100, 'NVIDIA GeForce RTX 3050': 62, 'NVIDIA GeForce RTX 3060': 90,
-  'NVIDIA GeForce RTX 3060 Ti': 113, 'NVIDIA GeForce RTX 3070': 128, 'NVIDIA GeForce RTX 3080': 165, 'NVIDIA GeForce RTX 4060': 105,
-  'NVIDIA GeForce RTX 4060 Ti': 125, 'NVIDIA GeForce RTX 4070': 160, 'NVIDIA GeForce RTX 4070 Super': 185, 'NVIDIA GeForce RTX 4080': 240,
-  'NVIDIA GeForce RTX 4090': 310, 'NVIDIA GeForce RTX 5060': 120, 'NVIDIA GeForce RTX 5070': 190,
-  'AMD Radeon R9 280': 27, 'AMD Radeon R9 290': 40, 'AMD Radeon RX 470': 42, 'AMD Radeon RX 480': 46, 'AMD Radeon RX 570': 44,
-  'AMD Radeon RX 580': 48, 'AMD Radeon RX 5500 XT': 52, 'AMD Radeon RX 5600 XT': 72, 'AMD Radeon RX 5700 XT': 92,
-  'AMD Radeon RX 6500 XT': 40, 'AMD Radeon RX 6600': 88, 'AMD Radeon RX 6700 XT': 120, 'AMD Radeon RX 6800 XT': 170,
-  'AMD Radeon RX 7600': 100, 'AMD Radeon RX 7800 XT': 175, 'AMD Radeon RX 7900 XTX': 250
-};
+function familia(prefixo, lista) {
+  return lista.split(',').map((x) => x.trim()).filter(Boolean).map((x) => {
+    const i = x.lastIndexOf(':');
+    return [prefixo + x.slice(0, i).trim(), Number(x.slice(i + 1))];
+  });
+}
 
-export const CPUS = {
-  'Intel Core i3-2100': 10, 'Intel Core i5-2500K': 18, 'Intel Core i5-3570K': 20, 'Intel Core i3-4130': 16, 'Intel Core i5-4460': 24,
-  'Intel Core i5-4590': 25, 'Intel Core i7-4770K': 32, 'Intel Core i5-6600K': 33, 'Intel Core i7-6700K': 40, 'Intel Core i3-8100': 34,
-  'Intel Core i5-8400': 48, 'Intel Core i7-8700K': 60, 'Intel Core i5-9600K': 55, 'Intel Core i3-10100': 45, 'Intel Core i5-10400': 58,
-  'Intel Core i7-10700K': 75, 'Intel Core i5-11400': 66, 'Intel Core i5-12400': 80, 'Intel Core i7-12700K': 105, 'Intel Core i5-13600K': 115,
-  'Intel Core i5-14400F': 92, 'Intel Core i7-13700K': 135, 'Intel Core i9-13900K': 150, 'Intel Core Ultra 7 155H': 85,
-  'AMD FX-6300': 14, 'AMD FX-8350': 20, 'AMD Ryzen 3 1200': 26, 'AMD Ryzen 5 1600': 38, 'AMD Ryzen 3 3100': 42, 'AMD Ryzen 5 2600': 44,
-  'AMD Ryzen 7 2700X': 52, 'AMD Ryzen 5 3600': 58, 'AMD Ryzen 7 3700X': 70, 'AMD Ryzen 5 5500': 64, 'AMD Ryzen 5 5600X': 80,
-  'AMD Ryzen 7 5800X': 92, 'AMD Ryzen 7 5800X3D': 98, 'AMD Ryzen 5 7600X': 100, 'AMD Ryzen 7 7800X3D': 125, 'AMD Ryzen 9 7950X': 160
-};
+export const GPUS = Object.fromEntries([
+  ...familia('NVIDIA GeForce ', `GT 710:4, GT 730:6, GT 1030:14, GTX 650:13, GTX 650 Ti:17, GTX 660:22, GTX 670:28, GTX 680:30,
+    GTX 750:15, GTX 750 Ti:17, GTX 760:26, GTX 770:31, GTX 780:36, GTX 780 Ti:42, GTX 950:24, GTX 960:28, GTX 970:38, GTX 980:45, GTX 980 Ti:55,
+    GTX 1050:26, GTX 1050 Ti:32, GTX 1060 3GB:44, GTX 1060 6GB:46, GTX 1070:60, GTX 1070 Ti:66, GTX 1080:72, GTX 1080 Ti:92,
+    GTX 1630:22, GTX 1650:37, GTX 1650 Super:48, GTX 1660:52, GTX 1660 Super:58, GTX 1660 Ti:60,
+    RTX 2060:72, RTX 2060 Super:82, RTX 2070:85, RTX 2070 Super:93, RTX 2080:100, RTX 2080 Super:105, RTX 2080 Ti:125,
+    RTX 3050 6GB:52, RTX 3050:62, RTX 3060:90, RTX 3060 Ti:113, RTX 3070:128, RTX 3070 Ti:136, RTX 3080:165, RTX 3080 Ti:180, RTX 3090:188, RTX 3090 Ti:205,
+    RTX 4060:105, RTX 4060 Ti:125, RTX 4070:160, RTX 4070 Super:185, RTX 4070 Ti:195, RTX 4070 Ti Super:210, RTX 4080:240, RTX 4080 Super:245, RTX 4090:310,
+    RTX 5060:120, RTX 5060 Ti:140, RTX 5070:190, RTX 5070 Ti:240, RTX 5080:275, RTX 5090:380,
+    GTX 1050 Laptop:22, GTX 1650 Laptop:32, GTX 1660 Ti Laptop:50, RTX 2060 Laptop:62, RTX 3050 Laptop:45, RTX 3050 Ti Laptop:50, RTX 3060 Laptop:75, RTX 3070 Laptop:95,
+    RTX 3080 Laptop:115, RTX 4050 Laptop:80, RTX 4060 Laptop:95, RTX 4070 Laptop:110, RTX 4080 Laptop:165, RTX 4090 Laptop:200`),
+  ...familia('AMD Radeon ', `R7 250:8, R7 260X:18, R9 270X:25, R9 280:27, R9 280X:30, R9 290:40, R9 290X:42, R9 380:30, R9 390:42,
+    RX 460:20, RX 470:42, RX 480:46, RX 550:14, RX 560:22, RX 570:44, RX 580:48, RX 590:52, RX Vega 56:64, RX Vega 64:70, VII:90,
+    RX 5500 XT:52, RX 5600 XT:72, RX 5700:85, RX 5700 XT:92, RX 6400:30, RX 6500 XT:40, RX 6600:88, RX 6600 XT:100, RX 6650 XT:105,
+    RX 6700 XT:120, RX 6750 XT:127, RX 6800:150, RX 6800 XT:170, RX 6900 XT:185, RX 6950 XT:195,
+    RX 7600:100, RX 7600 XT:108, RX 7700 XT:150, RX 7800 XT:175, RX 7900 GRE:190, RX 7900 XT:225, RX 7900 XTX:250,
+    RX 9060 XT:140, RX 9070:210, RX 9070 XT:235,
+    Vega 3:6, Vega 8:13, Vega 11:16, 610M:9, 660M:22, 680M:27, 760M:26, 780M:30, 890M:38`),
+  ...familia('Intel ', `HD Graphics 520:5, HD Graphics 620:6, UHD Graphics 600:4, UHD Graphics 620:8, UHD Graphics 630:9, UHD Graphics 730:9, UHD Graphics 770:11,
+    Iris Plus Graphics:11, Iris Xe Graphics:15, Arc 140V:35, Arc A380:38, Arc A580:80, Arc A750:95, Arc A770:105, Arc B570:110, Arc B580:125`),
+  ['Steam Deck (APU)', 14], ['ROG Ally Z1 Extreme (APU)', 28], ['Apple M1 (GPU)', 22], ['Apple M2 (GPU)', 30], ['Apple M3 (GPU)', 38]
+]);
+
+export const CPUS = Object.fromEntries([
+  ...familia('Intel Core ', `i3-2100:10, i5-2400:16, i5-2500K:18, i7-2600K:22, i3-3220:12, i5-3470:19, i5-3570K:20, i7-3770K:25,
+    i3-4130:16, i3-4160:17, i5-4460:24, i5-4590:25, i5-4690K:27, i7-4770:31, i7-4770K:32, i7-4790K:35,
+    i3-6100:22, i5-6400:28, i5-6500:30, i5-6600K:33, i7-6700:38, i7-6700K:40, i3-7100:24, i5-7400:32, i5-7500:34, i5-7600K:37, i7-7700:42, i7-7700K:45,
+    i3-8100:34, i5-8400:48, i5-8500:50, i5-8600K:52, i7-8700:58, i7-8700K:60, i3-9100F:36, i5-9400F:50, i5-9600K:55, i7-9700K:66, i9-9900K:72,
+    i3-10100:45, i3-10100F:45, i5-10400:58, i5-10400F:58, i5-10600K:64, i7-10700:72, i7-10700K:75, i9-10900K:82,
+    i5-11400:66, i5-11400F:66, i5-11600K:72, i7-11700K:80, i9-11900K:84,
+    i3-12100:68, i3-12100F:68, i5-12400:80, i5-12400F:80, i5-12600K:98, i7-12700:102, i7-12700K:105, i9-12900K:115,
+    i3-13100F:72, i5-13400:88, i5-13400F:88, i5-13600K:115, i7-13700K:135, i9-13900K:150,
+    i5-14400:92, i5-14400F:92, i5-14600K:120, i7-14700K:142, i9-14900K:155,
+    Ultra 5 125H:72, Ultra 7 155H:85, Ultra 5 245K:118, Ultra 7 265K:140, Ultra 9 285K:155,
+    i5-1135G7:40, i7-1165G7:44, i5-1235U:45, i7-1255U:48, i5-1335U:50, i5-10300H:42, i7-10750H:52, i5-11400H:58, i7-11800H:68,
+    i5-12450H:66, i5-12500H:72, i7-12650H:80, i7-12700H:85, i5-13420H:70, i7-13620H:88, i7-13700H:92, i9-13900H:100, i9-13980HX:130, i7-14650HX:120`),
+  ...familia('Intel ', `Pentium G4560:18, Pentium Gold G6400:26, Celeron N4020:3, Celeron N4500:5, Pentium Silver N5030:7`),
+  ...familia('AMD ', `FX-4300:10, FX-6300:14, FX-8350:20, Athlon 200GE:14, Athlon 3000G:16`),
+  ...familia('AMD Ryzen ', `3 1200:26, 3 2200G:30, 3 3200G:33, 3 3100:42, 3 3300X:50, 3 4100:48,
+    5 1400:30, 5 1600:38, 5 2400G:36, 5 2600:44, 5 3400G:44, 5 3500X:52, 5 3600:58, 5 4500:60, 5 4600G:62, 5 5500:64, 5 5600:78, 5 5600G:70, 5 5600X:80,
+    5 7500F:98, 5 7600:98, 5 7600X:100, 5 8500G:84, 5 8600G:92, 5 9600X:112,
+    7 1700:42, 7 2700X:52, 7 3700X:70, 7 3800X:72, 7 5700G:78, 7 5700X:84, 7 5800X:92, 7 5800X3D:98, 7 7700:110, 7 7700X:112, 7 7800X3D:125, 7 9700X:122, 7 9800X3D:140,
+    9 3900X:80, 9 5900X:98, 9 5950X:102, 9 7900X:130, 9 7950X:160, 9 9950X:170,
+    5 3500U:22, 5 4600H:50, 5 5500U:40, 5 5600H:60, 5 7520U:38, 5 7535HS:70, 7 4800H:58, 7 5700U:46, 7 5800H:70, 7 6800H:80, 7 7735HS:84, 7 8845HS:95, 9 7940HS:100, 9 5900HX:78`),
+  ['Steam Deck (APU)', 30], ['ROG Ally Z1 Extreme (APU)', 60], ['Apple M1', 55], ['Apple M2', 65], ['Apple M3', 78]
+]);

@@ -4,7 +4,8 @@ import { icone } from '../../core/icons.js';
 import { novoId } from '../../storage.js';
 import { JOGOS, imagens } from '../../games.js';
 import { CPUS, GPUS } from '../../data/hardware.js';
-import { NIVEIS, ROTULO_NIVEL, RAMS, explicar, resultado, resumo, validarPc, encontrarCpu } from './logic.js';
+import { NIVEIS, ROTULO_NIVEL, RAMS, explicar, resultado, resumo, validarPc, encontrarCpu, encontrarGpu } from './logic.js';
+import { combobox } from '../../core/combobox.js';
 import { detectar } from './detect.js';
 
 const CH_PCS = 'hardware:pcs';
@@ -15,7 +16,8 @@ async function formularioPc(base) {
   const det = detectar();
   const pc = { nome: 'Meu PC', ram: 16, ...base };
   if (!base) { if (det.gpu) pc.gpu = det.gpu; if (det.ramAprox && det.ramAprox >= 8) pc.ram = Math.max(8, det.ramAprox); }
-  const lista = (id, tabela) => h('datalist', { id }, Object.keys(tabela).map((n) => h('option', { value: n })));
+  const campoCpu = combobox({ name: 'cpu', opcoes: Object.keys(CPUS), valor: pc.cpu || '', placeholder: 'Digite parte do nome: 10400, Ryzen 5 3600…', rotulo: 'Processador' });
+  const campoGpu = combobox({ name: 'gpu', opcoes: Object.keys(GPUS), valor: pc.gpu || '', placeholder: 'Digite parte do nome: 3060, RX 580…', rotulo: 'Placa de vídeo' });
   const form = h('form', { class: 'form-pc', novalidate: true },
     h('div', { class: 'deteccao', id: 'deteccao' },
       h('span', { html: icone('chip') }),
@@ -23,10 +25,9 @@ async function formularioPc(base) {
         h('strong', {}, det.gpu ? `Detectamos: ${det.gpu}` : 'Não deu para reconhecer sua placa de vídeo'),
         h('p', { class: 'texto-3' }, det.textoGpu ? `O navegador informou “${det.textoGpu.slice(0, 90)}”. ` : '', det.nucleos ? `Seu processador tem ${det.nucleos} núcleos lógicos — escolha o modelo abaixo.` : 'Escolha as peças nas listas.'))),
     h('label', { class: 'campo' }, h('span', {}, 'Nome'), h('input', { class: 'entrada', name: 'nome', value: pc.nome, placeholder: 'Meu PC' }), h('span', { class: 'campo-erro', 'data-erro': 'nome' })),
-    h('label', { class: 'campo' }, h('span', {}, 'Processador'), h('input', { class: 'entrada', name: 'cpu', list: 'lista-cpus', value: pc.cpu || '', placeholder: 'Comece a digitar: i5-10400, Ryzen 5 3600…', autocomplete: 'off' }), h('span', { class: 'campo-erro', 'data-erro': 'cpu' })),
-    h('label', { class: 'campo' }, h('span', {}, 'Placa de vídeo'), h('input', { class: 'entrada', name: 'gpu', list: 'lista-gpus', value: pc.gpu || '', placeholder: 'RTX 3060, RX 580…', autocomplete: 'off' }), h('span', { class: 'campo-erro', 'data-erro': 'gpu' })),
+    h('div', { class: 'campo' }, h('span', {}, 'Processador'), campoCpu, h('span', { class: 'campo-erro', 'data-erro': 'cpu' })),
+    h('div', { class: 'campo' }, h('span', {}, 'Placa de vídeo'), campoGpu, h('span', { class: 'campo-erro', 'data-erro': 'gpu' })),
     h('label', { class: 'campo' }, h('span', {}, 'Memória RAM'), h('select', { class: 'entrada', name: 'ram' }, RAMS.map((r) => h('option', { value: r, selected: r === Number(pc.ram) }, `${r} GB`))), h('span', { class: 'campo-erro', 'data-erro': 'ram' })),
-    lista('lista-cpus', CPUS), lista('lista-gpus', GPUS),
     h('div', { class: 'modal-acoes form-acoes' },
       h('button', { type: 'button', class: 'btn', onclick: () => modal.fecharAtual(null) }, 'Cancelar'),
       h('button', { type: 'submit', class: 'btn btn-primario' }, base ? 'Salvar PC' : 'Ver o que roda')));
@@ -35,6 +36,7 @@ async function formularioPc(base) {
     e.preventDefault();
     const f = Object.fromEntries(new FormData(form));
     f.cpu = CPUS[f.cpu] ? f.cpu : encontrarCpu(f.cpu) || f.cpu;
+    f.gpu = GPUS[f.gpu] ? f.gpu : encontrarGpu(f.gpu) || f.gpu;
     const { ok, erros, valor } = validarPc(f);
     form.querySelectorAll('[data-erro]').forEach((el) => { el.textContent = erros[el.dataset.erro] || ''; });
     if (ok) modal.fecharAtual(valor);

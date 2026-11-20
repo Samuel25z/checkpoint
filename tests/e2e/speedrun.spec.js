@@ -32,7 +32,7 @@ test.describe('cronometro', () => {
     // run pior não troca o PB
     await page.keyboard.press('Space'); // nova tentativa
     await page.keyboard.press('Space');
-    await page.waitForTimeout(400);
+    await page.waitForTimeout(2500); // garante que esta run é mais lenta que a primeira
     await page.getByRole('button', { name: 'Split' }).click();
     await page.getByRole('button', { name: 'Split' }).click();
     await page.getByRole('button', { name: 'Terminar' }).click().catch(() => {});

@@ -140,6 +140,19 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .busca { position: relative; }
 .busca .ic { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--texto-3); pointer-events: none; }
 .busca .entrada { padding-left: 40px; }
+/* caixa de escolha com busca */
+.cb { position: relative; }
+.cb-entrada { padding-right: 76px; }
+.cb-botao { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; display: grid; place-items: center; border: 0; border-radius: 8px; background: transparent; color: var(--texto-3); cursor: pointer; }
+.cb-botao:hover { color: var(--texto); background: var(--superficie-2); }
+.cb-botao .ic { width: 16px; height: 16px; }
+.cb-limpar { right: 40px; } .cb-abrir { right: 6px; }
+.cb-abrir .ic { transform: rotate(90deg); }
+.cb-lista { position: absolute; z-index: 5; left: 0; right: 0; top: calc(100% + 6px); max-height: 260px; overflow-y: auto; margin: 0; padding: 6px; list-style: none; border-radius: 12px; background: var(--superficie); border: 1px solid var(--linha-forte); box-shadow: var(--sombra); }
+.cb-opcao { padding: 9px 12px; border-radius: 8px; cursor: pointer; font-size: .92rem; }
+.cb-opcao:hover, .cb-opcao.ativa { background: var(--superficie-2); }
+.cb-opcao.escolhida { font-weight: 700; color: var(--texto); box-shadow: inset 3px 0 0 var(--acento); }
+.cb-vazio { padding: 10px 12px; color: var(--texto-3); font-size: .88rem; }
 .sr-busca { display: flex; gap: var(--esp-2); margin-bottom: var(--esp-4); }
 .sr-busca .busca { flex: 1; min-width: 0; }
 
