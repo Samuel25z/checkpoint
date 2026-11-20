@@ -1,13 +1,13 @@
 # SPEC-20261120-1643: recomendador v2
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-20 16:43
 **Ativada:** 2026-11-20 16:43
-**Concluída:** —
+**Concluída:** 2026-11-20 16:46
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `ac103b5`
 **Keywords:** recomendador, metacritic, gosto, variedade
 **Features:** recomendador
 **Branch:** spec/recomendador-v2
@@ -58,5 +58,5 @@ recomendador/logic.js ganha qualidade(), semelhança Jaccard por etiquetas, filt
 
 ## Critério de aceite
 
-- [ ] Qualidade real, semelhança de gosto, humor como filtro, variedade e sugestão do dia estão corretos | verify: `node --test tests/unit/recomendador.test.js`
-- [ ] Na tela, as 3 sugestões mostram motivos com fatos e "outra sugestão" não repete | verify: `npx playwright test tests/e2e/recomendador.spec.js`
+- [x] Qualidade real, semelhança de gosto, humor como filtro, variedade e sugestão do dia estão corretos (2026-11-20 16:46, commit `ac103b5`, verify: exit 0) | verify: `node --test tests/unit/recomendador.test.js`
+- [x] Na tela, as 3 sugestões mostram motivos com fatos e "outra sugestão" não repete (2026-11-20 16:46, commit `ac103b5`, verify: exit 0) | verify: `npx playwright test tests/e2e/recomendador.spec.js`
