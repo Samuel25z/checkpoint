@@ -106,3 +106,10 @@
 - **Resposta da IA:** arquitetura de módulos plugáveis: cada aba é uma pasta e entra no site com uma linha no registro.
 - **Aplicação:** js/modules/registry.js e a receita "como criar uma aba nova" no README.
 - **Adaptações:** —
+
+## P16 — FPS estimado no "Roda no meu PC?"
+- **Objetivo:** dar mais profundidade ao resultado de cada jogo.
+- **Prompt:** "Você poderia dar também estimativa de quantos FPS roda. Ele tá dando poucas informações. Coloque mais informações para a pessoa conseguir entender mais a profundidade daquilo."
+- **Resposta da IA:** criou uma estimativa de FPS a partir dos requisitos (o recomendado mira cerca de 60 FPS no Alto em 1080p; a placa escala o número, o processador limita o teto e pouca memória tira 15%) e uma página de detalhes por jogo: FPS por qualidade e resolução, comparação peça por peça, o que limita o FPS e qual placa atual resolveria.
+- **Aplicação:** seletor de resolução (1080p, 1440p, 4K), FPS na lista e detalhe ao clicar no jogo.
+- **Adaptações:** o FPS da lista passou a seguir o nível do selo (antes a lista mostrava "Ultra" num jogo marcado "Alto"), e a sugestão de troca prioriza placas que ainda se vendem.
