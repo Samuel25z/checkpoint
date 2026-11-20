@@ -9,7 +9,7 @@
 **Pausada em:** —
 **Commit final:** `28bf50b`
 **Keywords:** roda-no-pc, fps, resolucao, upgrade, detalhes
-**Features:** roda-no-pc
+**Features:** hardware
 **Branch:** spec/roda-fps
 **Programa:** —
 **Workspace:** —

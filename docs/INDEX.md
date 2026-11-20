@@ -11,7 +11,6 @@
 - **hardware** — hardware, requisitos, gpu, cpu, webgl, pc
 - **recomendador** — recomendador, sugestao, etiquetas, humor, trailer
 - **recomps** — recomps, ports, decomp, github, releases, golpe
-- **roda-no-pc** — roda-no-pc, fps, resolucao, upgrade, detalhes
 - **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com
 - **torneio** — torneio, chaveamento, bracket, campeao, eliminacao
 - **wrapped** — wrapped, resumo-anual, estatisticas, stories, card, canvas
