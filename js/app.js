@@ -19,8 +19,14 @@ function aplicarTema(tema) {
   botao.innerHTML = icone(tema === 'escuro' ? 'sol' : 'lua');
   botao.setAttribute('aria-label', `Mudar para o tema ${outro}`);
   botao.title = `Tema ${outro}`;
-  document.querySelector('meta[name="theme-color"]').content = tema === 'escuro' ? '#161a21' : '#f4f5f8';
+  corDaBarra();
 }
+
+/** A barra do navegador no celular acompanha o fundo do visual + tema. */
+function corDaBarra() {
+  requestAnimationFrame(() => { document.querySelector('meta[name="theme-color"]').content = getComputedStyle(raiz).getPropertyValue('--fundo').trim() || '#0d1219'; });
+}
+document.addEventListener('checkpoint:visual', corDaBarra);
 
 function iniciarTema() {
   const salvo = storage.ler('pref:tema');

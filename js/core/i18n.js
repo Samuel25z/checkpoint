@@ -7,6 +7,9 @@ export const IDIOMAS = [{ id: 'pt', rotulo: 'Português' }, { id: 'en', rotulo: 
 export const EN = {
   // casca
   'Início': 'Home', 'Diário': 'Journal', 'Speedrun': 'Speedrun', 'Recomps': 'Recomps', 'Roda no PC?': 'Can I run it?', 'Torneio': 'Tournament', 'Recomenda': 'Picks', 'Wrapped': 'Wrapped',
+  'Visual': 'Look', 'padrão': 'default', 'Menu lateral, magenta e letras de console. O padrão do Checkpoint.': 'Side menu, magenta and console lettering. The Checkpoint default.',
+  'A arte do jogo ocupa a tela, azul e violeta, como um console de sala.': 'Game art fills the screen, blue and violet, like a living-room console.', 'Claro e arredondado, coral e verde-água, botões grandes.': 'Light and rounded, coral and teal, big buttons.',
+  'Continuar jogando': 'Continue playing', 'começou': 'started', 'Conquistas': 'Achievements', 'Última vez': 'Last played','Sua estante': 'Your shelf', 'Ver diário': 'View journal', 'Abrir no diário': 'Open in journal', 'Cronometrar run': 'Time a run', 'conquistas': 'achievements', 'sua nota': 'your rating', 'última vez': 'last played', 'horas': 'hours',
   'Pular para o conteúdo': 'Skip to content', 'Configurações': 'Settings', 'Idioma': 'Language', 'Fechar': 'Close', 'Cancelar': 'Cancel', 'Confirmar': 'Confirm', 'Excluir': 'Delete', 'Editar': 'Edit', 'Salvar': 'Save',
   'Mudar para o tema claro': 'Switch to light theme', 'Mudar para o tema escuro': 'Switch to dark theme', 'Tema claro': 'Light theme', 'Tema escuro': 'Dark theme',
   'Checkpoint · feito por Samuel Mota Ramos e Arthur · Desenvolvimento de Interfaces, UniCEUB Asa Norte · 2026': 'Checkpoint · made by Samuel Mota Ramos and Arthur · Interface Development, UniCEUB Asa Norte · 2026',
@@ -99,6 +102,7 @@ const PADROES_EN = [
   [/^(\d+) de (\d+)$/, '$1 of $2'],
   [/^(\d+(?:,\d)?) de 5 estrelas$/, '$1 out of 5 stars'],
   [/^há (\d+) dias$/, '$1 days ago'], [/^há (\d+) (mês|meses)$/, '$1 month(s) ago'], [/^há (\d+) (ano|anos)$/, '$1 year(s) ago'], [/^hoje$/, 'today'], [/^ontem$/, 'yesterday'],
+  [/^Continuar jogando · (.+)$/, 'Continue playing · $1'], [/^Continuar jogando: (.+)$/, 'Continue playing: $1'], [/^Visual (.+) aplicado$/, '$1 look applied'],
   [/^Parecido com (.+), que você deu ([\d,]+)$/, 'Similar to $1, which you rated $2'], [/^Nota (\d+) no Metacritic$/, 'Metacritic score $1'],
   [/^(\d+) mil recomendações na Steam$/, '$1k recommendations on Steam'], [/^Combina com seu humor: (.+)$/, 'Matches your mood: $1'],
   [/^Seu (\d{4}) até agora$/, 'Your $1 so far'], [/^(\d{4}) até agora$/, '$1 so far'], [/^Sua nota média: (.+)$/, 'Your average rating: $1'], [/^Seu perfil · (.+)$/, 'Your profile · $1'],

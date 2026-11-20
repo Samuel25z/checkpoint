@@ -1,16 +1,60 @@
-.inicio-topo { padding: var(--esp-4) 0 var(--esp-5); }
-.inicio-ola { color: var(--acento); font-weight: 700; margin-bottom: 4px; }
-.inicio-topo h1 { font-size: clamp(2.2rem, 1.4rem + 3.4vw, 3.6rem); letter-spacing: -.03em; }
+/* Início */
+.banner {
+  position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: flex-end; justify-content: space-between; gap: var(--esp-5);
+  min-height: 320px; padding: 32px; border-radius: var(--raio-g); background: var(--superficie); border: 1px solid var(--linha);
+}
+.banner-fundo { position: absolute; inset: 0; z-index: -1; }
+.banner-fundo .arte { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.banner-fundo .arte.desfocada { filter: blur(26px) saturate(1.3); transform: scale(1.2); opacity: .7; }
+.banner-fundo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--fundo) 12%, color-mix(in srgb, var(--fundo) 70%, transparent) 45%, transparent 80%), linear-gradient(0deg, color-mix(in srgb, var(--fundo) 80%, transparent), transparent 55%); }
+.banner-texto { display: grid; gap: 12px; max-width: 620px; }
+.banner-kicker { font: 700 .82rem/1 var(--fonte-titulo); letter-spacing: .12em; text-transform: uppercase; color: var(--acento); }
+.banner-titulo, .banner h1 { font: 700 clamp(2rem, 1.2rem + 3vw, 3.4rem)/1 var(--fonte-titulo); text-transform: var(--titulo-caixa); letter-spacing: var(--titulo-espaco); }
+.banner-sub { color: var(--texto-2); max-width: 46ch; }
+.banner-dados { display: flex; gap: 28px; margin: 4px 0 0; flex-wrap: wrap; }
+.banner-dados div { display: flex; flex-direction: column-reverse; }
+.banner-dados dt { font-size: .8rem; color: var(--texto-2); }
+.banner-dados dd { margin: 0; font: 700 1.5rem/1.1 var(--fonte-titulo); }
+.banner-acoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+.btn-vidro { background: color-mix(in srgb, var(--superficie) 55%, transparent); backdrop-filter: blur(8px); border-color: color-mix(in srgb, var(--texto) 25%, transparent); }
+.anel { flex: none; width: 116px; height: 116px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--acento) calc(var(--pct) * 1%), color-mix(in srgb, var(--texto) 12%, transparent) 0); }
+.anel span { width: 92px; height: 92px; border-radius: 50%; display: grid; place-content: center; text-align: center; background: var(--fundo); font: 700 1.4rem/1 var(--fonte-titulo); }
+.anel small { display: block; margin-top: 4px; font: 500 .66rem/1 var(--fonte-texto); color: var(--texto-2); letter-spacing: .04em; }
+@media (max-width: 640px) { .banner { min-height: 300px; padding: 22px; flex-direction: column; align-items: stretch; } .anel { position: absolute; top: 18px; right: 18px; width: 84px; height: 84px; } .anel span { width: 66px; height: 66px; font-size: 1.05rem; } }
 
-.atalhos { display: grid; gap: var(--esp-3); grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.estante-grade { display: grid; gap: 14px; grid-template-columns: repeat(8, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .estante-grade { grid-template-columns: repeat(6, minmax(0, 1fr)); } .estante-grade > :nth-child(n+7) { display: none; } }
+@media (max-width: 640px) { .estante-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); } .estante-grade > :nth-child(n+7) { display: none; } }
+
+.atalhos { display: grid; gap: var(--esp-3); grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .atalho {
   display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: var(--raio-g);
   background: var(--superficie); border: 1px solid var(--linha); color: var(--texto); text-decoration: none;
-  transition: transform var(--medio) var(--curva), border-color var(--rapido), box-shadow var(--medio);
+  transition: transform var(--medio) var(--curva), border-color var(--rapido);
 }
-.atalho:hover, .atalho:focus-visible { transform: translateY(-2px); border-color: var(--linha-forte); box-shadow: var(--sombra); }
-.atalho-icone { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--acento-suave); color: var(--acento); flex: none; }
-.atalho-icone .ic { width: 22px; height: 22px; }
+.atalho:hover, .atalho:focus-visible { transform: translateY(-2px); border-color: var(--acento); }
+.atalho-icone { display: grid; place-items: center; width: 42px; height: 42px; border-radius: var(--raio); background: var(--acento-suave); color: var(--acento); flex: none; }
+.atalho-icone .ic { width: 21px; height: 21px; }
 .atalho-texto { display: grid; line-height: 1.3; }
-.atalho-texto strong { font-family: var(--fonte-titulo); font-size: 1.05rem; }
-.atalho-texto span { color: var(--texto-3); font-size: .86rem; }
+.atalho-texto strong { font-family: var(--fonte-titulo); font-size: 1rem; text-transform: var(--titulo-caixa); letter-spacing: var(--titulo-espaco); }
+.atalho-texto span { color: var(--texto-3); font-size: .85rem; }
+
+/* ----- Palco: banner sangra para fora, título enorme, estante em quadrados ----- */
+:root[data-visual='palco'] .aba-inicio .banner { min-height: min(62vh, 560px); margin: calc(-1 * var(--esp-6)) calc(50% - 50vw) 0; border-radius: 0; border: 0; padding: 48px max(24px, calc((100vw - var(--largura)) / 2)); background: transparent; }
+:root[data-visual='palco'] .aba-inicio .banner-titulo { font-size: clamp(2.6rem, 1.4rem + 4.5vw, 5rem); font-weight: 800; }
+:root[data-visual='palco'] .banner-kicker { color: var(--acento); letter-spacing: .06em; }
+:root[data-visual='palco'] .banner .btn-primario { background: #fff; border-color: #fff; color: #06080f; }
+:root[data-visual='palco'] .estante-grade .capa { aspect-ratio: 1; }
+:root[data-visual='palco'] .estante-grade > :first-child .capa { box-shadow: 0 0 0 3px #fff, 0 0 40px color-mix(in srgb, var(--acento) 45%, transparent); }
+:root[data-visual='palco'][data-tema='claro'] .banner .btn-primario { background: var(--acento); border-color: var(--acento); color: #fff; }
+
+/* ----- Joy: banner em cartão claro, atalhos como botões redondos ----- */
+:root[data-visual='joy'] .banner { border: 0; box-shadow: 0 10px 30px rgba(27, 29, 36, .08); }
+:root[data-visual='joy'] .estante-grade .capa { aspect-ratio: 1; }
+:root[data-visual='joy'] .atalhos { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+:root[data-visual='joy'] .atalho { flex-direction: column; text-align: center; background: transparent; border: 0; padding: 8px; }
+:root[data-visual='joy'] .atalho:hover { transform: translateY(-3px); }
+:root[data-visual='joy'] .atalho-icone { width: 68px; height: 68px; border-radius: 50%; background: var(--superficie); box-shadow: 0 6px 16px rgba(27, 29, 36, .1); }
+:root[data-visual='joy'] .atalho:nth-child(even) .atalho-icone { color: var(--acento-2); }
+:root[data-visual='joy'] .atalho-texto span { display: none; }
+:root[data-visual='joy'] .atalho-texto strong { font-size: .9rem; font-weight: 600; }

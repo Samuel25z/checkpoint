@@ -1,7 +1,7 @@
 // Diário — registrar o que você joga e zera, com capa automática.
 import { h, esc, usarEstilo, cabecalho, vazio, carregando, erro, modal, confirmar, capa, dataCurta } from '../../core/ui.js';
 import { icone } from '../../core/icons.js';
-import { JOGOS, POR_ID, imagens, buscarNoCatalogo } from '../../games.js';
+import { JOGOS, POR_ID, imagens, buscarNoCatalogo, arteDoRegistro } from '../../games.js';
 import { wikipedia } from '../../services/wikipedia.js';
 import { STATUS, ROTULO_STATUS, PLATAFORMAS, ORDENS, validarRegistro, filtrar, ordenar, contar, idYoutube, textoAtividade, textoNota } from './logic.js';
 import { lerJogos, lerAtividades, salvarJogo, removerJogo } from './dados.js';
@@ -147,16 +147,29 @@ async function abrirBusca(ctx) {
 async function abrirDetalhe(j, ctx, redesenhar) {
   const resumo = h('p', { class: 'detalhe-resumo' }, j.resumo || '');
   const video = idYoutube(j.video);
+  // topo com a arte do jogo: banner largo da Steam, senão a capa desfocada, senão o padrão da marca
+  const arte = arteDoRegistro(j);
+  const fundo = h('div', { class: `detalhe-arte ${arte.hero || arte.capa ? '' : 'padrao-hex'}`, 'aria-hidden': 'true' });
+  if (arte.hero || arte.capa) {
+    const img = h('img', { src: arte.hero || arte.capa, alt: '', class: arte.hero ? '' : 'desfocada', referrerpolicy: 'no-referrer' });
+    img.addEventListener('error', () => { if (arte.hero && arte.capa && !img.classList.contains('desfocada')) { img.src = arte.capa; img.className = 'desfocada'; } else { img.remove(); fundo.classList.add('padrao-hex'); } });
+    fundo.append(img);
+  }
   const corpo = h('div', { class: 'detalhe' },
-    h('div', { class: 'detalhe-lado' }, capa(j.capa, j.nome, 'capa-detalhe')),
+    h('div', { class: 'detalhe-topo' }, fundo,
+      capa(arte.capa, j.nome, 'capa-detalhe'),
+      h('div', { class: 'detalhe-cabeca' },
+        h('div', { class: 'detalhe-selos' }, selo(j.status), j.favorito ? h('span', { class: 'selo fav' }, h('span', { html: icone('coracao') }), 'Favorito') : null),
+        h('h3', { class: 'detalhe-nome' }, j.nome),
+        estrelas(j.nota))),
     h('div', { class: 'detalhe-info' },
-      h('div', { class: 'detalhe-selos' }, selo(j.status), j.favorito ? h('span', { class: 'selo fav' }, h('span', { html: icone('coracao') }), 'Favorito') : null),
-      estrelas(j.nota),
       h('dl', { class: 'detalhe-dados' },
-        j.plataforma ? [h('dt', {}, 'Plataforma'), h('dd', {}, j.plataforma)] : null,
-        [h('dt', {}, 'Horas'), h('dd', {}, j.horas ? `${String(j.horas).replace('.', ',')} h` : '—')],
-        j.inicio ? [h('dt', {}, 'Começou'), h('dd', {}, dataCurta(j.inicio))] : null,
-        j.fim ? [h('dt', {}, 'Zerou'), h('dd', {}, dataCurta(j.fim))] : null),
+        j.plataforma ? h('div', {}, h('dt', {}, 'Plataforma'), h('dd', {}, j.plataforma)) : null,
+        h('div', {}, h('dt', {}, 'Horas'), h('dd', {}, j.horas ? `${String(j.horas).replace('.', ',')} h` : '—')),
+        j.conquistas?.total ? h('div', {}, h('dt', {}, 'Conquistas'), h('dd', {}, `${j.conquistas.feitas}/${j.conquistas.total}`)) : null,
+        j.inicio ? h('div', {}, h('dt', {}, 'Começou'), h('dd', {}, dataCurta(j.inicio))) : null,
+        j.fim ? h('div', {}, h('dt', {}, 'Zerou'), h('dd', {}, dataCurta(j.fim))) : null,
+        j.ultimaVez ? h('div', {}, h('dt', {}, 'Última vez'), h('dd', {}, dataCurta(j.ultimaVez))) : null),
       j.resenha ? h('blockquote', { class: 'detalhe-resenha' }, j.resenha) : null,
       resumo,
       video ? h('div', { class: 'video' }, h('iframe', { src: `https://www.youtube-nocookie.com/embed/${video}`, title: `Vídeo de ${j.nome}`, loading: 'lazy', allow: 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen', allowfullscreen: true })) : null));
@@ -235,6 +248,10 @@ export default {
     usarEstilo('js/modules/diario/estilo.css');
     desenhar(el, ctx);
     if (ctx.params[0] === 'adicionar') el.querySelector('#botao-adicionar')?.click();
+    else if (ctx.params[0]) {
+      const j = lerJogos(ctx.storage).find((x) => x.id === ctx.params[0]);
+      if (j) abrirDetalhe(j, ctx, () => desenhar(el, ctx));
+    }
   },
   painelInicio(ctx) {
     usarEstilo('js/modules/diario/estilo.css');

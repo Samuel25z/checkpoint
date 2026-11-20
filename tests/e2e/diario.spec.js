@@ -79,8 +79,9 @@ test.describe('fluxo', () => {
 
   test('o jogo em andamento aparece em "Continuar jogando" na Início', async ({ page }) => {
     await abrir(page, 'inicio', { dados: { 'diario:jogos': [{ id: 'z', nome: 'Celeste', status: 'jogando', nota: null, horas: 2, atualizadoEm: '2026-11-01' }] } });
-    await expect(page.locator('.painel-diario')).toContainText('Continuar jogando');
-    await expect(page.locator('.painel-diario .carta')).toContainText('Celeste');
+    await expect(page.locator('.banner')).toContainText('Continuar jogando');
+    await expect(page.locator('.banner')).toContainText('Celeste');
+    await expect(page.locator('.estante .carta')).toContainText('Celeste');
   });
 });
 

@@ -83,7 +83,9 @@ export function modal({ titulo, conteudo, acoes = [{ rotulo: 'Fechar', valor: nu
     fundo.addEventListener('mousedown', (e) => { if (e.target === fundo) fechar(null); });
     document.addEventListener('keydown', teclas);
     document.body.append(fundo);
-    (caixa.querySelector('.modal-corpo input, .modal-corpo select, .modal-corpo textarea') || caixa.querySelector('.modal-acoes .btn-primario, .modal-acoes .btn') || caixa).focus();
+    // foco inicial: campo do formulário, senão a ação principal; nunca uma ação destrutiva
+    (caixa.querySelector('.modal-corpo input, .modal-corpo select, .modal-corpo textarea') || caixa.querySelector('.modal-acoes .btn-primario')
+      || caixa.querySelector('.modal-acoes .btn:not(.btn-perigo)') || caixa.querySelector('.modal-topo .btn-icone') || caixa).focus();
     modal.fecharAtual = fechar;
   });
 }

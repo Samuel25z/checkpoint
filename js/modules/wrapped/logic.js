@@ -100,6 +100,7 @@ export function estatisticas(diario, periodoOuAno, catalogo = [], agora = new Da
     plataforma: plataforma?.valor || null,
     mes: mes ? MESES[Number(mes.valor)] : null,
     capasZerados: zerados.slice(0, 6).map((r) => ({ nome: r.nome, capa: r.capa || null })),
+    capas: [...lista].sort((a, b) => (b.horas || 0) - (a.horas || 0)).slice(0, 12).map((r) => ({ nome: r.nome, capa: r.capa || null })),
     perfil: perfil({ horas, zerados: zerados.length, platinados: lista.filter((r) => r.status === 'platinado').length, jogos: lista.length, genero: genero?.valor })
   };
 }

@@ -1,11 +1,28 @@
 /* Wrapped */
 .w-palco { position: relative; width: min(420px, 100%); aspect-ratio: 9 / 16; max-height: calc(100vh - 160px); margin: 0 auto; border-radius: 18px; overflow: hidden; color: #121319; background: var(--fundo-w); transition: background 500ms var(--curva); user-select: none; touch-action: manipulation; }
 @media (max-width: 760px) { .w-palco { max-height: calc(100vh - 220px); } }
-.tela-a { --fundo-w: #ffb21a; } .tela-b { --fundo-w: #45c08a; } .tela-c { --fundo-w: #b39cff; } .tela-d { --fundo-w: #f1efe9; }
-.tela-e { --fundo-w: #e46b7d; } .tela-f { --fundo-w: #5bc0eb; } .tela-g { --fundo-w: #f0b43c; } .tela-h { --fundo-w: #121319; color: #f1efe9; }
+/* cores da marca Checkpoint em cada tela (como o Spotify usa as dele) + hexágonos ao fundo */
+.tela-a { --fundo-w: #ff3d7f; --hex: rgba(26, 6, 16, .13); color: #1a0610; }
+.tela-b { --fundo-w: #0d1219; --hex: rgba(255, 61, 127, .2); color: #f2f5fa; }
+.tela-c { --fundo-w: #ffb547; --hex: rgba(40, 22, 0, .11); color: #281600; }
+.tela-d, .tela-f { --fundo-w: #0d1219; --hex: rgba(255, 255, 255, .08); color: #f2f5fa; }
+.tela-e { --fundo-w: #c9a7ff; --hex: rgba(30, 12, 60, .11); color: #1e0c3c; }
+.tela-g { --fundo-w: #3fdc98; --hex: rgba(0, 40, 24, .11); color: #00281a; }
+.tela-h { --fundo-w: #0d1219; --hex: rgba(255, 61, 127, .22); color: #f2f5fa; }
+/* hexágonos da marca: a cor vem de --hex e o desenho vem da máscara */
+.w-palco::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background-color: var(--hex); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='96' viewBox='0 0 84 96'%3E%3Cpath d='M42 3 79 24.5v47L42 93 5 71.5v-47Z' fill='none' stroke='black' stroke-width='3'/%3E%3C/svg%3E") 0 0 / 84px 96px repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='96' viewBox='0 0 84 96'%3E%3Cpath d='M42 3 79 24.5v47L42 93 5 71.5v-47Z' fill='none' stroke='black' stroke-width='3'/%3E%3C/svg%3E") 0 0 / 84px 96px repeat; }
+.com-arte::before { opacity: .5; }
+.w-tela { z-index: 2 !important; }
+.w-fundo { position: absolute; inset: 0; z-index: 0; }
+.w-fundo-arte { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; animation: w-zoom 9s linear both; }
+.com-arte .w-fundo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13, 18, 25, .96) 18%, rgba(13, 18, 25, .55) 60%, rgba(13, 18, 25, .3)); }
+.w-mosaico { position: absolute; inset: -10%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; transform: rotate(-12deg); opacity: .28; }
+.w-mosaico span { aspect-ratio: 3 / 4; border-radius: 6px; background: #243040 center / cover; }
+.w-mosaico::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, transparent, #0d1219 75%); }
+@keyframes w-zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+.tela-b .w-numero, .tela-h .w-perfil { color: #ff3d7f; }
 .w-barras { position: absolute; z-index: 3; top: 12px; left: 12px; right: 12px; display: flex; gap: 4px; }
-.w-barras span { flex: 1; height: 3px; border-radius: 3px; background: rgba(0, 0, 0, .2); overflow: hidden; }
-.tela-h .w-barras span { background: rgba(255, 255, 255, .2); }
+.w-barras span { flex: 1; height: 3px; border-radius: 3px; background: color-mix(in srgb, currentColor 25%, transparent); overflow: hidden; }
 .w-barras i { display: block; height: 100%; background: currentColor; transform: scaleX(0); transform-origin: left; }
 .w-tela { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 48px 28px 28px; }
 .w-tela > * { animation: w-entra 520ms var(--curva) both; }

@@ -86,6 +86,20 @@
 - **Aplicação:** botão "Importar da Steam" no Diário, com tela de revisão, e um Cloudflare Worker que guarda a chave.
 - **Adaptações:** "Coisas que não deu pra fazer, você não faz" — o grupo vetou status por suposição. Só fatos viram sugestão (0 h, últimas 2 semanas, 100% das conquistas), e o resto a pessoa escolhe, um por um ou em massa.
 
+## P14 — Identidade de verdade, em três visuais
+- **Objetivo:** tirar a cara de "site feito por IA" e criar uma marca.
+- **Prompt:** "Quando eu olho para esse site, eu vejo ele ainda com design meio retrógrado... meio cara de IA... a logo não ficou legal, tá parecendo um PNG."
+- **Resposta da IA:** em vez de descrever, desenhou três direções completas com telas reais e capas de jogos, cada uma com logo própria: Palco (inspirada no PS5), Joy (no Switch) e Deck (no Steam Deck).
+- **Aplicação:** Deck virou o visual padrão (menu lateral, magenta, letras de console e logo hexagonal rosa e branca). Palco e Joy ficaram como opção em Configurações. O tema claro/escuro vale nos três.
+- **Adaptações:** "Gostei das três, ficou insano" — o grupo decidiu manter as três como escolha da pessoa, em vez de descartar duas.
+
+## P15 — Sugestões que fazem sentido
+- **Objetivo:** parar de sugerir "qualquer coisa".
+- **Prompt:** "Agora você está me sugerindo um God of War, Undertale e Celeste. A gente tem que dar uma melhorada nessa sugestão."
+- **Resposta da IA:** explicou que, sem notas suficientes, os jogos empatavam e a escolha virava sorteio. Passou a usar a nota real do Metacritic e as recomendações da Steam, o humor como filtro, a semelhança com os jogos bem avaliados e a variedade de gênero.
+- **Aplicação:** recomendador v2, com motivos baseados em fatos ("Nota 95 no Metacritic", "Parecido com Hollow Knight, que você deu 5").
+- **Adaptações:** o grupo pediu que isso ficasse por último, por ser o mais complexo.
+
 ## P05 — Projeto evolutivo
 - **Objetivo:** que o site possa crescer depois do trabalho.
 - **Prompt:** "Faz um projeto estruturado para evoluir... lançando novas abas, novas atualizações."

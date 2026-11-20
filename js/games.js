@@ -163,6 +163,13 @@ export function imagens(j) {
   return { capa: `${base}/library_600x900.jpg`, frame: `${base}/header.jpg` };
 }
 
+/** Artes de um registro do diário: banner largo (Steam) e capa, quando existirem. */
+export function arteDoRegistro(r) {
+  const appid = r?.steamAppId || POR_ID[r?.jogoId]?.steam || null;
+  const base = appid ? `https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/${appid}` : null;
+  return { hero: base ? `${base}/library_hero.jpg` : null, capa: r?.capa || (base ? `${base}/library_600x900.jpg` : null) };
+}
+
 /** Link para o trailer (busca no YouTube, sempre funciona). */
 export function linkTrailer(j) {
   return `https://www.youtube.com/results?search_query=${encodeURIComponent(j.nome + ' trailer oficial')}`;

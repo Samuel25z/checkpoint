@@ -14,10 +14,11 @@ body {
 }
 .trocando-tema * { transition: background-color var(--medio), color var(--medio), border-color var(--medio) !important; }
 img { max-width: 100%; display: block; }
-h1, h2, h3, h4 { font-family: var(--fonte-titulo); line-height: 1.12; margin: 0; letter-spacing: -.02em; }
-h1 { font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.3rem); font-weight: 800; }
+h1, h2, h3, h4 { font-family: var(--fonte-titulo); line-height: 1.1; margin: 0; letter-spacing: var(--titulo-espaco); }
+h1, h2 { text-transform: var(--titulo-caixa); }
+h1 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem); font-weight: 700; }
 h2 { font-size: 1.12rem; font-weight: 700; }
-h3 { font-size: .98rem; font-weight: 700; letter-spacing: -.01em; }
+h3 { font-size: 1rem; font-weight: 700; letter-spacing: 0; }
 p { margin: 0; }
 a { color: var(--acento); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -37,11 +38,16 @@ button, input, select, textarea { font: inherit; color: inherit; }
   backdrop-filter: saturate(1.4) blur(12px);
   border-bottom: 1px solid var(--linha);
 }
-.marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; font: 800 1.02rem/1 var(--fonte-titulo); letter-spacing: -.03em; flex: none; }
-.marca-icone { width: 30px; height: 30px; }
-.marca-fundo { fill: var(--acento); }
-.marca-traco { stroke: var(--acento-texto); stroke-width: 2.6; stroke-linecap: round; }
-.marca-bandeira { fill: var(--acento-texto); }
+/* logo: hexágono rosa (cor fixa da marca em todos os visuais) com bandeira de checkpoint */
+.marca { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; font: 700 1.08rem/1 var(--fonte-titulo); letter-spacing: .07em; text-transform: uppercase; flex: none; }
+:root[data-visual='palco'] .marca, :root[data-visual='joy'] .marca { text-transform: none; letter-spacing: -.02em; font-weight: 800; font-size: 1.2rem; }
+.marca-icone { width: 34px; height: 34px; flex: none; }
+.marca-hex { fill: none; stroke: #ff3d7f; stroke-width: 2.6; stroke-linejoin: round; }
+.marca-mastro { stroke: var(--texto); stroke-width: 2.6; stroke-linecap: round; }
+.marca-bandeira { fill: #ff3d7f; }
+.marca:hover .marca-bandeira { animation: tremular 600ms var(--curva); }
+@keyframes tremular { 40% { transform: skewY(-8deg); } 70% { transform: skewY(4deg); } }
+.marca-bandeira { transform-origin: 13px 14px; }
 .nav { flex: 1; min-width: 0; }
 .nav ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; overflow-x: auto; scrollbar-width: none; }
 .nav ul::-webkit-scrollbar { display: none; }
@@ -66,6 +72,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .botao-conta[data-estado='erro'] .conta-ponto { background: var(--perigo); }
 .conta-info { display: grid; gap: 10px; }
 .config { display: grid; gap: var(--esp-5); }
+.vis-opcoes { display: grid; gap: 10px; }
+.vis-opcao { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; align-items: center; padding: 10px; border-radius: var(--raio-g); border: 1px solid var(--linha); background: var(--superficie); color: inherit; text-align: left; cursor: pointer; }
+.vis-opcao:hover { border-color: var(--linha-forte); }
+.vis-opcao[aria-checked='true'] { border-color: var(--acento); box-shadow: 0 0 0 1px var(--acento); }
+.vis-texto { display: grid; gap: 2px; font-size: .88rem; color: var(--texto-2); }
+.vis-texto strong { color: var(--texto); font-size: 1rem; display: flex; gap: 8px; align-items: center; }
+.vis-padrao { font-size: .66rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: var(--acento-suave); color: var(--acento); text-transform: uppercase; letter-spacing: .06em; }
+.vis-mini { position: relative; display: block; height: 72px; border-radius: 10px; overflow: hidden; background: var(--m-fundo); border: 1px solid rgba(127, 127, 127, .25); }
+.vis-mini i { position: absolute; border-radius: 3px; }
+.vis-mini .m-trilho { left: 0; top: 0; bottom: 0; width: 22px; background: rgba(0, 0, 0, .35); }
+.vis-mini .m-banner { left: 28px; right: 6px; top: 6px; height: 28px; background: linear-gradient(90deg, var(--m-a), var(--m-b)); opacity: .85; }
+.vis-mini .m-c1, .vis-mini .m-c2, .vis-mini .m-c3 { top: 40px; width: 18px; height: 24px; background: rgba(127, 127, 127, .45); }
+.vis-mini .m-c1 { left: 28px; } .vis-mini .m-c2 { left: 50px; } .vis-mini .m-c3 { left: 72px; }
+.vis-palco .m-trilho { display: none; } .vis-palco .m-banner { left: 0; right: 0; top: 0; height: 72px; opacity: .55; border-radius: 0; }
+.vis-palco .m-c1, .vis-palco .m-c2, .vis-palco .m-c3 { top: 42px; } .vis-palco .m-c1 { left: 8px; } .vis-palco .m-c2 { left: 30px; } .vis-palco .m-c3 { left: 52px; }
+.vis-joy .m-trilho { display: none; } .vis-joy .m-banner { left: 8px; right: 8px; top: 8px; height: 30px; border-radius: 8px; }
+.vis-joy .m-c1, .vis-joy .m-c2, .vis-joy .m-c3 { top: 46px; width: 16px; height: 16px; border-radius: 50%; background: var(--m-a); }
+.vis-joy .m-c1 { left: 20px; } .vis-joy .m-c2 { left: 44px; background: var(--m-b); } .vis-joy .m-c3 { left: 68px; }
+@media (max-width: 520px) { .vis-opcao { grid-template-columns: 90px minmax(0, 1fr); } }
 .config-controle { display: flex; gap: 12px; padding: 14px; border-radius: 10px; background: var(--superficie-2); }
 .config-controle .ic { width: 26px; height: 26px; color: var(--texto-2); flex: none; }
 .config-controle p { font-size: .9rem; margin-top: 4px; }
@@ -187,7 +212,7 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 
 /* ---------- capas como caixinhas de jogo (faixa no topo = status) ---------- */
 .capa {
-  position: relative; aspect-ratio: 3 / 4; border-radius: 6px; overflow: hidden;
+  position: relative; aspect-ratio: 3 / 4; border-radius: var(--raio-capa); overflow: hidden;
   background: linear-gradient(160deg, hsl(var(--tom) 42% 30%), hsl(calc(var(--tom) + 40) 46% 16%));
   display: grid; place-items: center;
 }
@@ -263,6 +288,62 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .modo-controle :focus { outline: none; box-shadow: 0 0 0 3px var(--fundo), 0 0 0 6px var(--acento), 0 0 22px 4px color-mix(in srgb, var(--acento) 45%, transparent) !important; border-radius: 10px; }
 .modo-controle .carta:focus .capa { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 0 3px var(--acento), 0 18px 30px -12px rgba(0, 0, 0, .8); }
 .modo-controle .carta:focus { box-shadow: none !important; }
+
+/* =====================================================================
+   VISUAIS — Deck (padrão): menu lateral · Palco: arte em tela cheia · Joy: claro e arredondado
+   ===================================================================== */
+/* padrão da marca quando não há arte de jogo: hexágonos rosa sobre a superfície */
+.padrao-hex { background-color: var(--superficie); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='64' viewBox='0 0 56 64'%3E%3Cpath d='M28 2 52 16v32L28 62 4 48V16Z' fill='none' stroke='%23ff3d7f' stroke-opacity='.18' stroke-width='2'/%3E%3C/svg%3E"); background-size: 56px 64px; }
+.padrao-hex::after { content: ''; position: absolute; inset: 0; background: radial-gradient(600px 300px at 85% 20%, color-mix(in srgb, var(--acento) 30%, transparent), transparent 70%), linear-gradient(90deg, var(--superficie) 20%, transparent 90%); }
+
+:root[data-visual='deck'] { --trilho-fundo: #0a0e14; }
+:root[data-visual='deck'][data-tema='claro'] { --trilho-fundo: #ffffff; }
+
+@media (min-width: 1000px) {
+  :root[data-visual='deck'] body { padding-left: var(--trilho); }
+  :root[data-visual='deck'] .topo {
+    position: fixed; inset: 0 auto 0 0; width: var(--trilho); height: auto; z-index: 30;
+    flex-direction: column; align-items: stretch; gap: var(--esp-5); padding: 22px 16px 18px;
+    background: var(--trilho-fundo); backdrop-filter: none; border-bottom: 0; border-right: 1px solid var(--linha);
+  }
+  :root[data-visual='deck'] .marca { padding: 0 6px; }
+  :root[data-visual='deck'] .nav { flex: 1; overflow-y: auto; }
+  :root[data-visual='deck'] .nav ul { flex-direction: column; gap: 4px; overflow: visible; }
+  :root[data-visual='deck'] .nav-item { height: auto; padding: 11px 14px; border-radius: var(--raio); font-size: .95rem; color: var(--texto-2); gap: 12px; }
+  :root[data-visual='deck'] .nav-item .ic { display: block; width: 18px; height: 18px; }
+  :root[data-visual='deck'] .nav-item::after { display: none; }
+  :root[data-visual='deck'] .nav-item:hover { background: var(--superficie-2); color: var(--texto); }
+  :root[data-visual='deck'] .nav-item.ativo { background: var(--superficie); color: var(--texto); box-shadow: inset 3px 0 0 var(--acento); }
+  :root[data-visual='deck'] .nav-item.ativo .ic { color: var(--acento); }
+  :root[data-visual='deck'] .topo-acoes { justify-content: space-between; padding: 8px; border-radius: var(--raio-g); background: var(--superficie); border: 1px solid var(--linha); }
+  :root[data-visual='deck'] .palco { max-width: calc(var(--largura) + 64px); padding: var(--esp-6) 32px var(--esp-7); }
+}
+
+/* Palco: brilho de palco no fundo, menu de texto grande */
+:root[data-visual='palco'] body { background-image: radial-gradient(1200px 520px at 85% -10%, color-mix(in srgb, var(--acento-2) 16%, transparent), transparent 70%), radial-gradient(900px 420px at -10% 10%, color-mix(in srgb, var(--acento) 12%, transparent), transparent 70%); background-attachment: fixed; }
+:root[data-visual='palco'] .topo { background: color-mix(in srgb, var(--fundo) 70%, transparent); border-bottom-color: transparent; }
+:root[data-visual='palco'] .nav-item { font-size: 1rem; font-weight: 500; }
+:root[data-visual='palco'] .nav-item::after { background: var(--texto); }
+
+/* Joy: claro por natureza, cantos grandes, sombras macias */
+:root[data-visual='joy'] body { background-image: none; }
+:root[data-visual='joy'] .topo { background: color-mix(in srgb, var(--fundo) 90%, transparent); border-bottom-color: transparent; }
+:root[data-visual='joy'] .nav-item.ativo { color: var(--acento); }
+:root[data-visual='joy'] .nav-item::after { background: var(--acento-2); height: 4px; }
+:root[data-visual='joy'] .painel, :root[data-visual='joy'] .modal { box-shadow: 0 10px 30px rgba(27, 29, 36, .08); }
+
+/* selo de status nas capas, por visual */
+:root[data-visual='deck'] .faixa {
+  top: auto; bottom: 8px; left: 8px; right: auto; height: auto; padding: 4px 8px; gap: 5px; border: 0; border-radius: 4px;
+  background: rgba(10, 14, 20, .86); color: var(--cor); font-size: .6rem;
+}
+:root[data-visual='deck'] .capa:has(.faixa) img, :root[data-visual='joy'] .capa:has(.faixa) img, :root[data-visual='palco'] .capa:has(.faixa) img { top: 0; height: 100%; }
+:root[data-visual='palco'] .faixa { top: 8px; left: auto; right: 8px; height: 22px; width: auto; padding: 0 8px; border: 0; border-radius: 999px; background: rgba(6, 8, 15, .7); backdrop-filter: blur(6px); color: #fff; font-size: .58rem; }
+:root[data-visual='palco'] .faixa::before { box-shadow: 0 0 10px var(--cor); }
+:root[data-visual='joy'] .faixa { top: auto; bottom: 10px; left: 10px; right: auto; height: 24px; padding: 0 10px; border: 0; border-radius: 999px; background: var(--cor); color: #fff; font-size: .6rem; }
+:root[data-visual='joy'] .faixa::before { background: #fff; box-shadow: none; }
+:root[data-visual='palco'] .carta:hover .capa, :root[data-visual='palco'] .carta:focus-visible .capa { box-shadow: 0 0 0 3px #fff, 0 0 40px color-mix(in srgb, var(--acento) 45%, transparent); }
+:root[data-visual='joy'] .carta:hover .capa, :root[data-visual='joy'] .carta:focus-visible .capa { box-shadow: 0 0 0 4px var(--acento-2), var(--sombra); }
 
 /* ---------- celular: filtros rolam para o lado em vez de quebrar linha ---------- */
 @media (max-width: 760px) {
