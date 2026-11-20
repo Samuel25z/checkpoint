@@ -87,3 +87,99 @@ export function validarPc(pc) {
   if (!RAMS.includes(Number(pc.ram))) erros.ram = 'Escolha a memória.';
   return { ok: !Object.keys(erros).length, erros, valor: { ...pc, nome: String(pc.nome || '').trim(), ram: Number(pc.ram) } };
 }
+
+/* ---------- FPS estimado ---------- */
+// Base: o requisito recomendado mira ~60 FPS no Alto em 1080p. A placa escala o FPS pela pontuação,
+// o processador limita o teto e memória abaixo do recomendado tira 15%. É estimativa, não benchmark.
+export const QUALIDADES = [
+  { id: 'baixo', rotulo: 'Baixo', fator: 1.6 },
+  { id: 'medio', rotulo: 'Médio', fator: 1.25 },
+  { id: 'alto', rotulo: 'Alto', fator: 1 },
+  { id: 'ultra', rotulo: 'Ultra', fator: 0.75 }
+];
+export const RESOLUCOES = [
+  { id: '1080p', rotulo: '1080p', fator: 1 },
+  { id: '1440p', rotulo: '1440p', fator: 0.65 },
+  { id: '4k', rotulo: '4K', fator: 0.35 }
+];
+const FPS_TETO = 240;
+
+/** FPS estimado (inteiro) ou null se não roda / sem dados. */
+export function estimarFps(pc, requisitos, { qualidade = 'alto', resolucao = '1080p' } = {}) {
+  if (!requisitos) return null;
+  const { nivel } = classificar(pc, requisitos);
+  if (!nivel || nivel === 'nao') return null;
+  const q = QUALIDADES.find((x) => x.id === qualidade)?.fator ?? 1;
+  const r = RESOLUCOES.find((x) => x.id === resolucao)?.fator ?? 1;
+  const gpu = 60 * (GPUS[pc.gpu] / GPUS[requisitos.rec.gpu]) * q * r;
+  // o processador quase não liga para qualidade/resolução: teto fixo pelo quanto ele passa do recomendado
+  const cpu = 60 * 1.4 * (CPUS[pc.cpu] / CPUS[requisitos.rec.cpu]);
+  const ram = pc.ram < requisitos.rec.ram ? 0.85 : 1;
+  return Math.max(1, Math.min(FPS_TETO, Math.round(Math.min(gpu, cpu) * ram)));
+}
+
+/** Quem limita o FPS naquela combinação: 'gpu' ou 'cpu'. */
+export function limitante(pc, requisitos, opcoes = {}) {
+  const q = QUALIDADES.find((x) => x.id === (opcoes.qualidade || 'alto'))?.fator ?? 1;
+  const r = RESOLUCOES.find((x) => x.id === (opcoes.resolucao || '1080p'))?.fator ?? 1;
+  const gpu = 60 * (GPUS[pc.gpu] / GPUS[requisitos.rec.gpu]) * q * r;
+  const cpu = 60 * 1.4 * (CPUS[pc.cpu] / CPUS[requisitos.rec.cpu]);
+  return gpu <= cpu ? 'gpu' : 'cpu';
+}
+
+/** Tabela qualidade × resolução. */
+export function tabelaFps(pc, requisitos) {
+  return QUALIDADES.map((q) => ({ ...q, fps: Object.fromEntries(RESOLUCOES.map((r) => [r.id, estimarFps(pc, requisitos, { qualidade: q.id, resolucao: r.id })])) }));
+}
+
+/** FPS na qualidade do nível do jogo (Baixo/Médio/Alto/Ultra), para a lista bater com o selo. */
+export function fpsDoNivel(pc, requisitos, nivel, resolucao = '1080p') {
+  if (!QUALIDADES.some((q) => q.id === nivel)) return null;
+  return estimarFps(pc, requisitos, { qualidade: nivel, resolucao });
+}
+
+/** "~72", ou "240+" quando bate no teto. */
+export const textoFps = (fps) => (fps === null ? '—' : fps >= FPS_TETO ? `${FPS_TETO}+` : `~${fps}`);
+
+/** Melhor qualidade que ainda segura 60 FPS na resolução (ou a que der mais FPS, se nenhuma chegar). */
+export function qualidadeSugerida(pc, requisitos, resolucao = '1080p') {
+  const t = tabelaFps(pc, requisitos);
+  if (t[0].fps[resolucao] === null) return null;
+  const boas = t.filter((q) => q.fps[resolucao] >= 60);
+  const q = boas.length ? boas[boas.length - 1] : t[0];
+  return { id: q.id, rotulo: q.rotulo, fps: q.fps[resolucao] };
+}
+
+/** Faixa de leitura do FPS. */
+export function sensacao(fps) {
+  if (fps === null || fps === undefined) return 'Não roda';
+  if (fps < 30) return 'Travando';
+  if (fps < 45) return 'Jogável';
+  if (fps < 60) return 'Bom';
+  if (fps < 100) return 'Liso';
+  return 'Muito liso';
+}
+
+/** Peça por peça: sua pontuação comparada ao mínimo e ao recomendado. */
+export function comparar(pc, requisitos) {
+  const tab = { cpu: CPUS, gpu: GPUS };
+  return ['cpu', 'gpu', 'ram'].map((p) => {
+    const voce = p === 'ram' ? pc.ram : tab[p][pc[p]];
+    const min = p === 'ram' ? requisitos.min.ram : tab[p][requisitos.min[p]];
+    const rec = p === 'ram' ? requisitos.rec.ram : tab[p][requisitos.rec[p]];
+    return { peca: p, nome: p === 'ram' ? `${pc.ram} GB` : pc[p], min: requisitos.min[p], rec: requisitos.rec[p],
+      vsRec: Math.round((voce / rec) * 100) / 100, situacao: voce < min * 0.9 ? 'abaixo' : voce < rec ? 'entre' : 'acima' };
+  });
+}
+
+/** A placa mais fraca da lista que dá ~60 FPS no Alto (1080p) com o resto do PC igual; null se o processador não deixa. */
+export function placaPara60(pc, requisitos, resolucao = '1080p') {
+  const todas = Object.entries(GPUS).filter(([n, p]) => p > (GPUS[pc.gpu] || 0) && !/laptop|graphics|vega|steam deck/i.test(n)).sort((a, b) => a[1] - b[1]);
+  // primeiro as placas que ainda se compram (RTX 30+, RX 6000+, Arc); só depois as antigas
+  const atual = (n) => /RTX [345]0|RX [679]\d{3}|Arc /i.test(n);
+  for (const [nome] of [...todas.filter(([n]) => atual(n)), ...todas.filter(([n]) => !atual(n))]) {
+    const fps = estimarFps({ ...pc, gpu: nome }, requisitos, { qualidade: 'alto', resolucao });
+    if (fps !== null && fps >= 60) return nome;
+  }
+  return null;
+}

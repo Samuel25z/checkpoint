@@ -4,12 +4,65 @@ import { icone } from '../../core/icons.js';
 import { novoId } from '../../storage.js';
 import { JOGOS, imagens } from '../../games.js';
 import { CPUS, GPUS } from '../../data/hardware.js';
-import { NIVEIS, ROTULO_NIVEL, RAMS, explicar, resultado, resumo, validarPc, encontrarCpu, encontrarGpu } from './logic.js';
+import { NIVEIS, ROTULO_NIVEL, RAMS, explicar, resultado, resumo, validarPc, encontrarCpu, encontrarGpu,
+  RESOLUCOES, tabelaFps, qualidadeSugerida, sensacao, comparar, placaPara60, limitante, fpsDoNivel, textoFps } from './logic.js';
 import { combobox } from '../../core/combobox.js';
 import { detectar } from './detect.js';
 
 const CH_PCS = 'hardware:pcs';
 const CH_ATUAL = 'hardware:pcAtual';
+const CH_RES = 'hardware:resolucao';
+const NOME_PECA = { cpu: 'Processador', gpu: 'Placa de vídeo', ram: 'Memória' };
+const classeFps = (fps) => (fps === null ? 'fps-nao' : fps < 30 ? 'fps-ruim' : fps < 60 ? 'fps-ok' : 'fps-bom');
+const fmtX = (n) => (n === 1 ? 'igual ao recomendado' : `${String(n).replace('.', ',')}× o recomendado`);
+const rotuloRes = (id) => RESOLUCOES.find((x) => x.id === id).rotulo;
+
+/** Detalhe de um jogo: FPS por qualidade e resolução, peça por peça, gargalo e o que trocar. */
+function detalheJogo(r, pc, res) {
+  const req = r.jogo.requisitos;
+  const rotRes = rotuloRes(res);
+  const sug = qualidadeSugerida(pc, req, res);
+  const tabela = tabelaFps(pc, req);
+  const pecas = comparar(pc, req);
+  const roda = r.nivel !== 'nao';
+  const altoFps = tabela.find((q) => q.id === 'alto').fps[res];
+  const placa = roda && altoFps < 60 ? placaPara60(pc, req, res) : null;
+  const fpsNivel = roda ? fpsDoNivel(pc, req, r.nivel, res) : null;
+  const rotNivel = ROTULO_NIVEL[r.nivel];
+  const lim = roda ? limitante(pc, req, { qualidade: r.nivel, resolucao: res }) : null;
+  const dica = !sug ? null : sug.fps < 60 ? `Nem no Baixo passa de 60 FPS em ${rotRes}: o máximo fica em ${textoFps(sug.fps)}.`
+    : sug.id !== r.nivel ? `Para ficar acima de 60 FPS em ${rotRes}, use o ${sug.rotulo} (${textoFps(sug.fps)} FPS).` : `O ${sug.rotulo} já fica acima de 60 FPS em ${rotRes}.`;
+  let troca;
+  if (!roda) troca = `${NOME_PECA[r.gargalo]} abaixo do mínimo: o jogo não deve abrir ou fica impraticável.`;
+  else if (altoFps >= 60) troca = `Já passa de 60 FPS no Alto em ${rotRes}. Nada a trocar.`;
+  else if (placa) troca = `Para ~60 FPS no Alto em ${rotRes}, uma ${placa} já resolve (com o resto do PC igual).`;
+  else troca = `Trocar só a placa não chega a 60 FPS no Alto em ${rotRes}: o processador segura.`;
+  const qtd = (c, v) => (c.peca === 'ram' ? `${v} GB` : v);
+  const corpo = h('div', { class: 'pc-detalhe' },
+    h('div', { class: 'pc-det-topo' }, capa(imagens(r.jogo).capa, r.jogo.nome, 'capa-det'),
+      h('div', {},
+        h('span', { class: `nivel nivel-${r.nivel}` }, ROTULO_NIVEL[r.nivel]),
+        h('p', { class: 'pc-det-fps' }, roda ? [h('strong', { class: 'numero' }, textoFps(fpsNivel)), h('span', {}, ` FPS no ${rotNivel} em ${rotRes}`)] : h('strong', {}, 'Não roda')),
+        h('p', { class: 'texto-2' }, roda ? `${sensacao(fpsNivel)}. ${explicar(r)}.` : `${explicar(r)}.`),
+        dica ? h('p', { class: 'texto-2' }, dica) : null,
+        lim ? h('p', { class: 'texto-3' }, `Quem limita o FPS nessa configuração: ${NOME_PECA[lim].toLowerCase()}.`) : null)),
+    h('h3', { class: 'pc-det-titulo' }, 'FPS estimado por qualidade'),
+    h('div', { class: 'pc-tabela-rolagem' }, h('table', { class: 'pc-tabela' },
+      h('thead', {}, h('tr', {}, h('th', { scope: 'col' }, 'Qualidade'), RESOLUCOES.map((x) => h('th', { scope: 'col', class: x.id === res ? 'atual' : '' }, x.rotulo)))),
+      h('tbody', {}, tabela.map((q) => h('tr', {}, h('th', { scope: 'row' }, q.rotulo),
+        RESOLUCOES.map((x) => h('td', { class: `${classeFps(q.fps[x.id])} ${x.id === res ? 'atual' : ''}` }, textoFps(q.fps[x.id])))))))),
+    h('p', { class: 'texto-3 pc-legenda' }, h('i', { class: 'fps-bom' }), '60 ou mais: liso', h('i', { class: 'fps-ok' }), '30 a 59: jogável', h('i', { class: 'fps-ruim' }), 'abaixo de 30: travando'),
+    h('h3', { class: 'pc-det-titulo' }, 'Seu PC peça por peça'),
+    h('ul', { class: 'pc-comp' }, pecas.map((c) => h('li', { class: `comp-${c.situacao}` },
+      h('div', { class: 'comp-linha' }, h('strong', {}, NOME_PECA[c.peca]),
+        h('span', { class: 'comp-sit' }, c.situacao === 'abaixo' ? 'abaixo do mínimo' : c.situacao === 'entre' ? 'entre o mínimo e o recomendado' : fmtX(c.vsRec))),
+      h('div', { class: 'comp-barra', 'aria-hidden': 'true' }, h('span', { style: `width:${Math.min(100, c.vsRec * 50)}%` }), h('i', { class: 'marca-rec' })),
+      h('p', { class: 'texto-3' }, `Seu: ${c.nome} · Mínimo: ${qtd(c, c.min)} · Recomendado: ${qtd(c, c.rec)}`)))),
+    h('h3', { class: 'pc-det-titulo' }, 'O que trocar'),
+    h('p', { class: 'pc-troca' }, troca),
+    h('p', { class: 'texto-3 pc-nota' }, 'Como calculamos: o requisito recomendado do jogo mira cerca de 60 FPS no Alto em 1080p. A sua placa aumenta ou diminui isso na proporção da força dela, o processador limita o teto e memória abaixo do recomendado tira uns 15%. É uma estimativa: drivers, ray tracing e DLSS/FSR mudam o resultado.'));
+  return modal({ titulo: r.jogo.nome, conteudo: corpo, largo: true });
+}
 let filtro = { nivel: 'todos', texto: '' };
 
 async function formularioPc(base) {
@@ -78,16 +131,19 @@ function desenhar(el, ctx) {
     desenhar(el, ctx);
   };
 
+  const res = RESOLUCOES.some((x) => x.id === s.ler(CH_RES)) ? s.ler(CH_RES) : '1080p';
   const lista = resultado(atual, JOGOS);
   const cont = resumo(lista);
   const linhas = h('ol', { class: 'pc-lista', id: 'lista-jogos-pc' });
   const pintar = () => {
     const t = filtro.texto.toLowerCase();
     const vis = lista.filter((r) => (filtro.nivel === 'todos' || r.nivel === filtro.nivel) && (!t || r.jogo.nome.toLowerCase().includes(t)));
-    linhas.replaceChildren(...(vis.length ? vis.map((r) => h('li', { class: 'pc-jogo', 'data-jogo': r.jogo.id },
+    linhas.replaceChildren(...(vis.length ? vis.map((r) => { const fps = fpsDoNivel(atual, r.jogo.requisitos, r.nivel, res); const abrir = () => detalheJogo(r, atual, res); return h('li', { class: 'pc-jogo', 'data-jogo': r.jogo.id, tabindex: '0', role: 'button', 'aria-label': `${r.jogo.nome}: ver detalhes`,
+      onclick: abrir, onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(); } } },
       capa(imagens(r.jogo).capa, r.jogo.nome, 'capa-mini'),
       h('div', { class: 'pc-jogo-texto' }, h('strong', {}, r.jogo.nome), h('span', { class: 'texto-3' }, explicar(r))),
-      h('span', { class: `nivel nivel-${r.nivel}` }, h('span', { class: 'barras', 'aria-hidden': 'true' }, NIVEIS.slice(1).map((n, i) => h('i', { class: i < NIVEIS.findIndex((x) => x.id === r.nivel) ? 'cheia' : '' }))), ROTULO_NIVEL[r.nivel]))) : [h('li', { class: 'texto-2 sem-resultado' }, 'Nenhum jogo com esse filtro.')]));
+      h('span', { class: `pc-fps ${classeFps(fps)}` }, h('strong', {}, fps === null ? '—' : `${textoFps(fps)} FPS`), h('small', {}, fps === null ? 'sem FPS' : `${ROTULO_NIVEL[r.nivel]} · ${rotuloRes(res)}`)),
+      h('span', { class: `nivel nivel-${r.nivel}` }, h('span', { class: 'barras', 'aria-hidden': 'true' }, NIVEIS.slice(1).map((n, i) => h('i', { class: i < NIVEIS.findIndex((x) => x.id === r.nivel) ? 'cheia' : '' }))), ROTULO_NIVEL[r.nivel])); }) : [h('li', { class: 'texto-2 sem-resultado' }, 'Nenhum jogo com esse filtro.')]));
   };
   pintar();
 
@@ -104,10 +160,12 @@ function desenhar(el, ctx) {
     h('div', { class: 'pc-resumo', id: 'resumo-pc' }, [...NIVEIS].reverse().map((n) => h('button', { type: 'button', class: `pc-total nivel-${n.id}`, 'aria-pressed': String(filtro.nivel === n.id), 'data-nivel': n.id,
       onclick: () => { filtro.nivel = filtro.nivel === n.id ? 'todos' : n.id; el.querySelectorAll('.pc-total').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.nivel === filtro.nivel))); pintar(); } },
       h('strong', { class: 'numero' }, cont[n.id]), h('span', {}, n.rotulo)))),
+    h('div', { class: 'pc-res', role: 'group', 'aria-label': 'Resolução do monitor' }, h('span', { class: 'texto-3' }, 'Resolução do monitor:'),
+      RESOLUCOES.map((x) => h('button', { type: 'button', class: 'pc-res-op', 'data-res': x.id, 'aria-pressed': String(x.id === res), onclick: () => { s.gravar(CH_RES, x.id); desenhar(el, ctx); } }, x.rotulo))),
     h('label', { class: 'busca pc-busca' }, h('span', { class: 'sr' }, 'Filtrar jogos'), h('span', { html: icone('busca') }),
       h('input', { class: 'entrada', type: 'search', placeholder: 'Filtrar jogos', value: filtro.texto, oninput: (e) => { filtro.texto = e.target.value; pintar(); } })),
     linhas,
-    h('p', { class: 'texto-3 pc-nota' }, 'Estimativa a partir dos requisitos mínimos e recomendados divulgados pelos jogos. Resolução, drivers e otimizações mudam o resultado.'));
+    h('p', { class: 'texto-3 pc-nota' }, 'FPS e nível são estimativas a partir dos requisitos mínimos e recomendados divulgados pelos jogos. Clique num jogo para ver a conta, peça por peça.'));
 }
 
 export default {
