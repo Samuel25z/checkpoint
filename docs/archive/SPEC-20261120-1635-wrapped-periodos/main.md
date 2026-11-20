@@ -52,5 +52,5 @@ wrapped/logic.js ganha `periodos(diario, agora)` e `estatisticas(diario, periodo
 
 ## Critério de aceite
 
-- [x] Estatísticas por período (ano, 30 dias, tudo) batem com um diário de exemplo (2026-11-20 16:37, commit `7c301ec`, verify: exit 0) | verify: `node --test tests/unit/wrapped.test.js`
-- [x] Na tela, trocar de período muda os números e o título, e o card baixa com o nome do período (2026-11-20 16:37, commit `7c301ec`, verify: exit 0) | verify: `npx playwright test tests/e2e/wrapped.spec.js`
+- [x] Estatísticas por período (ano, 30 dias, tudo) batem com um diário de exemplo (2026-11-20 16:38, commit `725888a`, verify: exit 0) | verify: `node --test tests/unit/wrapped.test.js`
+- [x] Na tela, trocar de período muda os números e o título, e o card baixa com o nome do período (2026-11-20 16:38, commit `725888a`, verify: exit 0) | verify: `npx playwright test tests/e2e/wrapped.spec.js`

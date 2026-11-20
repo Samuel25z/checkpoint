@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-20 16:37
+**Última atualização:** 2026-11-20 16:38
 **Onde tô:** Wrapped com períodos: ano até agora, últimos 30 dias, desde sempre e anos anteriores; títulos e card com o nome do período
 **Próximo passo:** fechar a SPEC e seguir para a próxima do programa (specctl next)
 **Última decisão:** atividade no período = começou, terminou ou jogou por último (Steam) dentro da janela
@@ -55,4 +55,9 @@ Wrapped por período entregue. 2/2 critérios verificados.
 
 ## 2026-11-20 16:37 — [nota] verify: 1/1 critérios passaram (commit `7c301ec`)
 
+- PASS: Na tela, trocar de período muda os números e o título, e o …
+
+## 2026-11-20 16:38 — [nota] verify: 2/2 critérios passaram (commit `725888a`)
+
+- PASS: Estatísticas por período (ano, 30 dias, tudo) batem com um …
 - PASS: Na tela, trocar de período muda os números e o título, e o …
