@@ -1,13 +1,13 @@
 # SPEC-20261120-1629: hardware completo
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-20 16:29
 **Ativada:** 2026-11-20 16:29
-**Concluída:** —
+**Concluída:** 2026-11-20 16:35
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `135fedb`
 **Keywords:** hardware, processador, placa-de-video, combobox, base
 **Features:** hardware
 **Branch:** spec/hardware-completo
@@ -54,6 +54,6 @@ js/data/hardware.js passa a ter listas por família com pontuação relativa; js
 
 ## Critério de aceite
 
-- [ ] Base tem 150+ CPUs e 120+ GPUs, sem nomes repetidos, e todo requisito do catálogo existe nela | verify: `node --test tests/unit/games.test.js tests/unit/hardware.test.js`
-- [ ] Busca da caixa de escolha acha por partes do nome em qualquer ordem e ignora acento e caixa | verify: `node --test tests/unit/combobox.test.js`
-- [ ] Na tela, a placa detectada pode ser trocada por outra pela lista, o processador é escolhido por busca, limpar funciona e o resultado aparece, no celular e no PC | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`
+- [x] Base tem 150+ CPUs e 120+ GPUs, sem nomes repetidos, e todo requisito do catálogo existe nela (2026-11-20 16:35, commit `135fedb`, verify: exit 0) | verify: `node --test tests/unit/games.test.js tests/unit/hardware.test.js`
+- [x] Busca da caixa de escolha acha por partes do nome em qualquer ordem e ignora acento e caixa (2026-11-20 16:35, commit `135fedb`, verify: exit 0) | verify: `node --test tests/unit/combobox.test.js`
+- [x] Na tela, a placa detectada pode ser trocada por outra pela lista, o processador é escolhido por busca, limpar funciona e o resultado aparece, no celular e no PC (2026-11-20 16:35, commit `135fedb`, verify: exit 0) | verify: `npx playwright test tests/e2e/roda-no-pc.spec.js`
