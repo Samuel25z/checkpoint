@@ -1,13 +1,13 @@
 # SPEC-20261120-1635: wrapped periodos
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-20 16:35
 **Ativada:** 2026-11-20 16:35
-**Concluída:** —
+**Concluída:** 2026-11-20 16:37
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `7c301ec`
 **Keywords:** wrapped, periodo, resumo, ate-agora
 **Features:** wrapped
 **Branch:** spec/wrapped-periodos
@@ -52,5 +52,5 @@ wrapped/logic.js ganha `periodos(diario, agora)` e `estatisticas(diario, periodo
 
 ## Critério de aceite
 
-- [ ] Estatísticas por período (ano, 30 dias, tudo) batem com um diário de exemplo | verify: `node --test tests/unit/wrapped.test.js`
-- [ ] Na tela, trocar de período muda os números e o título, e o card baixa com o nome do período | verify: `npx playwright test tests/e2e/wrapped.spec.js`
+- [x] Estatísticas por período (ano, 30 dias, tudo) batem com um diário de exemplo (2026-11-20 16:37, commit `7c301ec`, verify: exit 0) | verify: `node --test tests/unit/wrapped.test.js`
+- [x] Na tela, trocar de período muda os números e o título, e o card baixa com o nome do período (2026-11-20 16:37, commit `7c301ec`, verify: exit 0) | verify: `npx playwright test tests/e2e/wrapped.spec.js`
