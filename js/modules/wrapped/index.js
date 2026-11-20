@@ -3,7 +3,7 @@ import { h, usarEstilo, cabecalho, vazio, capa } from '../../core/ui.js';
 import { icone } from '../../core/icons.js';
 import { JOGOS } from '../../games.js';
 import { lerJogos } from '../diario/dados.js';
-import { estatisticas, anosDisponiveis } from './logic.js';
+import { estatisticas, periodos, lerPeriodo } from './logic.js';
 
 const DURACAO = 5500;
 let parar = () => {};
@@ -12,17 +12,17 @@ const num = (n) => String(n).replace('.', ',');
 
 function telas(e) {
   const lista = [
-    { cor: 'tela-a', conteudo: [h('p', { class: 'w-pre' }, 'Checkpoint apresenta'), h('h2', { class: 'w-gigante' }, `Seu ${e.ano}`, h('br'), 'em jogos'), h('p', { class: 'w-sub' }, 'Aperte play. Ou só espere.')] },
+    { cor: 'tela-a', conteudo: [h('p', { class: 'w-pre' }, 'Checkpoint apresenta'), h('h2', { class: 'w-gigante w-abertura' }, e.rotulo, h('br'), 'em jogos'), h('p', { class: 'w-sub' }, 'Aperte play. Ou só espere.')] },
     { cor: 'tela-b', conteudo: [h('p', { class: 'w-pre' }, 'Você jogou'), h('h2', { class: 'w-numero numero' }, num(e.horas)), h('p', { class: 'w-grande' }, 'horas'), h('p', { class: 'w-sub' }, e.dias >= 1 ? `Isso dá ${num(e.dias)} dias inteiros sem parar.` : 'Cada minuto contou.')] },
     { cor: 'tela-c', conteudo: [h('p', { class: 'w-pre' }, 'Você zerou'), h('h2', { class: 'w-numero numero' }, e.zerados), h('p', { class: 'w-grande' }, e.zerados === 1 ? 'jogo' : 'jogos'),
       e.capasZerados.length ? h('div', { class: 'w-leque' }, e.capasZerados.map((c) => capa(c.capa, c.nome))) : null,
       e.platinados ? h('p', { class: 'w-sub' }, `${e.platinados} deles até a platina.`) : null] }
   ];
   if (e.maisJogado) lista.push({ cor: 'tela-d', conteudo: [h('p', { class: 'w-pre' }, 'O jogo que mais te prendeu'), capa(e.maisJogado.capa, e.maisJogado.nome, 'w-capa'), h('h2', { class: 'w-titulo' }, e.maisJogado.nome), h('p', { class: 'w-sub' }, `${num(e.maisJogado.horas)} horas`)] });
-  if (e.genero) lista.push({ cor: 'tela-e', conteudo: [h('p', { class: 'w-pre' }, 'Seu gênero do ano'), h('h2', { class: 'w-gigante' }, e.genero), e.plataforma ? h('p', { class: 'w-sub' }, `Quase sempre no ${e.plataforma}.`) : null] });
+  if (e.genero) lista.push({ cor: 'tela-e', conteudo: [h('p', { class: 'w-pre' }, e.periodo.tipo === 'ano' ? 'Seu gênero do ano' : 'Seu gênero favorito'), h('h2', { class: 'w-gigante' }, e.genero), e.plataforma ? h('p', { class: 'w-sub' }, `Quase sempre no ${e.plataforma}.`) : null] });
   if (e.melhorNota) lista.push({ cor: 'tela-f', conteudo: [h('p', { class: 'w-pre' }, 'Sua nota mais alta'), capa(e.melhorNota.capa, e.melhorNota.nome, 'w-capa'), h('h2', { class: 'w-titulo' }, e.melhorNota.nome), h('p', { class: 'w-grande numero' }, `${num(e.melhorNota.nota)} ★`)] });
-  if (e.mes) lista.push({ cor: 'tela-g', conteudo: [h('p', { class: 'w-pre' }, 'O mês em que você mais jogou'), h('h2', { class: 'w-gigante' }, e.mes), e.mediaNotas ? h('p', { class: 'w-sub' }, `Sua nota média no ano: ${num(e.mediaNotas)}`) : null] });
-  lista.push({ cor: 'tela-h', final: true, conteudo: [h('p', { class: 'w-pre' }, `Seu perfil em ${e.ano}`), h('h2', { class: 'w-titulo w-perfil' }, e.perfil.titulo), h('p', { class: 'w-sub' }, e.perfil.texto),
+  if (e.mes) lista.push({ cor: 'tela-g', conteudo: [h('p', { class: 'w-pre' }, 'O mês em que você mais jogou'), h('h2', { class: 'w-gigante' }, e.mes), e.mediaNotas ? h('p', { class: 'w-sub' }, `Sua nota média: ${num(e.mediaNotas)}`) : null] });
+  lista.push({ cor: 'tela-h', final: true, conteudo: [h('p', { class: 'w-pre' }, `Seu perfil · ${e.rotulo}`), h('h2', { class: 'w-titulo w-perfil' }, e.perfil.titulo), h('p', { class: 'w-sub' }, e.perfil.texto),
     h('dl', { class: 'w-resumo' }, h('div', {}, h('dt', {}, 'Horas'), h('dd', { class: 'numero' }, num(e.horas))), h('div', {}, h('dt', {}, 'Zerados'), h('dd', { class: 'numero' }, e.zerados)), h('div', {}, h('dt', {}, 'Jogos'), h('dd', { class: 'numero' }, e.jogos)))] });
   return lista.map((t) => ({ ...t, conteudo: t.conteudo.filter(Boolean) }));
 }
@@ -43,7 +43,7 @@ async function gerarCard(e) {
   g.fillStyle = '#1a1300'; g.fillRect(132, 168, 10, 72); g.beginPath(); g.moveTo(137, 172); g.lineTo(185, 172); g.lineTo(173, 192); g.lineTo(185, 212); g.lineTo(137, 212); g.fill();
   const fonte = (peso, tam) => `${peso} ${tam}px Unbounded, "Segoe UI", sans-serif`;
   g.fillStyle = '#f1efe9'; g.font = fonte(800, 46); g.fillText('Checkpoint', 240, 222);
-  g.fillStyle = '#aeb0b9'; g.font = fonte(500, 44); g.fillText(`Meu ${e.ano} em jogos`, 90, 420);
+  g.fillStyle = '#aeb0b9'; g.font = fonte(500, 44); g.fillText(e.rotulo.replace(/^Seu /, 'Meu ').replace(/^Seus /, 'Meus '), 90, 420);
   g.fillStyle = '#ffb21a'; g.font = fonte(800, 92);
   quebrar(g, e.perfil.titulo, 90, 540, 900, 104);
   const itens = [['Horas jogadas', num(e.horas)], ['Jogos zerados', String(e.zerados)], ['Mais jogado', e.maisJogado?.nome || '—'], ['Gênero favorito', e.genero || '—'], ['Nota mais alta', e.melhorNota ? `${e.melhorNota.nome} · ${num(e.melhorNota.nota)}★` : '—']];
@@ -78,7 +78,7 @@ function tocar(palco, e, ctx) {
   const baixar = async (botao) => {
     botao.disabled = true;
     const blob = await gerarCard(e);
-    const a = h('a', { href: URL.createObjectURL(blob), download: `checkpoint-wrapped-${e.ano}.png` });
+    const a = h('a', { href: URL.createObjectURL(blob), download: `checkpoint-wrapped-${e.periodo.id}.png` });
     document.body.append(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
     botao.disabled = false;
@@ -131,18 +131,17 @@ export default {
   montar(el, ctx) {
     usarEstilo('js/modules/wrapped/estilo.css');
     const diario = lerJogos(ctx.storage);
-    const anos = anosDisponiveis(diario);
-    const atual = new Date().getFullYear();
-    let ano = Number(ctx.params[0]) || (anos.includes(atual) ? atual : anos[0] || atual);
-    const seletor = h('select', { class: 'entrada', id: 'ano-wrapped', 'aria-label': 'Ano', onchange: (e) => { ctx.irPara('wrapped', e.target.value); } },
-      (anos.length ? anos : [atual]).map((a) => h('option', { value: a, selected: a === ano }, a)));
-    const e = estatisticas(diario, ano, JOGOS);
-    el.append(cabecalho('Wrapped', 'Seu ano em jogos, em telas animadas. No fim, baixe o card para postar.', seletor));
+    const agora = new Date();
+    const periodo = lerPeriodo(ctx.params[0], agora);
+    const seletor = h('div', { class: 'segmentos w-periodos', role: 'tablist', 'aria-label': 'Período' },
+      periodos(diario, agora).map((p) => h('button', { type: 'button', role: 'tab', 'aria-selected': String(p.id === periodo.id), 'data-periodo': p.id, onclick: () => ctx.irPara('wrapped', p.id) }, p.rotulo)));
+    const e = estatisticas(diario, periodo, JOGOS, agora);
+    el.append(cabecalho('Wrapped', 'Seu resumo em telas animadas, a qualquer momento do ano. No fim, baixe o card para postar.'), seletor);
     if (!e.jogos) {
-      el.append(vazio({ titulo: `Nada registrado em ${ano}`, texto: 'O Wrapped é montado com o seu diário. Registre os jogos que você jogou este ano.', acao: { rotulo: 'Abrir diário', onclick: () => ctx.irPara('diario') } }));
+      el.append(vazio({ titulo: `Nada registrado: ${e.rotulo.toLowerCase()}`, texto: 'O Wrapped é montado com o seu diário. Registre os jogos que você jogou nesse período.', acao: { rotulo: 'Abrir diário', onclick: () => ctx.irPara('diario') } }));
       return;
     }
-    const palco = h('section', { class: 'w-palco', id: 'wrapped', 'aria-label': `Wrapped ${ano}`, 'aria-live': 'polite' });
+    const palco = h('section', { class: 'w-palco', id: 'wrapped', 'aria-label': `Wrapped: ${e.rotulo}`, 'aria-live': 'polite' });
     el.append(palco, h('p', { class: 'texto-3 w-dica' }, 'Toque nas laterais ou use as setas do teclado. Segure para pausar.'));
     tocar(palco, e, ctx);
   },

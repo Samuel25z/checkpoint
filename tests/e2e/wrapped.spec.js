@@ -28,9 +28,30 @@ test('percorre as telas e baixa o card PNG', async ({ page }) => {
   expect(erros).toEqual([]);
 });
 
-test('ano sem jogos mostra o estado vazio com atalho para o diário', async ({ page }) => {
+test('troca de período muda números e título; card leva o nome do período', async ({ page }) => {
+  const hoje = new Date();
+  const recente = new Date(hoje.getTime() - 5 * 86400000).toISOString().slice(0, 10);
+  const dados = [...diario, { id: 'c', nome: 'Celeste', jogoId: 'celeste', status: 'zerado', nota: 5, horas: 9, plataforma: 'PC', inicio: recente, fim: recente, atualizadoEm: recente },
+    { id: 'd', nome: 'Antigo', status: 'zerado', nota: 3, horas: 30, plataforma: 'PC', inicio: '2019-01-01', fim: '2019-02-01', atualizadoEm: '2019-02-01' }];
+  await abrir(page, 'wrapped', { dados: { 'diario:jogos': dados } });
+  await expect(page.locator('.w-tela')).toContainText(`Seu ${ano} até agora`);
+  await page.locator('[data-periodo="30-dias"]').click();
+  await expect(page.locator('.w-tela')).toContainText('Seus últimos 30 dias');
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('.w-tela')).toContainText('9');
+  await page.locator('[data-periodo="tudo"]').click();
+  await expect(page).toHaveURL(/#\/wrapped\/tudo$/);
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('.w-tela')).toContainText('161');
+  await page.locator('[data-periodo="2019"]').click();
+  for (let i = 0; i < 9; i++) await page.keyboard.press('ArrowRight');
+  const [download] = await Promise.all([page.waitForEvent('download'), page.locator('#baixar-card').click()]);
+  expect(download.suggestedFilename()).toBe('checkpoint-wrapped-2019.png');
+});
+
+test('período sem jogos mostra o estado vazio com atalho para o diário', async ({ page }) => {
   await abrir(page, 'wrapped');
-  await expect(page.getByText(`Nada registrado em ${ano}`)).toBeVisible();
+  await expect(page.getByText(`Nada registrado: seu ${ano} até agora`)).toBeVisible();
   await page.getByRole('button', { name: 'Abrir diário' }).click();
   await expect(page).toHaveURL(/#\/diario/);
 });

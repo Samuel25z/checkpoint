@@ -78,6 +78,9 @@ export const EN = {
   'Uma partida rápida': 'A quick session', 'Algumas noites': 'A few evenings', 'Um jogo para meses': 'A game for months', 'Sozinho': 'Solo', 'Com amigos': 'With friends', 'Qualquer': 'Any', 'Celular': 'Mobile',
   'Para hoje': 'For today', 'Outra sugestão': 'Another pick', 'Ver trailer': 'Watch trailer', 'Já está no diário': 'Already in journal', 'Acabaram as sugestões': 'Out of picks', 'Recomeçar': 'Start over',
   // wrapped
+  'Seu resumo em telas animadas, a qualquer momento do ano. No fim, baixe o card para postar.': 'Your recap in animated screens, any time of the year. At the end, download the card to share.',
+  'O Wrapped é montado com o seu diário. Registre os jogos que você jogou nesse período.': 'Wrapped is built from your journal. Log the games you played in this period.',
+  'Últimos 30 dias': 'Last 30 days', 'Desde sempre': 'All time', 'Seus últimos 30 dias': 'Your last 30 days', 'Seu gênero favorito': 'Your favorite genre', 'Período': 'Period',
   'Seu ano em jogos, em telas animadas. No fim, baixe o card para postar.': 'Your year in games, in animated screens. At the end, download the card to share.', 'Checkpoint apresenta': 'Checkpoint presents',
   'Aperte play. Ou só espere.': 'Hit play. Or just wait.', 'Você jogou': 'You played', 'horas': 'hours', 'Você zerou': 'You beat', 'jogos': 'games', 'jogo': 'game', 'O jogo que mais te prendeu': 'The game that hooked you most',
   'Seu gênero do ano': 'Your genre of the year', 'Sua nota mais alta': 'Your highest rating', 'O mês em que você mais jogou': 'The month you played the most', 'Baixar card': 'Download card', 'Ver de novo': 'Watch again', 'Card baixado': 'Card downloaded',
@@ -96,6 +99,8 @@ const PADROES_EN = [
   [/^(\d+) de (\d+)$/, '$1 of $2'],
   [/^(\d+(?:,\d)?) de 5 estrelas$/, '$1 out of 5 stars'],
   [/^há (\d+) dias$/, '$1 days ago'], [/^há (\d+) (mês|meses)$/, '$1 month(s) ago'], [/^há (\d+) (ano|anos)$/, '$1 year(s) ago'], [/^hoje$/, 'today'], [/^ontem$/, 'yesterday'],
+  [/^Seu (\d{4}) até agora$/, 'Your $1 so far'], [/^(\d{4}) até agora$/, '$1 so far'], [/^Sua nota média: (.+)$/, 'Your average rating: $1'], [/^Seu perfil · (.+)$/, 'Your profile · $1'],
+  [/^Nada registrado: (.+)$/, 'Nothing logged: $1'],
   [/^Seu (\d{4})$/, 'Your $1'], [/^Nada registrado em (\d{4})$/, 'Nothing logged in $1'], [/^Seu perfil em (\d{4})$/, 'Your $1 profile'],
   [/^Split (\d+) de (\d+): (.+)$/, 'Split $1 of $2: $3'], [/^Resultados para “(.+)”$/, 'Results for “$1”'], [/^Adicionar “(.+)”$/, 'Add “$1”'],
   [/^(.+) adicionado ao diário$/, '$1 added to journal'], [/^Abrir (.+)$/, 'Open $1']

@@ -25,23 +25,69 @@ function maisFrequente(itens) {
   return melhor ? { valor: melhor[0], vezes: melhor[1] } : null;
 }
 
-export function estatisticas(diario, ano, catalogo = []) {
+/* ---------- períodos: ver o resumo a qualquer momento ---------- */
+const DIA = 86400000;
+
+/** Lê o período da rota: "2026", "30-dias" ou "tudo". */
+export function lerPeriodo(id, agora = new Date()) {
+  if (id === 'tudo') return { tipo: 'tudo', id: 'tudo' };
+  const dias = String(id || '').match(/^(\d{1,3})-dias$/);
+  if (dias) return { tipo: 'dias', n: Number(dias[1]), id: `${dias[1]}-dias` };
+  const ano = Number(id) || agora.getFullYear();
+  return { tipo: 'ano', ano, id: String(ano) };
+}
+
+export function rotuloPeriodo(p, agora = new Date()) {
+  if (p.tipo === 'tudo') return 'Desde sempre';
+  if (p.tipo === 'dias') return `Seus últimos ${p.n} dias`;
+  return p.ano === agora.getFullYear() ? `Seu ${p.ano} até agora` : `Seu ${p.ano}`;
+}
+
+/** Opções do seletor: ano atual, 30 dias, tudo e anos anteriores com registros. */
+export function periodos(diario, agora = new Date()) {
+  const atual = agora.getFullYear();
+  const anteriores = anosDisponiveis(diario).filter((a) => a < atual);
+  return [lerPeriodo(String(atual), agora), lerPeriodo('30-dias'), lerPeriodo('tudo'), ...anteriores.map((a) => lerPeriodo(String(a)))]
+    .map((p) => ({ ...p, rotulo: p.tipo === 'ano' && p.ano === atual ? `${atual} até agora` : p.tipo === 'dias' ? 'Últimos 30 dias' : p.tipo === 'tudo' ? 'Desde sempre' : String(p.ano) }));
+}
+
+/** A data cai dentro do período? */
+function naJanela(d, p, agora) {
+  if (!d) return false;
+  if (p.tipo === 'tudo') return true;
+  if (p.tipo === 'ano') return anoDe(d) === p.ano;
+  const t = new Date(String(d).length === 10 ? `${d}T12:00:00` : d).getTime();
+  return t >= agora.getTime() - p.n * DIA && t <= agora.getTime() + DIA;
+}
+
+/** O registro tem atividade no período (começou, terminou, jogou por último ou, sem datas, foi criado). */
+export function noPeriodo(r, p, agora = new Date()) {
+  const datas = [r.inicio, r.fim, r.ultimaVez].filter(Boolean);
+  if (!datas.length) return naJanela(r.criadoEm || r.atualizadoEm, p, agora);
+  return datas.some((d) => naJanela(d, p, agora));
+}
+
+export function estatisticas(diario, periodoOuAno, catalogo = [], agora = new Date()) {
+  const p = typeof periodoOuAno === 'object' ? periodoOuAno : lerPeriodo(String(periodoOuAno), agora);
+  const ano = p.tipo === 'ano' ? p.ano : agora.getFullYear();
   const doCatalogo = Object.fromEntries(catalogo.map((j) => [j.id, j]));
   const porNome = Object.fromEntries(catalogo.map((j) => [normalizar(j.nome), j]));
-  const lista = diario.filter((r) => doAno(r, ano) && r.status !== 'quero');
-  const zerados = lista.filter((r) => (r.status === 'zerado' || r.status === 'platinado') && (!r.fim || anoDe(r.fim) === ano));
+  const lista = diario.filter((r) => noPeriodo(r, p, agora) && r.status !== 'quero');
+  const zerados = lista.filter((r) => (r.status === 'zerado' || r.status === 'platinado') && (!r.fim || naJanela(r.fim, p, agora)));
   const horas = Math.round(lista.reduce((a, r) => a + (Number(r.horas) || 0), 0) * 10) / 10;
   const maisJogado = [...lista].filter((r) => r.horas > 0).sort((a, b) => b.horas - a.horas || a.nome.localeCompare(b.nome))[0] || null;
   const avaliados = lista.filter((r) => r.nota !== null && r.nota !== undefined);
   const melhorNota = [...avaliados].sort((a, b) => b.nota - a.nota || (b.horas || 0) - (a.horas || 0) || a.nome.localeCompare(b.nome))[0] || null;
   const generos = lista.flatMap((r) => (doCatalogo[r.jogoId] || porNome[normalizar(r.nome)])?.generos || []);
-  const meses = lista.flatMap((r) => [r.inicio, r.fim].filter((d) => anoDe(d) === ano).map((d) => Number(String(d).slice(5, 7)) - 1));
+  const meses = lista.flatMap((r) => [r.inicio, r.fim].filter((d) => naJanela(d, p, agora)).map((d) => Number(String(d).slice(5, 7)) - 1));
   const mes = maisFrequente(meses.map((m) => String(m).padStart(2, '0')));
   const plataforma = maisFrequente(lista.map((r) => r.plataforma));
   const genero = maisFrequente(generos);
 
   return {
     ano,
+    periodo: p,
+    rotulo: rotuloPeriodo(p, agora),
     jogos: lista.length,
     zerados: zerados.length,
     platinados: lista.filter((r) => r.status === 'platinado').length,

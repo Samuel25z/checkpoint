@@ -44,6 +44,31 @@ test('ano sem nada não quebra', () => {
   assert.equal(e.mediaNotas, null);
 });
 
+test('períodos: até agora, últimos 30 dias, desde sempre e anos anteriores', async () => {
+  const { periodos, lerPeriodo, rotuloPeriodo } = await import('../../js/modules/wrapped/logic.js');
+  const agora = new Date('2026-07-10T12:00:00');
+  const ps = periodos(diario, agora);
+  assert.deepEqual(ps.map((p) => p.id), ['2026', '30-dias', 'tudo', '2025']);
+  assert.equal(ps[0].rotulo, '2026 até agora');
+  assert.equal(rotuloPeriodo(lerPeriodo('2026', agora), agora), 'Seu 2026 até agora');
+  assert.equal(rotuloPeriodo(lerPeriodo('2025', agora), agora), 'Seu 2025');
+  assert.equal(rotuloPeriodo(lerPeriodo('30-dias'), agora), 'Seus últimos 30 dias');
+  assert.equal(rotuloPeriodo(lerPeriodo('tudo'), agora), 'Desde sempre');
+
+  const trinta = estatisticas(diario, lerPeriodo('30-dias'), JOGOS, agora);
+  assert.deepEqual([trinta.jogos, trinta.zerados], [1, 1], 'só Celeste (julho) está nos últimos 30 dias');
+  const tudo = estatisticas(diario, lerPeriodo('tudo'), JOGOS, agora);
+  assert.equal(tudo.jogos, 6, 'desde sempre: tudo menos "quero jogar"');
+  assert.equal(tudo.zerados, 4);
+  assert.equal(estatisticas(diario, 2026, JOGOS, agora).rotulo, 'Seu 2026 até agora', 'aceita o ano como antes');
+});
+
+test('última vez jogada (Steam) conta como atividade no período', async () => {
+  const { lerPeriodo } = await import('../../js/modules/wrapped/logic.js');
+  const e = estatisticas([{ nome: 'X', status: 'larguei', horas: 5, ultimaVez: '2026-07-01T10:00:00Z' }], lerPeriodo('30-dias'), [], new Date('2026-07-10T12:00:00'));
+  assert.equal(e.jogos, 1);
+});
+
 test('perfil do card final', () => {
   assert.equal(perfil({ horas: 10, zerados: 1, platinados: 3, jogos: 3 }).titulo, 'Caçador de troféus');
   assert.equal(perfil({ horas: 400, zerados: 1, platinados: 0, jogos: 3 }).titulo, 'Maratonista');
