@@ -65,3 +65,48 @@ test('valida o formulário do PC', () => {
   const v = validarPc({ nome: '', cpu: 'Pentium', gpu: '', ram: 7 });
   assert.deepEqual(Object.keys(v.erros).sort(), ['cpu', 'gpu', 'nome', 'ram']);
 });
+
+import { estimarFps, tabelaFps, qualidadeSugerida, comparar, placaPara60, sensacao, limitante } from '../../js/modules/roda-no-pc/logic.js';
+
+test('FPS: o recomendado dá ~60 no Alto em 1080p e cai com resolução e qualidade', () => {
+  const rec = POR_ID['elden-ring'].requisitos.rec;
+  const pcRec = { cpu: rec.cpu, gpu: rec.gpu, ram: rec.ram };
+  assert.equal(estimarFps(pcRec, POR_ID['elden-ring'].requisitos), 60);
+  const t = tabelaFps(pcRec, POR_ID['elden-ring'].requisitos);
+  assert.ok(t[0].fps['1080p'] > t[3].fps['1080p'], 'Baixo > Ultra');
+  assert.ok(t[2].fps['1080p'] > t[2].fps['1440p'] && t[2].fps['1440p'] > t[2].fps['4k'], '1080p > 1440p > 4K');
+});
+
+test('FPS: não roda = sem número; processador fraco limita o teto', () => {
+  assert.equal(estimarFps(pc('Intel Core i3-2100', 'Intel UHD Graphics 620', 4), cyber), null);
+  const gpuMonstro = pc('Intel Core i5-10400', 'NVIDIA GeForce RTX 4090', 16);
+  const baixo = estimarFps(gpuMonstro, cyber, { qualidade: 'baixo' });
+  const ultra = estimarFps(gpuMonstro, cyber, { qualidade: 'ultra' });
+  assert.equal(baixo, ultra, 'com placa sobrando, quem manda é o processador');
+  assert.equal(limitante(gpuMonstro, cyber), 'cpu');
+  assert.ok(estimarFps(pc('AMD Ryzen 7 7800X3D', 'NVIDIA GeForce RTX 4080', 32), hk) <= 240);
+});
+
+test('memória abaixo do recomendado tira 15%', () => {
+  const r = POR_ID['elden-ring'].requisitos;
+  const cheio = estimarFps({ cpu: r.rec.cpu, gpu: r.rec.gpu, ram: r.rec.ram }, r);
+  const pouca = estimarFps({ cpu: r.rec.cpu, gpu: r.rec.gpu, ram: r.min.ram }, r);
+  assert.equal(pouca, Math.round(cheio * 0.85));
+});
+
+test('qualidade sugerida, sensação, comparação e placa para 60 FPS', () => {
+  const medio = pc('Intel Core i5-12400', 'NVIDIA GeForce GTX 1060 6GB', 16);
+  const r = POR_ID['elden-ring'].requisitos;
+  const s = qualidadeSugerida(medio, r);
+  assert.ok(['baixo', 'medio', 'alto', 'ultra'].includes(s.id));
+  assert.equal(sensacao(null), 'Não roda');
+  assert.equal(sensacao(25), 'Travando');
+  assert.equal(sensacao(72), 'Liso');
+  const c = comparar(medio, r);
+  assert.deepEqual(c.map((x) => x.peca), ['cpu', 'gpu', 'ram']);
+  assert.equal(c[2].situacao, 'acima');
+  const placa = placaPara60(medio, r);
+  assert.ok(placa, 'existe placa que resolve');
+  assert.ok(estimarFps({ ...medio, gpu: placa }, r) >= 60);
+  assert.equal(placaPara60(pc('Intel Core i3-2100', 'NVIDIA GeForce RTX 4090', 16), cyber), null, 'processador abaixo do mínimo: nenhuma placa resolve');
+});

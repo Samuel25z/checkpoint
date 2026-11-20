@@ -38,3 +38,43 @@
 .deteccao .ic { color: var(--acento); flex: none; margin-top: 2px; }
 :root[data-tema='claro'] .deteccao .ic { color: var(--texto); }
 .deteccao p { font-size: .84rem; margin-top: 2px; word-break: break-word; }
+
+/* FPS estimado */
+.fps-bom { --fps: var(--st-zerado); } .fps-ok { --fps: var(--st-jogando); } .fps-ruim { --fps: var(--st-larguei); } .fps-nao { --fps: var(--texto-3); }
+.pc-jogo { grid-template-columns: 40px minmax(0, 1fr) auto auto; cursor: pointer; border-radius: 8px; transition: background .15s; }
+.pc-jogo:hover, .pc-jogo:focus-visible { background: var(--superficie-2); }
+.pc-fps { display: grid; justify-items: end; line-height: 1.15; min-width: 92px; }
+.pc-fps strong { font: 700 1rem/1.1 var(--fonte-titulo); color: var(--fps); }
+.pc-fps small { font-size: .74rem; color: var(--texto-3); }
+@media (max-width: 560px) {
+  .pc-jogo { grid-template-columns: 40px minmax(0, 1fr) auto; }
+  .pc-jogo .nivel { grid-column: 2 / -1; min-width: 0; }
+}
+.pc-res { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: var(--esp-3); }
+.pc-res-op { border: 1px solid var(--linha); background: var(--superficie); color: var(--texto-2); font-weight: 700; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+.pc-res-op[aria-pressed='true'] { background: color-mix(in srgb, var(--acento) 16%, var(--superficie)); border-color: var(--acento); color: var(--texto); }
+
+/* detalhe do jogo */
+.pc-detalhe { display: grid; gap: var(--esp-3); }
+.pc-det-topo { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--esp-4); align-items: start; }
+.pc-det-topo .capa-det { width: 96px; }
+.pc-det-fps { margin: 8px 0 4px; }
+.pc-det-fps strong { font: 800 2.2rem/1 var(--fonte-titulo); color: var(--texto); }
+.pc-det-titulo { font: 700 .95rem/1.2 var(--fonte-titulo); letter-spacing: .04em; text-transform: var(--titulo-caixa, none); margin-top: var(--esp-3); }
+.pc-tabela-rolagem { overflow-x: auto; }
+.pc-tabela { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.pc-tabela th, .pc-tabela td { padding: 8px 10px; text-align: center; border-bottom: 1px solid var(--linha); }
+.pc-tabela th[scope='row'] { text-align: left; color: var(--texto-2); font-weight: 700; }
+.pc-tabela thead th { font-size: .8rem; color: var(--texto-3); }
+.pc-tabela td { font-weight: 700; color: var(--fps); }
+.pc-tabela .atual { background: color-mix(in srgb, var(--acento) 8%, transparent); }
+.pc-legenda { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: .78rem; }
+.pc-legenda i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--fps); margin-right: -6px; }
+.pc-comp { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--esp-3); }
+.comp-acima { --comp: var(--st-zerado); } .comp-entre { --comp: var(--st-jogando); } .comp-abaixo { --comp: var(--st-larguei); }
+.comp-linha { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.comp-sit { font-weight: 700; font-size: .84rem; color: var(--comp); }
+.comp-barra { position: relative; height: 8px; border-radius: 8px; background: var(--superficie-2); margin: 6px 0 4px; overflow: hidden; }
+.comp-barra span { position: absolute; inset: 0 auto 0 0; background: var(--comp); border-radius: 8px; }
+.comp-barra .marca-rec { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--texto); opacity: .6; }
+.pc-troca { padding: 12px 14px; border-radius: 10px; background: var(--superficie-2); border-left: 3px solid var(--acento); }

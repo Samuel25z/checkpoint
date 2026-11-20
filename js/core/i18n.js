@@ -70,6 +70,12 @@ export const EN = {
   'Nenhuma peça com esse nome. Tente só o número do modelo.': 'No part with that name. Try just the model number.', 'Limpar Processador': 'Clear processor', 'Limpar Placa de vídeo': 'Clear graphics card', 'Adicionar PC': 'Add PC', 'Seu PC': 'Your PC', 'Editar PC': 'Edit PC', 'Salvar PC': 'Save PC', 'Ver o que roda': 'See what runs', 'Processador': 'Processor', 'Placa de vídeo': 'Graphics card', 'Memória': 'Memory', 'Memória RAM': 'RAM', 'Nome': 'Name',
   'Não roda': "Won't run", 'Baixo': 'Low', 'Médio': 'Medium', 'Alto': 'High', 'Ultra': 'Ultra', 'Filtrar jogos': 'Filter games', 'Sobra desempenho': 'Plenty of headroom', 'Excluir este PC?': 'Delete this PC?',
   'Vamos olhar seu PC': "Let's look at your PC", 'Quem segura é a placa de vídeo': 'The graphics card holds it back', 'Quem segura é a processador': 'The processor holds it back', 'Quem segura é a memória': 'The memory holds it back',
+  '1080p': '1080p', '1440p': '1440p', '4K': '4K', 'Resolução do monitor:': 'Monitor resolution:', 'Resolução do monitor': 'Monitor resolution', 'sem FPS': 'no FPS',
+  'FPS estimado por qualidade': 'Estimated FPS by quality', 'Qualidade': 'Quality', 'Seu PC peça por peça': 'Your PC part by part', 'O que trocar': 'What to upgrade',
+  '60 ou mais: liso': '60 or more: smooth', '30 a 59: jogável': '30 to 59: playable', 'abaixo de 30: travando': 'below 30: stuttering',
+  'abaixo do mínimo': 'below minimum', 'entre o mínimo e o recomendado': 'between minimum and recommended', 'igual ao recomendado': 'same as recommended', 'Memória': 'Memory',
+  'FPS e nível são estimativas a partir dos requisitos mínimos e recomendados divulgados pelos jogos. Clique num jogo para ver a conta, peça por peça.': 'FPS and level are estimates based on the minimum and recommended requirements published by each game. Click a game to see the math, part by part.',
+  'Como calculamos: o requisito recomendado do jogo mira cerca de 60 FPS no Alto em 1080p. A sua placa aumenta ou diminui isso na proporção da força dela, o processador limita o teto e memória abaixo do recomendado tira uns 15%. É uma estimativa: drivers, ray tracing e DLSS/FSR mudam o resultado.': 'How we calculate it: a game’s recommended spec targets about 60 FPS on High at 1080p. Your graphics card raises or lowers that in proportion to its power, the processor caps the ceiling and memory below recommended costs about 15%. It is an estimate: drivers, ray tracing and DLSS/FSR change the result.',
   'A placa de vídeo está abaixo do mínimo': 'The graphics card is below minimum', 'A processador está abaixo do mínimo': 'The processor is below minimum', 'A memória está abaixo do mínimo': 'The memory is below minimum',
   // torneio
   'Monte um campeonato entre amigos em segundos: coloque os nomes, sorteie e clique em quem venceu.': 'Set up a tournament with friends in seconds: add names, draw, and click who won.', 'Nome do torneio': 'Tournament name',
@@ -109,7 +115,18 @@ const PADROES_EN = [
   [/^Nada registrado: (.+)$/, 'Nothing logged: $1'],
   [/^Seu (\d{4})$/, 'Your $1'], [/^Nada registrado em (\d{4})$/, 'Nothing logged in $1'], [/^Seu perfil em (\d{4})$/, 'Your $1 profile'],
   [/^Split (\d+) de (\d+): (.+)$/, 'Split $1 of $2: $3'], [/^Resultados para “(.+)”$/, 'Results for “$1”'], [/^Adicionar “(.+)”$/, 'Add “$1”'],
-  [/^(.+) adicionado ao diário$/, '$1 added to journal'], [/^Abrir (.+)$/, 'Open $1']
+  [/^(.+) adicionado ao diário$/, '$1 added to journal'], [/^Abrir (.+)$/, 'Open $1'],
+  [/^(.+) FPS no (Baixo|Médio|Alto|Ultra) em (.+)$/, '$1 FPS on $2 at $3'], [/^(Baixo|Médio|Alto|Ultra) · (.+)$/, '$1 · $2'], [/^(.+) FPS$/, '$1 FPS'],
+  [/^(.+): ver detalhes$/, '$1: see details'], [/^([\d,]+)× o recomendado$/, '$1× recommended'], [/^Seu: (.+) · Mínimo: (.+) · Recomendado: (.+)$/, 'Yours: $1 · Minimum: $2 · Recommended: $3'],
+  [/^Quem limita o FPS nessa configuração: (.+)\.$/, 'What limits FPS in this setup: $1.'],
+  [/^Para ~60 FPS no Alto em (.+), uma (.+) já resolve \(com o resto do PC igual\)\.$/, 'For ~60 FPS on High at $1, a $2 is enough (rest of the PC unchanged).'],
+  [/^Já passa de 60 FPS no Alto em (.+)\. Nada a trocar\.$/, 'Already above 60 FPS on High at $1. Nothing to upgrade.'],
+  [/^Trocar só a placa não chega a 60 FPS no Alto em (.+): o processador segura\.$/, 'A new graphics card alone won’t reach 60 FPS on High at $1: the processor holds it back.'],
+  [/^(.+) abaixo do mínimo: o jogo não deve abrir ou fica impraticável\.$/, '$1 below minimum: the game may not start or will be unplayable.'],
+  [/^Para ficar acima de 60 FPS em (.+), use o (.+) \((.+) FPS\)\.$/, 'To stay above 60 FPS at $1, use $2 ($3 FPS).'],
+  [/^O (.+) já fica acima de 60 FPS em (.+)\.$/, '$1 already stays above 60 FPS at $2.'],
+  [/^Nem no Baixo passa de 60 FPS em (.+): o máximo fica em (.+)\.$/, 'Not even Low passes 60 FPS at $1: the most is $2.'],
+  [/^(Travando|Jogável|Bom|Liso|Muito liso|Não roda)\. (.+)\.$/, (m, a, b) => `${{ Travando: 'Stuttering', Jogável: 'Playable', Bom: 'Good', Liso: 'Smooth', 'Muito liso': 'Very smooth', 'Não roda': "Won't run" }[a]}. ${EN[b] || b}.`]
 ];
 
 export function traduzir(texto, idioma) {

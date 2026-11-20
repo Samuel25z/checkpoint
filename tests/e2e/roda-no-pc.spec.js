@@ -70,3 +70,37 @@ test('detecta a placa, troca por outra pela lista, salva dois PCs e mostra o res
   await semBotaoMorto(page);
   expect(erros).toEqual([]);
 });
+
+test('mostra FPS estimado, troca a resolução e abre o detalhe do jogo', async ({ page }) => {
+  const meu = { id: 'p1', nome: 'Meu PC', cpu: 'Intel Core i5-12400F', gpu: 'NVIDIA GeForce GTX 1660 Super', ram: 16, atualizadoEm: '2026-11-20' };
+  const erros = await abrir(page, 'roda-no-pc', { dados: { 'hardware:pcs': [meu], 'hardware:pcAtual': 'p1' } });
+  const elden = page.locator('.pc-jogo[data-jogo="elden-ring"]');
+  await expect(elden.locator('.pc-fps')).toContainText(/~\d+ FPS/);
+  await expect(elden.locator('.pc-fps')).toContainText('1080p');
+  const fps1080 = Number((await elden.locator('.pc-fps strong').textContent()).match(/\d+/)[0]);
+
+  await page.locator('.pc-res-op[data-res="4k"]').click();
+  await expect(page.locator('.pc-res-op[data-res="4k"]')).toHaveAttribute('aria-pressed', 'true');
+  await expect(elden.locator('.pc-fps')).toContainText('4K');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.pc-res-op[data-res="4k"]')).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('.pc-res-op[data-res="1080p"]').click();
+
+  await page.locator('.pc-jogo[data-jogo="elden-ring"]').click();
+  const d = page.getByRole('dialog', { name: 'Elden Ring' });
+  await expect(d.locator('.pc-det-fps')).toContainText(`~${fps1080} FPS`);
+  await expect(d.locator('.pc-tabela tbody tr')).toHaveCount(4);
+  await expect(d.locator('.pc-tabela thead')).toContainText('1440p');
+  await expect(d.locator('.pc-comp li')).toHaveCount(3);
+  await expect(d.locator('.pc-comp')).toContainText('Recomendado:');
+  await expect(d.locator('.pc-troca')).not.toBeEmpty();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toHaveCount(0);
+
+  // pelo teclado também abre (o último da lista, o mais pesado)
+  await page.locator('.pc-jogo').last().focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await semBotaoMorto(page);
+  expect(erros).toEqual([]);
+});
