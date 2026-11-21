@@ -1,13 +1,13 @@
 # SPEC-20261121-0014: barra rolagem
 
-**Status:** active
+**Status:** done
 **Porte:** P
 **Owner:** @samuel25z
 **Criada:** 2026-11-21 00:14
 **Ativada:** 2026-11-21 00:14
-**Concluída:** —
+**Concluída:** 2026-11-21 00:16
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `2e03393`
 **Keywords:** barra-de-rolagem, scrollbar, modal, visual
 **Features:** base
 **Branch:** spec/barra-rolagem
@@ -51,4 +51,4 @@ Tokens --rolagem e --rolagem-hover em css/style.css; scrollbar-width/scrollbar-c
 
 ## Critério de aceite
 
-- [ ] barra estilizada no site e no modal, em todos os visuais, sem rolagem lateral | verify: `npx playwright test tests/e2e/visual.spec.js`
+- [x] barra estilizada no site e no modal, em todos os visuais, sem rolagem lateral (2026-11-21 00:16, commit `2e03393`, verify: exit 0) | verify: `npx playwright test tests/e2e/visual.spec.js`

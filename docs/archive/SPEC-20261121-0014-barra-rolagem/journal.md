@@ -42,3 +42,7 @@
 
 Barra de rolagem moderna entregue. 1/1 critério verificado.
 ⎿ commit d13b728+dirty · 2 files changed, 21 insertions(+)
+
+## 2026-11-21 00:16 — [nota] verify: 1/1 critérios passaram (commit `2e03393`)
+
+- PASS: barra estilizada no site e no modal, em todos os visuais, s…
