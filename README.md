@@ -20,6 +20,14 @@ Trabalho da disciplina **Desenvolvimento de Interfaces (HTML, CSS e JavaScript)*
 
 > O Checkpoint não hospeda nem distribui jogos. Recomps e ports usam a sua cópia original do jogo.
 
+## Entrega da atividade
+
+- Site no ar: [samuel25z.github.io/checkpoint](https://samuel25z.github.io/checkpoint/)
+- Vídeo de demonstração: [relatorio/Video-Checkpoint.mp4](relatorio/Video-Checkpoint.mp4)
+- Relatório (com o Apêndice A, histórico de prompts): [relatorio/Relatorio-Checkpoint.docx](relatorio/Relatorio-Checkpoint.docx)
+- Apresentação: [relatorio/Apresentacao-Checkpoint.pptx](relatorio/Apresentacao-Checkpoint.pptx)
+- Registro dos prompts: [relatorio/prompts.md](relatorio/prompts.md)
+
 ## Como rodar
 
 O site é HTML, CSS e JavaScript puro, sem etapa de build. Precisa só do [Node.js](https://nodejs.org) 18 ou mais novo.
