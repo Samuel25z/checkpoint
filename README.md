@@ -10,7 +10,7 @@ O Checkpoint é um hub de utilidades para quem joga. Ele junta num lugar só:
 | **Wrapped** | Mostra o seu ano em jogos em telas animadas, no estilo Spotify, e gera um card para postar. |
 | **Speedrun** | Mostra os recordes mundiais ao vivo do speedrun.com e tem um cronômetro com splits, recorde pessoal e modo foco. |
 | **Recomps** | Catálogo de recomps e ports de código aberto, atualizado direto do GitHub, com alerta de golpe. |
-| **Roda no PC?** | Detecta a placa de vídeo pelo navegador e diz em que qualidade cada jogo roda. |
+| **Roda no PC?** | Detecta a placa de vídeo pelo navegador e diz em que qualidade e com quantos FPS (estimados) cada jogo roda, em 1080p, 1440p ou 4K, com o detalhe peça por peça. |
 | **Torneio** | Monta a chave de um campeonato de 4 a 32 jogadores, com animação de campeão. |
 | **Recomenda** | Responde "que jogo eu jogo hoje?" sem IA, explicando o motivo de cada sugestão. |
 
