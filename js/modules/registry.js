@@ -15,6 +15,7 @@ export const MODULOS = [
   { id: 'recomendador', titulo: 'Recomenda', icone: 'brilho', rota: 'recomendador', carregar: () => import('./recomendador/index.js') },
   { id: 'almanaque', titulo: 'Almanaque', icone: 'almanaque', rota: 'almanaque', carregar: () => import('./almanaque/index.js') },
   { id: 'wrapped', titulo: 'Wrapped', icone: 'presente', rota: 'wrapped', carregar: () => import('./wrapped/index.js') },
+  { id: 'outro-projeto', titulo: 'Outro projeto', icone: 'play', rota: 'outro-projeto', carregar: () => import('./outro-projeto/index.js') },
 ];
 
 /** Valida e organiza uma lista de módulos (exportado para testes e para quem quiser montar outro registro). */
