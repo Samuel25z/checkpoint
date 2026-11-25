@@ -4,6 +4,7 @@
 
 export const MODULOS = [
   { id: 'inicio', titulo: 'Início', icone: 'casa', rota: 'inicio', carregar: () => import('./inicio/index.js') },
+  { id: 'video', titulo: 'Apresentação', icone: 'play', rota: 'video', carregar: () => import('./video/index.js') },
   { id: 'diario', titulo: 'Diário', icone: 'livro', rota: 'diario', carregar: () => import('./diario/index.js') },
   { id: 'perfil', titulo: 'Meu perfil', icone: 'perfil', rota: 'perfil', carregar: () => import('./perfil/index.js') },
   { id: 'amigos', titulo: 'Amigos', icone: 'amigos', rota: 'amigos', carregar: () => import('./amigos/index.js') },

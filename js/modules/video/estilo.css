@@ -1,0 +1,7 @@
+/* Apresentação — vídeo grande, centralizado, com o padrão hexagonal da marca em volta */
+.vd-palco { position: relative; overflow: hidden; border-radius: 20px; border: 1px solid var(--linha); padding: clamp(10px, 2.4vw, 28px); }
+.vd-palco::after { background: radial-gradient(700px 300px at 50% 0%, color-mix(in srgb, var(--acento) 26%, transparent), transparent 70%); }
+.vd-moldura { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; border-radius: 14px; overflow: hidden; background: #000;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .8), 0 0 0 1px color-mix(in srgb, var(--acento) 30%, transparent); }
+.vd-player { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.vd-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: var(--esp-4); }
