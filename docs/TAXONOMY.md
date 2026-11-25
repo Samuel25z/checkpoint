@@ -15,5 +15,6 @@
 - recomendador — sugestões de jogos sem IA (aliases proibidos: sugestao→recomendador)
 - wrapped — resumo animado do ano (aliases proibidos: retrospectiva→wrapped)
 - conta — login Supabase e sincronização (aliases proibidos: login→conta, sync→conta)
+- perfil — perfil do jogador: favoritos, nível, medalhas e estatísticas do Diário (aliases proibidos: conta-perfil→perfil, estatisticas→perfil)
 - almanaque — livro dos recordes dos games: prêmios de Jogo do Ano, recordes, neste dia e curiosidades (aliases proibidos: guinness→almanaque, curiosidades→almanaque)
 - entrega — publicação, README, relatório e slides (aliases proibidos: deploy→entrega)

@@ -121,3 +121,10 @@
 - **Aplicação:** aba Almanaque com os Jogos do Ano do The Game Awards, BAFTA, GDC e D.I.C.E., rankings de quem mais ganhou, recordes ao vivo, mais vendidos, mais jogados, lançamentos de cada dia do ano e 24 curiosidades com fonte.
 - **Adaptações:** o nome "Guinness" ficou de fora por ser marca registrada. A aba de guias de platina foi adiada depois de a IA avaliar que escrever guias próprios não compensaria. Durante a construção, o Wikidata cortava respostas grandes no meio; a consulta passou a ser feita mês a mês.
 
+## P18 — Perfil do jogador inspirado em outro site
+- **Objetivo:** aprender com um site parecido e trazer o que fosse bom para o Checkpoint.
+- **Prompt:** "Quero que você analise o yourgamerprofile e veja coisas boas para colocar no nosso."
+- **Resposta da IA:** navegou pelo site (reviews, perfil de usuário, página de jogo e página inicial) e listou o que ele faz bem: perfil com favoritos coroados, números, estatísticas visuais, mapa de atividade, medalhas e nível. Separou o que dava para fazer já, sem login, do que dependia de contas e amigos, e o que não valia copiar (ofertas de loja e conexão não oficial com PlayStation e Xbox).
+- **Aplicação:** aba Meu Perfil com capa do jogo coroado, nível e XP, números, 5 favoritos, 6 medalhas de bronze a ouro, gráfico das notas, radar de gêneros em SVG, mapa de atividade dos últimos 90 dias e destaques, tudo calculado do Diário.
+- **Adaptações:** o grupo escolheu começar pelo perfil ("Pode começar por ela"); a parte social (seguir amigos, feed) e o status "Pausado" ficaram para depois.
+
