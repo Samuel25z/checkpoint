@@ -13,6 +13,7 @@
 
 ## Specs desta feature
 ### Concluídas
+- SPEC-20261125-1929-outro-projeto | 2026-11-25 | `7e9d616` | Aba Outro projeto (Drift Tela)
 - SPEC-20261125-1743-aba-video | 2026-11-25 | `6bb14f2` | Aba Apresentação com o vídeo
 - SPEC-20261121-0014-barra-rolagem | 2026-11-21 | `d13b728` | Barra de rolagem moderna
 - SPEC-20261120-1736-identidade-v2 | 2026-11-20 | `eaaf13e` | Identidade v2: Deck, Palco e Joy
@@ -34,6 +35,9 @@ Barra de rolagem: tokens --rolagem/--rolagem-hover em css/style.css; modal com m
 
 ### Delta de estado (SPEC-20261125-1743-aba-video, 2026-11-25 17:48)
 Vídeo da aba Apresentação: VIDEOS[0] em js/modules/video/index.js.
+
+### Delta de estado (SPEC-20261125-1929-outro-projeto, 2026-11-25 19:32)
+Aba Outro projeto: PROJETO em js/modules/outro-projeto/index.js.
 
 ## Decisões arquiteturais ativas
 - DEC-20261118-2013-abas-plugaveis [ativa] (SPEC-20261118-1956-fundacao) — abas como módulos registrados em registry.js com import preguiçoso; erro num módulo só afeta a própria aba
@@ -58,3 +62,4 @@ Vídeo da aba Apresentação: VIDEOS[0] em js/modules/video/index.js.
 - SPEC-20261118-1956-controle-idioma | texto novo sem tradução (2026-11-18 20:50) — o teste gamepad-i18n reprova; acrescentar a frase em EN
 - SPEC-20261120-1736-identidade-v2 | foco inicial de janela em ação destrutiva (2026-11-20 17:47) — modal foca campo, depois ação primária, nunca .btn-perigo
 - SPEC-20261121-0014-barra-rolagem | scrollbar-color no Chrome (2026-11-21 00:16) — desliga o ::-webkit-scrollbar e as setas voltam
+- SPEC-20261125-1929-outro-projeto | ordem do menu (2026-11-25 19:32) — aba nova entre outras muda o teste do LB/RB do controle

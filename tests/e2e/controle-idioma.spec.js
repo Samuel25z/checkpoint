@@ -21,8 +21,8 @@ test('com controle, o foco anda e LB/RB trocam de aba', async ({ page }) => {
   await page.evaluate(() => window.__apertar(13)); // baixo
   const focado = await page.evaluate(() => document.activeElement?.tagName);
   expect(['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA']).toContain(focado);
-  await page.evaluate(() => window.__apertar(5)); // RB
-  await expect(page).toHaveURL(/#\/diario/);
+  await page.evaluate(() => window.__apertar(5)); // RB: próxima aba do menu (Apresentação)
+  await expect(page).toHaveURL(/#\/video/);
   await page.evaluate(() => window.__apertar(4)); // LB
   await expect(page).toHaveURL(/#\/inicio/);
 });
