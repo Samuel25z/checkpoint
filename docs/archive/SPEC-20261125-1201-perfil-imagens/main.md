@@ -1,13 +1,13 @@
 # SPEC-20261125-1201: perfil imagens
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 12:01
 **Ativada:** 2026-11-25 12:01
-**Concluída:** —
+**Concluída:** 2026-11-25 12:06
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `533836d`
 **Keywords:** perfil, foto, avatar, banner, gif, link, upload
 **Features:** perfil
 **Branch:** spec/perfil-imagens
@@ -59,5 +59,5 @@ js/modules/perfil/imagens.js com funções puras (tipoPorAssinatura, validarLink
 
 ## Critério de aceite
 
-- [ ] assinatura de arquivo, limites, links e tamanho testados | verify: `node --test tests/unit/perfil-imagens.test.js`
-- [ ] enviar foto, GIF grande recusado, link de banner, remover e persistir funcionam na tela | verify: `npx playwright test tests/e2e/perfil.spec.js`
+- [x] assinatura de arquivo, limites, links e tamanho testados (2026-11-25 12:06, commit `533836d`, verify: exit 0) | verify: `node --test tests/unit/perfil-imagens.test.js`
+- [x] enviar foto, GIF grande recusado, link de banner, remover e persistir funcionam na tela (2026-11-25 12:06, commit `533836d`, verify: exit 0) | verify: `npx playwright test tests/e2e/perfil.spec.js`

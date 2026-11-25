@@ -55,3 +55,8 @@
 
 Foto e banner entregues. 2/2 critérios verificados.
 ⎿ commit 4d7bb98+dirty · 9 files changed, 156 insertions(+), 9 deletions(-)
+
+## 2026-11-25 12:06 — [nota] verify: 2/2 critérios passaram (commit `533836d`)
+
+- PASS: assinatura de arquivo, limites, links e tamanho testados | …
+- PASS: enviar foto, GIF grande recusado, link de banner, remover e…
