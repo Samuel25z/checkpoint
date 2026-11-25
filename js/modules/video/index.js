@@ -4,7 +4,7 @@ import { h, usarEstilo, cabecalho } from '../../core/ui.js';
 import { icone } from '../../core/icons.js';
 
 export const VIDEOS = [
-  { id: 'v1', titulo: 'Checkpoint em 1 minuto e meio', arquivo: 'relatorio/Video-Checkpoint.mp4', capa: 'assets/video-capa.jpg', duracao: '1:25' },
+  { id: 'v2', titulo: 'Checkpoint em menos de 2 minutos', arquivo: 'relatorio/Video-Checkpoint.mp4', capa: 'assets/video-capa.jpg', duracao: '1:55' },
 ];
 
 export default {
