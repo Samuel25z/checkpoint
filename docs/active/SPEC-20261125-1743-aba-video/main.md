@@ -8,55 +8,47 @@
 **Concluída:** —
 **Pausada em:** —
 **Commit final:** —
-**Keywords:** aba, video
-**Features:** —
+**Keywords:** video, apresentacao, aba
+**Features:** base
 **Branch:** spec/aba-video
 **Programa:** —
 **Workspace:** —
 **Origem:** usuário em 2026-11-25 17:43
-**Resumo:** <1 frase sobre o que entrega e por quê>
+**Resumo:** Aba Apresentação com o vídeo de demonstração, logo abaixo da Início, para abrir antes de mostrar o site.
 
 ## Objetivo
 
-<2-3 frases: o quê e por quê.>
+"Quero que você crie uma nova aba no site e anexe o nosso vídeo primário... vai ser mais fácil de abrir o site lá e apresentar o vídeo primeiro, antes de apresentar o site."
 
 ## Escopo
 
 **DENTRO:**
-- <item>
+- Aba Apresentação com o vídeo (relatorio/Video-Checkpoint.mp4), capa do logo, tela cheia e botão "Ir para o site"
+- Lista VIDEOS para trocar pelo vídeo novo se o Samuel aprovar
 
 **FORA:**
-- <item>
+- Vídeo novo (feito à parte, se der tempo)
 
 ## Invariantes
 
-<!-- propriedades que valem SEMPRE (antes/durante/depois) — linhas-vermelhas que QUALQUER mudança futura pode violar; distintas dos critérios (que checam o estado final). Estilo SEMPRE/NUNCA. P trivial: "—" -->
-- SEMPRE/NUNCA <propriedade que não pode ser violada>
+—
 
 ## Implementação
 
-<abordagem em alto nível; porte G: o detalhe fino vai em techspec.md>
+js/modules/video/index.js + estilo.css + 1 linha no registry; capa assets/video-capa.jpg tirada do próprio vídeo.
 
 ### Modelo de dados
 
-<!-- entidades/campos novos ou tocados (schema, tabelas, tipos); "—" se não há mudança de dados -->
-| Entidade | Campos / mudança |
-|---|---|
-| <Entidade> | <campos> |
-
-<!-- Alternativas (M/G): abordagens consideradas e REJEITADAS + porquê — evita reabrir becos sem saída. Decisão irreversível (porta de mão-única): marque [irreversível] p/ sinalizar mais escrutínio. -->
+—
 
 ## Riscos
 
-<!-- riscos técnicos/de segurança + mitigação (contrato estável — NÃO é progresso; decisões/fases vão no journal); P trivial: "—" -->
-- <risco> — mitigação: <como>
+—
 
 ## Sinais de sucesso
 
-<!-- como saberemos que a SPEC cumpriu o PROPÓSITO (não só a corretude dos critérios) — métrica/sinal observável; P: 1 linha -->
-- <resultado observável que indica que valeu>
+- O Samuel abre a aba e toca o vídeo em tela cheia na apresentação
 
 ## Critério de aceite
 
-<!-- P: feche com: node scripts/specctl.mjs check <id> <n> -->
-- [ ] <critério binário e verificável>
+- [ ] aba mostra o vídeo com capa e leva ao site | verify: `npx playwright test tests/e2e/video.spec.js`
