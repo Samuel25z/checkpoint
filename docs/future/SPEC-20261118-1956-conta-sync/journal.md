@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-25 16:57
+**Última atualização:** 2026-11-25 17:03
 **Onde tô:** login no ar com e-mail e senha ou Google (Supabase), sincronização do diário, perfil e imagens, apagar conta (LGPD) e página de privacidade; testado de verdade pelo Samuel
 **Próximo passo:** fechar a SPEC e seguir para a próxima do programa (specctl next)
 **Última decisão:** e-mail e senha continuam ligados (pedido do Samuel para a apresentação) junto com o Google; tabela liberada só para authenticated, RLS por usuário
@@ -78,3 +78,10 @@
 
 Login entregue e testado pelo Samuel.
 ⎿ commit b1ccb2c+dirty · 3 files changed, 9 insertions(+), 119 deletions(-)
+
+## 2026-11-25 17:03 — [nota] formas de entrar
+
+Pedido do Samuel: "igual o Roblox faz" — quem cria com Google pode criar senha nas configurações da conta e entrar também por e-mail e senha; quem cria por e-mail pode ligar o Google (linkIdentity, exige "Allow manual linking" no Supabase). Login com Google confirmado pelo e-mail do Google às 16:50 de 25/11. Falta: teste de isolamento entre duas contas reais.
+⎿ commit 33be885
+
+## 2026-11-25 17:03 — [nota] Pausada: falta o Samuel testar isolamento entre duas contas reais
