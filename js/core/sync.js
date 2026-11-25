@@ -5,7 +5,7 @@
 
 export const CHAVE_REMOVIDOS = 'sync:removidos';
 /** O que vai para a conta. Preferências de tela e caches ficam só no navegador. */
-export const SINCRONIZAVEIS = ['diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista', 'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', CHAVE_REMOVIDOS];
+export const SINCRONIZAVEIS = ['diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista', 'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', CHAVE_REMOVIDOS];
 export const LISTAS = ['diario:jogos', 'speedrun:rotas', 'torneio:lista', 'hardware:pcs'];
 export const sincronizavel = (chave) => SINCRONIZAVEIS.includes(chave);
 
