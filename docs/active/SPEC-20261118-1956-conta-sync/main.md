@@ -1,17 +1,17 @@
 # SPEC-20261118-1956: conta sync
 
-**Status:** paused
+**Status:** active
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:44
 **Concluída:** —
 **Pausada em:** 2026-11-25 16:47 — login publicado; falta o Samuel testar a conta de verdade (e-mail e Google) para fechar
-**Reativada em:** 2026-11-25 16:10
+**Reativada em:** 2026-11-25 16:57
 **Commit final:** —
 **Keywords:** login, conta, supabase, google, sincronizacao, rls
 **Features:** conta
-**Branch:** spec/conta-ligar
+**Branch:** spec/conta-fechar
 **Programa:** checkpoint
 **Workspace:** —
 **Origem:** usuário em 2026-11-18 19:56
