@@ -4,6 +4,7 @@
 
 ## geral
 
+- **almanaque** — almanaque, premios, game-awards, recordes, curiosidades, neste-dia
 - **base** — fundacao, casca, registro, router, tema, storage
 - **conta** — conta, login, supabase, sincronizacao, rls, remocoes
 - **diario** — diario, jogos, capa, wikipedia, status, nota

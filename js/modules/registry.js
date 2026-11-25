@@ -10,6 +10,7 @@ export const MODULOS = [
   { id: 'roda-no-pc', titulo: 'Roda no PC?', icone: 'chip', rota: 'roda-no-pc', carregar: () => import('./roda-no-pc/index.js') },
   { id: 'torneio', titulo: 'Torneio', icone: 'trofeu', rota: 'torneio', carregar: () => import('./torneio/index.js') },
   { id: 'recomendador', titulo: 'Recomenda', icone: 'brilho', rota: 'recomendador', carregar: () => import('./recomendador/index.js') },
+  { id: 'almanaque', titulo: 'Almanaque', icone: 'almanaque', rota: 'almanaque', carregar: () => import('./almanaque/index.js') },
   { id: 'wrapped', titulo: 'Wrapped', icone: 'presente', rota: 'wrapped', carregar: () => import('./wrapped/index.js') },
 ];
 

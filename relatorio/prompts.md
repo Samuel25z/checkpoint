@@ -113,3 +113,11 @@
 - **Resposta da IA:** criou uma estimativa de FPS a partir dos requisitos (o recomendado mira cerca de 60 FPS no Alto em 1080p; a placa escala o número, o processador limita o teto e pouca memória tira 15%) e uma página de detalhes por jogo: FPS por qualidade e resolução, comparação peça por peça, o que limita o FPS e qual placa atual resolveria.
 - **Aplicação:** seletor de resolução (1080p, 1440p, 4K), FPS na lista e detalhe ao clicar no jogo.
 - **Adaptações:** o FPS da lista passou a seguir o nível do selo (antes a lista mostrava "Ultra" num jogo marcado "Alto"), e a sugestão de troca prioriza placas que ainda se vendem.
+
+## P17 — Almanaque, o livro dos recordes dos games
+- **Objetivo:** criar uma parte do site para folhear fatos de games, como os livros de recordes, com dados que se atualizam sozinhos.
+- **Prompt:** "Eu tinha vários livros do Guinness Book e adorava abrir e ficar vendo. A ideia é fazer isso com uma parte do nosso site: uma planilha com todos os jogos indicados e ganhadores dos anos, desde quando começou... a gente tem que achar alguma forma de que as informações vão se atualizando de uma forma sustentável."
+- **Resposta da IA:** propôs a aba Almanaque com capa (Fato do Dia e "Me surpreenda") e quatro capítulos (Prêmios, Recordes, Neste Dia e Curiosidades). Para a atualização, comparou três caminhos e recomendou um script que busca os dados abertos (Wikidata, Wikipedia e Steam) e um robô do GitHub que roda toda semana, com os recordes de speedrun buscados ao vivo.
+- **Aplicação:** aba Almanaque com os Jogos do Ano do The Game Awards, BAFTA, GDC e D.I.C.E., rankings de quem mais ganhou, recordes ao vivo, mais vendidos, mais jogados, lançamentos de cada dia do ano e 24 curiosidades com fonte.
+- **Adaptações:** o nome "Guinness" ficou de fora por ser marca registrada. A aba de guias de platina foi adiada depois de a IA avaliar que escrever guias próprios não compensaria. Durante a construção, o Wikidata cortava respostas grandes no meio; a consulta passou a ser feita mês a mês.
+
