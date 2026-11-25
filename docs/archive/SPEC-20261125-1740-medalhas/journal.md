@@ -45,3 +45,7 @@
 
 Símbolos das medalhas entregues. 1/1 critério verificado.
 ⎿ commit b9cd9d0+dirty · 2 files changed, 22 insertions(+), 10 deletions(-)
+
+## 2026-11-25 17:42 — [nota] verify: 1/1 critérios passaram (commit `0cbd597`)
+
+- PASS: medalhas do perfil continuam aparecendo com grau e progress…

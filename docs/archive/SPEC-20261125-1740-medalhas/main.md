@@ -1,13 +1,13 @@
 # SPEC-20261125-1740: medalhas
 
-**Status:** active
+**Status:** done
 **Porte:** P
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 17:40
 **Ativada:** 2026-11-25 17:40
-**Concluída:** —
+**Concluída:** 2026-11-25 17:42
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `0cbd597`
 **Keywords:** medalhas, simbolos, perfil, svg
 **Features:** perfil
 **Branch:** spec/medalhas
@@ -51,4 +51,4 @@ svgMedalha(id, grau) monta o hexágono da marca com o desenho próprio, borda e 
 
 ## Critério de aceite
 
-- [ ] medalhas do perfil continuam aparecendo com grau e progresso | verify: `npx playwright test tests/e2e/perfil.spec.js`
+- [x] medalhas do perfil continuam aparecendo com grau e progresso (2026-11-25 17:42, commit `0cbd597`, verify: exit 0) | verify: `npx playwright test tests/e2e/perfil.spec.js`
