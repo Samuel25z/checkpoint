@@ -95,6 +95,7 @@ export const EN = {
   'Você ainda não segue ninguém. Busque pelo @ acima.': "You don't follow anyone yet. Search by @ above.", 'Ninguém te segue ainda. Mande o link do seu perfil para os amigos.': 'Nobody follows you yet. Send your profile link to your friends.',
   'Esse perfil não existe ou é privado.': "This profile doesn't exist or is private.", 'Seu perfil agora é privado': 'Your profile is now private', 'Seu perfil agora é público': 'Your profile is now public',
   'Escolha um nome de usuário.': 'Pick a username.', 'Use pelo menos 3 caracteres.': 'Use at least 3 characters.', 'Use no máximo 20 caracteres.': 'Use at most 20 characters.', 'Use só letras sem acento, números e _ (sem espaço).': 'Use only plain letters, numbers and _ (no spaces).',
+  'A parte de amigos ainda não foi ligada no servidor. Tente de novo mais tarde.': 'The friends feature is not set up on the server yet. Try again later.',
   'Esse nome é reservado. Escolha outro.': 'That name is reserved. Pick another one.', 'Esse @ já é de outra pessoa. Escolha outro.': 'That @ is taken. Pick another one.', 'Entre na sua conta para usar essa parte.': 'Sign in to use this part.',
   // perfil
   'Meu perfil': 'My profile', 'Seu cartão de visitas de jogador, montado a partir do seu Diário.': 'Your gamer business card, built from your Journal.', 'Editar perfil': 'Edit profile',
