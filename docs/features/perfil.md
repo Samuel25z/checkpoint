@@ -8,6 +8,7 @@
 
 ## Specs desta feature
 ### Concluídas
+- SPEC-20261125-1740-medalhas | 2026-11-25 | `b9cd9d0` | Símbolos das medalhas
 - SPEC-20261125-1201-perfil-imagens | 2026-11-25 | `4d7bb98` | Foto e banner do perfil
 - SPEC-20261125-1116-perfil | 2026-11-25 | `11039c2` | Meu perfil do jogador
 ### Planejadas (future/)
@@ -18,11 +19,16 @@ Rota #/perfil. Storage perfil:dados {nome, frase, favoritos[ids do diário], cor
 ### Delta de estado (SPEC-20261125-1201-perfil-imagens, 2026-11-25 12:06)
 Imagens em 'perfil:imagens' {avatar,banner}: {origem: 'arquivo'|'link', url}. lerImagens() descarta o que não for seguro. Link que falha volta para iniciais/arte do jogo.
 
+### Delta de estado (SPEC-20261125-1740-medalhas, 2026-11-25 17:42)
+Medalha nova = item em MEDALHAS (logic.js) + desenho em DESENHOS (simbolos.js).
+
 ## Decisões arquiteturais ativas
 - DEC-20261125-1125-perfil-do-diario [ativa] (SPEC-20261125-1116-perfil) — perfil não duplica dados: calcula tudo do Diário
 - DEC-20261125-1125-perfil-sem-social [ativa] (SPEC-20261125-1116-perfil) — seguir/feed ficam para quando o login estiver ligado
 
 - DEC-20261125-1206-perfil-imagens-limites [ativa] (SPEC-20261125-1201-perfil-imagens) — GIF até 200/450 KB; maior vai por link; SVG nunca
+
+- DEC-20261125-1742-medalhas-svg-proprio [ativa] (SPEC-20261125-1740-medalhas) — símbolos próprios em SVG no hexágono da marca
 
 ## Alternativas consideradas e rejeitadas
 

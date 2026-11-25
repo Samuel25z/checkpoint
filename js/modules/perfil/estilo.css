@@ -43,10 +43,8 @@
 
 /* medalhas */
 .pf-medalhas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--esp-3); }
-.pf-medalha { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: center; padding: 14px; border-radius: 12px; background: var(--superficie); border: 1px solid var(--linha); }
+.pf-medalha { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 12px; align-items: center; padding: 14px; border-radius: 12px; background: var(--superficie); border: 1px solid var(--linha); }
 .pf-medalha > div { display: grid; gap: 2px; min-width: 0; }
-.pf-medalha-icone svg { width: 44px; height: 44px; display: block; }
-.pf-medalha-icone path { fill: var(--grau, var(--superficie-2)); stroke: color-mix(in srgb, var(--grau, var(--linha-forte)) 70%, white); stroke-width: 1.6; }
 .pf-medalha.bronze { --grau: #c98a52; } .pf-medalha.prata { --grau: #b9c4d2; } .pf-medalha.ouro { --grau: #f5c542; }
 .pf-medalha.bloqueada { opacity: .7; }
 .pf-grau { font: 700 .72rem/1 var(--fonte-titulo); letter-spacing: .1em; text-transform: uppercase; color: var(--grau, var(--texto-3)); }
@@ -112,3 +110,22 @@
 .pf-link-caixa { display: flex; gap: 6px; }
 .pf-link-caixa[hidden] { display: none; }
 .pf-link-caixa .entrada { flex: 1; min-width: 0; }
+
+/* símbolos das medalhas (simbolos.js): hexágono da marca, desenho próprio e grau na borda */
+.pf-medalha-icone { display: block; width: 56px; }
+.md { width: 56px; height: auto; display: block; overflow: visible; }
+.md-fundo { fill: color-mix(in srgb, var(--grau, var(--texto-3)) 14%, var(--superficie-2)); }
+.md-borda { fill: none; stroke: var(--grau, var(--linha-forte)); stroke-width: 3.2; stroke-linejoin: round; }
+.md-brilho { fill: none; stroke: color-mix(in srgb, var(--grau, transparent) 55%, white); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.md-desenho { color: var(--grau, var(--texto-3)); }
+.md-ponto { fill: var(--grau); }
+.pf-medalha.ouro .md { filter: drop-shadow(0 0 10px color-mix(in srgb, #f5c542 55%, transparent)); }
+.pf-medalha.prata .md { filter: drop-shadow(0 0 6px color-mix(in srgb, #b9c4d2 35%, transparent)); }
+.pf-medalha.bloqueada .md-fundo { fill: var(--superficie-2); }
+.pf-medalha.bloqueada .md-borda { stroke-dasharray: 4 4; }
+.pf-medalha:not(.bloqueada) .md { animation: md-entra var(--medio, .3s) var(--curva, ease) both; }
+@keyframes md-entra { from { transform: scale(.85) rotate(-6deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .pf-medalha .md { animation: none; } }
+:root[data-tema='claro'] .pf-medalha.bronze { --grau: #b0682e; }
+:root[data-tema='claro'] .pf-medalha.prata { --grau: #6f7f96; }
+:root[data-tema='claro'] .pf-medalha.ouro { --grau: #c79400; }

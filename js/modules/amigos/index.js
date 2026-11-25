@@ -5,6 +5,7 @@ import { ROTULO_STATUS } from '../diario/logic.js';
 import { lerJogos } from '../diario/dados.js';
 import { lerPerfil } from '../perfil/logic.js';
 import { criarSocial } from '../../services/social.js';
+import { svgMedalha } from '../perfil/simbolos.js';
 import { validarUsuario, sugerirUsuario, termoBusca, amigos, feed, erroSocial, linkPerfil } from './logic.js';
 import { dadosPublicos, atualizarPublico, CHAVE_PERFIL } from './publicar.js';
 
@@ -110,7 +111,7 @@ async function telaPerfil(el, ctx, social, usuario) {
     (r.favoritos || []).length ? h('section', { class: 'pf-bloco am-bloco' }, h('div', { class: 'pf-bloco-topo' }, h('h3', {}, 'Jogos favoritos')),
       h('div', { class: 'pf-favoritos' }, r.favoritos.map((f) => h('div', { class: `pf-jogo ${f.coroado ? 'coroado' : ''}` }, f.coroado ? h('span', { class: 'pf-coroa', html: icone('coroa'), 'aria-hidden': 'true' }) : null, capa(f.capa, f.nome, 'pf-jogo-capa'), h('span', { class: 'pf-jogo-nome' }, f.nome), h('span', { class: 'texto-3' }, f.horas ? `${fmt(f.horas)} h` : ROTULO_STATUS[f.status] || ''))))) : null,
     (r.medalhas || []).length ? h('section', { class: 'pf-bloco am-bloco' }, h('div', { class: 'pf-bloco-topo' }, h('h3', {}, 'Medalhas')),
-      h('ul', { class: 'am-medalhas' }, r.medalhas.map((m) => h('li', { class: `pf-medalha ${m.grau}` }, h('span', { class: 'pf-medalha-icone', 'aria-hidden': 'true', html: '<svg viewBox="0 0 34 34"><path d="M17 1.8 30.2 9.4v15.2L17 32.2 3.8 24.6V9.4Z"/></svg>' }), h('div', {}, h('strong', {}, m.nome), h('span', { class: 'pf-grau' }, GRAU[m.grau])))))) : null,
+      h('ul', { class: 'am-medalhas' }, r.medalhas.map((m) => h('li', { class: `pf-medalha ${m.grau}` }, h('span', { class: 'pf-medalha-icone', 'aria-hidden': 'true', html: svgMedalha(m.id, m.grau) }), h('div', {}, h('strong', {}, m.nome), h('span', { class: 'pf-grau' }, GRAU[m.grau])))))) : null,
     (r.jogando || []).length ? h('section', { class: 'pf-bloco am-bloco' }, h('div', { class: 'pf-bloco-topo' }, h('h3', {}, 'Jogando agora')),
       h('div', { class: 'pf-recentes' }, r.jogando.map((j) => h('div', { class: 'pf-jogo' }, capa(j.capa, j.nome, 'pf-jogo-capa'), h('span', { class: 'pf-jogo-nome' }, j.nome))))) : null);
 }
