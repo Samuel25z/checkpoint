@@ -1,13 +1,13 @@
 # SPEC-20261125-2002: drift download
 
-**Status:** active
+**Status:** done
 **Porte:** P
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 20:02
 **Ativada:** 2026-11-25 20:02
-**Concluída:** —
+**Concluída:** 2026-11-25 20:04
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `0853e8a`
 **Keywords:** drift-tela, download, outro-projeto
 **Features:** base
 **Branch:** spec/drift-download
