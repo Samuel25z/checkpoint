@@ -1,12 +1,12 @@
 # SPEC-20261118-1956: conta sync
 
-**Status:** active
+**Status:** paused
 **Porte:** M
 **Owner:** @samuel
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:44
 **Concluída:** —
-**Pausada em:** 2026-11-25 12:00 — aguardando o Samuel criar o projeto no Supabase e o login do Google e mandar URL + chave anon
+**Pausada em:** 2026-11-25 16:47 — login publicado; falta o Samuel testar a conta de verdade (e-mail e Google) para fechar
 **Reativada em:** 2026-11-25 16:10
 **Commit final:** —
 **Keywords:** login, conta, supabase, google, sincronizacao, rls
