@@ -1,0 +1,41 @@
+# Atualiza os dados do Almanaque toda semana (prêmios, mais vendidos, mais jogados, lançamentos por dia).
+# Também dá para rodar na mão: aba Actions → "Atualizar Almanaque" → Run workflow.
+name: Atualizar Almanaque
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # toda segunda, 6h no horário de Brasília
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: almanaque
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Buscar dados novos
+        run: node scripts/atualizar-almanaque.mjs
+      - name: Conferir o arquivo
+        run: node --test tests/unit/almanaque-script.test.js
+      - name: Publicar se mudou
+        run: |
+          if git diff --quiet -- js/data/almanaque.json; then
+            echo "Nada mudou nesta semana."
+            exit 0
+          fi
+          git config user.name "checkpoint-robo"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add js/data/almanaque.json
+          git commit -m "Almanaque: dados da semana ($(date -u +%Y-%m-%d))"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

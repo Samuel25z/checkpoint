@@ -1,6 +1,7 @@
 // Ícones em SVG (traço 2px, estilo contorno). Uso: icone('casa').
 const P = {
   casa: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/>',
+  almanaque: '<path d="M12 6.5C10 4.8 6.5 4 3 4.5v14c3.5-.5 7 .3 9 2 2-1.7 5.5-2.5 9-2v-14c-3.5-.5-7 .3-9 2z"/><path d="M12 6.5v14"/><path d="m16.5 8.2.6 1.3 1.4.2-1 1 .2 1.4-1.2-.7-1.3.7.3-1.4-1-1 1.4-.2z"/>',
   livro: '<path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/>',
   cronometro: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M9.5 2h5"/><path d="M12 2v3"/>',
   ramo: '<circle cx="6" cy="5" r="2.2"/><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="7" r="2.2"/><path d="M6 7.2v9.6"/><path d="M18 9.2c0 5-6 3.8-11.2 8"/>',

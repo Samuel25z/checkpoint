@@ -13,6 +13,7 @@ O Checkpoint é um hub de utilidades para quem joga. Ele junta num lugar só:
 | **Roda no PC?** | Detecta a placa de vídeo pelo navegador e diz em que qualidade e com quantos FPS (estimados) cada jogo roda, em 1080p, 1440p ou 4K, com o detalhe peça por peça. |
 | **Torneio** | Monta a chave de um campeonato de 4 a 32 jogadores, com animação de campeão. |
 | **Recomenda** | Responde "que jogo eu jogo hoje?" sem IA, explicando o motivo de cada sugestão. |
+| **Almanaque** | O livro dos recordes dos games: todos os Jogos do Ano (indicados e vencedores), recordes de speedrun ao vivo, mais vendidos, mais jogados, "neste dia" e curiosidades com fonte. Os dados se atualizam sozinhos toda semana. |
 
 Também tem tema claro e escuro, idioma inglês, navegação por controle de videogame, login com Google opcional e funciona no celular, no tablet e no PC.
 
@@ -53,6 +54,10 @@ npm run lint      # checagens do código
 - **Cloudflare Pages (opcional):**
   1. No painel da Cloudflare, crie um projeto Pages ligado a este repositório.
   2. Deixe o comando de build vazio e use `/` como pasta de saída.
+
+## Dados do Almanaque (atualizam sozinhos)
+
+O arquivo `js/data/almanaque.json` é montado por `scripts/atualizar-almanaque.mjs` a partir do Wikidata (prêmios e lançamentos), da Wikipedia (mais vendidos) e da Steam (mais jogados). O GitHub Actions (`.github/workflows/almanaque.yml`) roda o script toda segunda-feira e publica se algo mudou. Para rodar na mão: `node scripts/atualizar-almanaque.mjs`. As curiosidades escritas à mão ficam em `js/data/curiosidades.js` (uma por item, sempre com fonte).
 
 ## Como criar uma aba nova
 
