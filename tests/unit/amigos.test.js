@@ -57,6 +57,7 @@ test('feed junta o que as pessoas andam jogando, do mais novo ao mais antigo', (
 test('erros do banco em português e link do perfil', () => {
   assert.match(erroSocial({ code: '23505', message: 'duplicate key value' }), /já é de outra pessoa/);
   assert.match(erroSocial({ message: 'Failed to fetch' }), /internet/);
+  assert.match(erroSocial({ code: 'PGRST205', message: "Could not find the table 'public.perfis' in the schema cache" }), /ainda não foi ligada/);
   assert.match(erroSocial({ code: '42501' }), /Entre na sua conta/);
   assert.equal(linkPerfil('samuel'), '#/amigos/@samuel');
 });

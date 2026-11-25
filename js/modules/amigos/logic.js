@@ -65,6 +65,7 @@ export function feed(perfis = [], limite = 30) {
 /** Erros do banco em português. */
 export function erroSocial(e) {
   const m = `${e?.code || ''} ${e?.message || e || ''}`;
+  if (/PGRST205|PGRST202|schema cache/i.test(m)) return 'A parte de amigos ainda não foi ligada no servidor. Tente de novo mais tarde.';
   if (/23505|duplicate key|unique/i.test(m)) return 'Esse @ já é de outra pessoa. Escolha outro.';
   if (/23514|check constraint/i.test(m)) return 'Algum dado está fora do formato aceito (nome, frase ou imagem grande demais).';
   if (/failed to fetch|network/i.test(m)) return 'Sem conexão com o servidor. Confira a internet.';
