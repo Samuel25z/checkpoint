@@ -384,3 +384,10 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 .conta-aviso:empty { display: none; }
 .conta-aviso.erro { color: var(--perigo); }
 .conta-aviso.ok { color: var(--st-zerado); }
+.conta-formas { display: grid; gap: 6px; padding: 12px 14px; border-radius: 12px; background: var(--superficie-2); }
+.conta-formas h3 { font: 700 .95rem/1.2 var(--fonte-titulo); }
+.conta-formas ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; }
+.conta-forma { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; font-weight: 600; }
+.conta-forma > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.conta-forma-estado { font-size: .8rem; color: var(--texto-3); }
+.conta-forma-estado.ligado { color: var(--st-zerado); }

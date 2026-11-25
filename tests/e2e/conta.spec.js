@@ -14,18 +14,28 @@ export function createClient() {
   return {
     auth: {
       onAuthStateChange(cb) { ouvintes.push(cb); setTimeout(() => cb('INITIAL_SESSION', sessao)); return { data: { subscription: { unsubscribe() {} } } }; },
-      async signInWithOAuth() { const id = localStorage.getItem('fake-proximo') || 'u1'; sessao = { user: { id, email: id + '@exemplo.com', user_metadata: { full_name: 'Jogador ' + id } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { error: null }; },
+      async signInWithOAuth() { const id = localStorage.getItem('fake-proximo') || 'u1'; sessao = { user: { id, email: id + '@exemplo.com', user_metadata: { full_name: 'Jogador ' + id }, app_metadata: { providers: ['google'] } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { error: null }; },
       async signInWithPassword({ email, password }) {
         const u = JSON.parse(localStorage.getItem('fake-usuarios') || '{}')[email];
         if (!u || u.senha !== password) return { data: {}, error: { message: 'Invalid login credentials' } };
         if (!u.confirmado) return { data: {}, error: { message: 'Email not confirmed' } };
-        sessao = { user: { id: 'u1', email, user_metadata: {} } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { data: { session: sessao }, error: null };
+        sessao = { user: { id: 'u1', email, user_metadata: {}, app_metadata: { providers: email === 'u1@exemplo.com' ? ['google', 'email'] : ['email'] } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { data: { session: sessao }, error: null };
       },
       async signUp({ email, password }) {
         const us = JSON.parse(localStorage.getItem('fake-usuarios') || '{}');
         if (us[email]) return { data: {}, error: { message: 'User already registered' } };
         us[email] = { senha: password, confirmado: false }; localStorage.setItem('fake-usuarios', JSON.stringify(us)); return { data: { user: { email }, session: null }, error: null };
       },
+      async getUser() { return { data: { user: sessao?.user || null }, error: null }; },
+      async updateUser({ password }) {
+        if (!sessao) return { data: {}, error: { message: 'not logged' } };
+        const us = JSON.parse(localStorage.getItem('fake-usuarios') || '{}');
+        us[sessao.user.email] = { senha: password, confirmado: true }; localStorage.setItem('fake-usuarios', JSON.stringify(us));
+        const prov = new Set([...(sessao.user.app_metadata?.providers || []), 'email']);
+        sessao.user.app_metadata = { providers: [...prov] }; localStorage.setItem('fake-sessao', JSON.stringify(sessao));
+        return { data: { user: sessao.user }, error: null };
+      },
+      async linkIdentity() { localStorage.setItem('fake-ligou', 'google'); return { data: {}, error: null }; },
       async resetPasswordForEmail(email) { localStorage.setItem('fake-reset', email); return { data: {}, error: null }; },
       async signOut() { sessao = null; localStorage.removeItem('fake-sessao'); ouvintes.forEach((f) => f('SIGNED_OUT', null)); return { error: null }; }
     },
@@ -203,6 +213,66 @@ test.describe('email', () => {
     await d.locator('#esqueci-senha').click();
     await expect(d.locator('.conta-aviso')).toContainText('chega um link para criar uma senha nova');
     expect(await page.evaluate(() => localStorage.getItem('fake-reset'))).toBe('ana@exemplo.com');
+  });
+});
+
+test.describe('formas-de-entrar', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: "export const SUPABASE = { url: 'https://teste.supabase.co', chaveAnon: 'chave-publica-de-teste' }; export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';" }));
+    await page.route(SDK, (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE, headers: { 'access-control-allow-origin': '*' } }));
+  });
+
+  test('quem entrou pelo Google cria senha e depois entra com e-mail e senha na mesma conta', async ({ page }) => {
+    const erros = await abrir(page, 'diario', { manterConfig: true, dados: { 'diario:jogos': [{ id: 'j1', nome: 'Celeste', status: 'jogando', nota: null, horas: 1, atualizadoEm: '2026-05-02T00:00:00Z' }] } });
+    await page.locator('#botao-conta').click();
+    await page.getByRole('button', { name: 'Entrar com Google' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+
+    await page.locator('#botao-conta').click();
+    const conta = page.getByRole('dialog', { name: 'Sua conta' });
+    const formas = conta.getByRole('region', { name: 'Formas de entrar' });
+    await expect(formas.locator('.conta-forma').first()).toContainText('Ligado');
+    await expect(formas.locator('.conta-forma').nth(1)).toContainText('Não ligado');
+    await formas.locator('#criar-senha').click();
+
+    const d = page.getByRole('dialog', { name: 'Entrar também com e-mail e senha' });
+    await expect(d).toContainText('u1@exemplo.com');
+    await d.getByLabel('Senha nova').fill('curta');
+    await d.getByRole('button', { name: 'Salvar senha nova' }).click();
+    await expect(d.locator('.conta-aviso')).toHaveText('A senha precisa ter pelo menos 8 caracteres.');
+    await d.getByLabel('Senha nova').fill('senhaboa123');
+    await d.getByRole('button', { name: 'Salvar senha nova' }).click();
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+
+    await page.locator('#botao-conta').click();
+    await expect(page.getByRole('dialog', { name: 'Sua conta' }).locator('#criar-senha')).toHaveText('Trocar senha');
+    await page.getByRole('dialog', { name: 'Sua conta' }).getByRole('button', { name: 'Sair' }).click();
+    await page.getByRole('dialog', { name: 'Sair da conta?' }).getByRole('button', { name: 'Sair' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'desligado');
+
+    // mesma conta, agora por e-mail e senha: os dados voltam
+    await page.locator('#botao-conta').click();
+    const entrar = page.getByRole('dialog', { name: 'Entrar no Checkpoint' });
+    await entrar.getByLabel('E-mail').fill('u1@exemplo.com');
+    await entrar.getByLabel('Senha').fill('senhaboa123');
+    await entrar.locator('#entrar-email').click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    await expect(page.locator('.carta', { hasText: 'Celeste' })).toBeVisible();
+    expect(erros).toEqual([]);
+  });
+
+  test('quem entrou por e-mail pode ligar o Google', async ({ page }) => {
+    await abrir(page, 'diario', { manterConfig: true });
+    await page.evaluate(() => localStorage.setItem('fake-usuarios', JSON.stringify({ 'ana@exemplo.com': { senha: 'senhaboa123', confirmado: true } })));
+    await page.locator('#botao-conta').click();
+    const entrar = page.getByRole('dialog', { name: 'Entrar no Checkpoint' });
+    await entrar.getByLabel('E-mail').fill('ana@exemplo.com');
+    await entrar.getByLabel('Senha').fill('senhaboa123');
+    await entrar.locator('#entrar-email').click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    await page.locator('#botao-conta').click();
+    await page.getByRole('dialog', { name: 'Sua conta' }).locator('#ligar-google').click();
+    expect(await page.evaluate(() => localStorage.getItem('fake-ligou'))).toBe('google');
   });
 });
 

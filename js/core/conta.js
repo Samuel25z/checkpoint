@@ -227,10 +227,11 @@ export function iniciarConta(ctx) {
   }
 
   /** Voltou pelo link de "esqueci a senha": pede a senha nova. */
-  async function novaSenha() {
+  async function novaSenha({ titulo = 'Criar senha nova', texto = null, sucesso = 'Senha nova salva' } = {}) {
     const aviso = h('p', { class: 'conta-aviso', role: 'status', 'aria-live': 'polite' });
     const senha = h('input', { class: 'entrada', type: 'password', autocomplete: 'new-password', minlength: 8, 'aria-label': 'Senha nova', placeholder: 'Senha nova' });
     const form = h('form', { class: 'conta-form', novalidate: true },
+      texto ? h('p', { class: 'texto-2' }, texto) : null,
       h('label', { class: 'campo' }, h('span', {}, 'Senha nova'), senha, h('span', { class: 'texto-3' }, 'Pelo menos 8 caracteres.')), aviso,
       h('div', { class: 'conta-botoes' }, h('button', { type: 'submit', class: 'btn btn-primario' }, 'Salvar senha nova')));
     form.addEventListener('submit', async (e) => {
@@ -238,10 +239,47 @@ export function iniciarConta(ctx) {
       if (senha.value.length < 8) { aviso.textContent = 'A senha precisa ter pelo menos 8 caracteres.'; return; }
       const { error } = await cliente.auth.updateUser({ password: senha.value });
       if (error) { aviso.className = 'conta-aviso erro'; aviso.textContent = erroLegivel(error); return; }
+      await atualizarUsuario();
       modal.fecharAtual(null);
-      ctx.toast('Senha nova salva', 'sucesso');
+      ctx.toast(sucesso, 'sucesso');
     });
-    return modal({ titulo: 'Criar senha nova', conteudo: form, acoes: [] });
+    return modal({ titulo, conteudo: form, acoes: [] });
+  }
+
+  /** Relê o usuário (depois de ligar Google ou criar senha, a lista de formas de entrar muda). */
+  async function atualizarUsuario() {
+    try { const { data } = await cliente.auth.getUser(); if (data?.user) { usuario = data.user; pintar(); } } catch { /* fica o que tinha */ }
+  }
+
+  /** Formas de entrar ligadas a esta conta (Google, e-mail e senha). */
+  const formas = () => new Set([...(usuario?.app_metadata?.providers || []), ...(usuario?.identities || []).map((i) => i.provider)]);
+
+  /** Liga o Google a uma conta criada por e-mail (precisa de "Allow manual linking" no Supabase). */
+  async function ligarGoogle() {
+    try {
+      const { error } = await cliente.auth.linkIdentity({ provider: 'google', options: { redirectTo: location.origin + location.pathname } });
+      if (error) throw error;
+    } catch (e) {
+      console.warn('[conta] ligar Google', e);
+      ctx.toast(/manual linking|linking.*disabled/i.test(String(e?.message)) ? 'Ligar o Google ainda não foi ativado no servidor. Tente mais tarde.' : erroLegivel(e), 'erro');
+    }
+  }
+
+  /** Bloco "Formas de entrar" da janela Sua conta. */
+  function blocoFormas() {
+    const f = formas();
+    const temGoogle = f.has('google');
+    const temSenha = f.has('email');
+    const linha = (nome, ligado, botao) => h('li', { class: 'conta-forma' }, h('span', {}, nome), h('span', { class: `conta-forma-estado ${ligado ? 'ligado' : ''}` }, ligado ? 'Ligado' : 'Não ligado'), botao);
+    return h('section', { class: 'conta-formas', 'aria-label': 'Formas de entrar' },
+      h('h3', {}, 'Formas de entrar'),
+      h('p', { class: 'texto-3' }, 'Ligue mais de uma forma para entrar na mesma conta, com os mesmos dados.'),
+      h('ul', {},
+        linha('Google', temGoogle, temGoogle ? null : h('button', { type: 'button', class: 'btn btn-pequeno', id: 'ligar-google', onclick: () => { modal.fecharAtual(null); ligarGoogle(); } }, 'Ligar Google')),
+        linha(`E-mail e senha${usuario?.email ? ` (${usuario.email})` : ''}`, temSenha,
+          h('button', { type: 'button', class: 'btn btn-pequeno', id: 'criar-senha', onclick: () => { modal.fecharAtual(null); novaSenha(temSenha
+            ? { titulo: 'Trocar senha', sucesso: 'Senha trocada' }
+            : { titulo: 'Entrar também com e-mail e senha', texto: `Crie uma senha para entrar com ${usuario?.email || 'o seu e-mail'} além do Google. É a mesma conta, com os mesmos dados.`, sucesso: 'Pronto: agora você também entra com e-mail e senha' }); } }, temSenha ? 'Trocar senha' : 'Criar senha'))));
   }
 
   async function sair() {
@@ -300,8 +338,9 @@ export function iniciarConta(ctx) {
     }
     const ultima = storage.ler(META_ULTIMA);
     const r = await modal({ titulo: 'Sua conta', conteudo: h('div', { class: 'conta-info' },
-      h('p', {}, h('strong', {}, usuario.user_metadata?.full_name || 'Conta Google'), h('br'), h('span', { class: 'texto-2' }, usuario.email || '')),
+      h('p', {}, h('strong', {}, usuario.user_metadata?.full_name || usuario.email?.split('@')[0] || 'Sua conta'), h('br'), h('span', { class: 'texto-2' }, usuario.email || '')),
       h('p', { class: `conta-estado est-${estado}` }, estado === 'ok' ? `Sincronizado${ultima ? ' às ' + new Date(ultima).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}` : estado === 'erro' ? 'Não deu para sincronizar. Confira a internet.' : 'Sincronizando…'),
+      blocoFormas(),
       linkPrivacidade()),
     acoes: [{ rotulo: 'Apagar conta', valor: 'apagar', tipo: 'perigo' }, { rotulo: 'Sair', valor: 'sair' }, { rotulo: 'Sincronizar agora', valor: 'sync', tipo: 'primario' }] });
     if (r === 'sync') { await sincronizar(); ctx.toast(estado === 'ok' ? 'Tudo sincronizado' : 'Não deu para sincronizar', estado === 'ok' ? 'sucesso' : 'erro'); }
