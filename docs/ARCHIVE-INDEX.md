@@ -26,3 +26,4 @@ SPEC-20261125-1713-amigos | done | amigos | amigos, social, seguir, perfil-publi
 SPEC-20261125-1740-medalhas | done | perfil | medalhas, simbolos, perfil, svg | Cada medalha ganha um símbolo próprio no hexágono da marca (grau na cor da borda e em pontinhos), no lugar do hexágono laranja igual para todas.
 SPEC-20261125-1743-aba-video | done | base | video, apresentacao, aba | Aba Apresentação com o vídeo de demonstração, logo abaixo da Início, para abrir antes de mostrar o site.
 SPEC-20261125-1929-outro-projeto | done | base | outro-projeto, drift-tela, video, aba | Aba Outro projeto no fim do menu com o vídeo do Drift Tela.
+SPEC-20261125-2002-drift-download | done | base | drift-tela, download, outro-projeto | Botões de baixar o Drift Tela e abrir no navegador na aba Outro projeto.
