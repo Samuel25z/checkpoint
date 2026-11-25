@@ -1,13 +1,13 @@
 # SPEC-20261125-1713: amigos
 
-**Status:** active
+**Status:** done
 **Porte:** G
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 17:13
 **Ativada:** 2026-11-25 17:13
-**Concluída:** —
+**Concluída:** 2026-11-25 17:22
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `01c208d`
 **Keywords:** amigos, social, seguir, perfil-publico, usuario, feed, supabase
 **Features:** amigos
 **Branch:** spec/amigos
@@ -65,5 +65,5 @@ Alternativa rejeitada: pedido de amizade com aceite (o Samuel escolheu seguir: m
 
 ## Critério de aceite
 
-- [ ] @, resumo público sem dado sensível, amigos e feed testados | verify: `node --test tests/unit/amigos.test.js`
-- [ ] criar @, buscar, seguir, amigos, feed, perfil público, privado e @ repetido funcionam na tela | verify: `npx playwright test tests/e2e/amigos.spec.js`
+- [x] @, resumo público sem dado sensível, amigos e feed testados (2026-11-25 17:22, commit `01c208d`, verify: exit 0) | verify: `node --test tests/unit/amigos.test.js`
+- [x] criar @, buscar, seguir, amigos, feed, perfil público, privado e @ repetido funcionam na tela (2026-11-25 17:22, commit `01c208d`, verify: exit 0) | verify: `npx playwright test tests/e2e/amigos.spec.js`

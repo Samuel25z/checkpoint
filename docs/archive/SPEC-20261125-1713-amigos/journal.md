@@ -65,3 +65,8 @@
 
 Amigos entregue. 2/2 critérios verificados.
 ⎿ commit 1d97cab+dirty · 10 files changed, 103 insertions(+), 4 deletions(-)
+
+## 2026-11-25 17:22 — [nota] verify: 2/2 critérios passaram (commit `01c208d`)
+
+- PASS: @, resumo público sem dado sensível, amigos e feed testados…
+- PASS: criar @, buscar, seguir, amigos, feed, perfil público, priv…
