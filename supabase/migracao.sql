@@ -6,7 +6,7 @@ create table if not exists public.checkpoint_dados (
   user_id uuid not null references auth.users (id) on delete cascade,
   chave text not null check (chave in (
     'diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista',
-    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'sync:removidos'
+    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'sync:removidos'
   )),
   valor jsonb not null,
   atualizado_em timestamptz not null default now(),
@@ -35,3 +35,31 @@ create policy "apagar os próprios dados" on public.checkpoint_dados
 
 -- Visitantes sem login não têm acesso nenhum.
 revoke all on public.checkpoint_dados from anon;
+
+-- Quem já tinha rodado a versão antiga: atualiza a lista de dados aceitos (inclui o perfil).
+alter table public.checkpoint_dados drop constraint if exists checkpoint_dados_chave_check;
+alter table public.checkpoint_dados add constraint checkpoint_dados_chave_check check (chave in (
+  'diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista',
+  'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'sync:removidos'
+));
+
+-- Direito de apagar tudo (LGPD): o usuário logado apaga a PRÓPRIA conta.
+-- security definer porque o navegador não pode mexer em auth.users; a função só aceita auth.uid(),
+-- então ninguém apaga a conta de outra pessoa. Os dados saem junto (on delete cascade).
+create or replace function public.apagar_minha_conta()
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'precisa estar logado';
+  end if;
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+
+revoke all on function public.apagar_minha_conta() from public, anon;
+grant execute on function public.apagar_minha_conta() to authenticated;
+

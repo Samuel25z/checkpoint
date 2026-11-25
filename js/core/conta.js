@@ -162,6 +162,33 @@ export function iniciarConta(ctx) {
     ctx.toast('Você saiu da conta. Seus dados foram tirados deste navegador.');
   }
 
+  /** Direito de apagar tudo (LGPD): a função no banco remove o usuário, e os dados vão junto (on delete cascade). */
+  async function apagarConta() {
+    const ok = await confirmar('Apagar sua conta?', 'Isso apaga para sempre a sua conta e tudo o que está salvo nela: diário, recordes, torneios, PCs e perfil. Não dá para desfazer. Os dados também saem deste navegador.', 'Apagar tudo', true);
+    if (!ok) return;
+    try {
+      clearTimeout(tempo); fila = new Set();
+      const { error } = await cliente.rpc('apagar_minha_conta');
+      if (error) throw error;
+      await cliente.auth.signOut();
+    } catch (e) {
+      console.warn('[conta] apagar falhou', e);
+      ctx.toast('Não deu para apagar a conta agora. Tente de novo.', 'erro');
+      return;
+    }
+    usuario = null; estado = 'desligado';
+    aplicandoRemoto = true;
+    for (const chave of SINCRONIZAVEIS) storage.remover(chave);
+    for (const meta of [META_USUARIO, META_EM, META_ULTIMA]) storage.remover(meta);
+    lembrarIds();
+    aplicandoRemoto = false;
+    pintar();
+    ctx.roteador?.navegar();
+    ctx.toast('Sua conta e seus dados foram apagados.', 'sucesso');
+  }
+
+  const linkPrivacidade = () => h('p', { class: 'texto-3' }, h('a', { href: 'privacidade.html', target: '_blank', rel: 'noopener' }, 'Como cuidamos dos seus dados'));
+
   botao.addEventListener('click', async () => {
     if (!configurado()) {
       modal({ titulo: 'Conta', conteudo: h('div', { class: 'conta-info' },
@@ -172,7 +199,7 @@ export function iniciarConta(ctx) {
     if (!usuario) {
       const r = await modal({ titulo: 'Entrar no Checkpoint', conteudo: h('div', { class: 'conta-info' },
         h('p', {}, 'Entre com sua conta Google para levar seu diário, recordes e torneios para qualquer computador.'),
-        h('p', { class: 'texto-2' }, 'O que já está neste navegador sobe para a sua conta. Nada é apagado.')),
+        h('p', { class: 'texto-2' }, 'O que já está neste navegador sobe para a sua conta. Nada é apagado.'), linkPrivacidade()),
       acoes: [{ rotulo: 'Agora não', valor: null }, { rotulo: 'Entrar com Google', valor: 'entrar', tipo: 'primario' }] });
       if (r === 'entrar') entrar();
       return;
@@ -180,10 +207,12 @@ export function iniciarConta(ctx) {
     const ultima = storage.ler(META_ULTIMA);
     const r = await modal({ titulo: 'Sua conta', conteudo: h('div', { class: 'conta-info' },
       h('p', {}, h('strong', {}, usuario.user_metadata?.full_name || 'Conta Google'), h('br'), h('span', { class: 'texto-2' }, usuario.email || '')),
-      h('p', { class: `conta-estado est-${estado}` }, estado === 'ok' ? `Sincronizado${ultima ? ' às ' + new Date(ultima).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}` : estado === 'erro' ? 'Não deu para sincronizar. Confira a internet.' : 'Sincronizando…')),
-    acoes: [{ rotulo: 'Sair', valor: 'sair' }, { rotulo: 'Sincronizar agora', valor: 'sync', tipo: 'primario' }] });
+      h('p', { class: `conta-estado est-${estado}` }, estado === 'ok' ? `Sincronizado${ultima ? ' às ' + new Date(ultima).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : ''}` : estado === 'erro' ? 'Não deu para sincronizar. Confira a internet.' : 'Sincronizando…'),
+      linkPrivacidade()),
+    acoes: [{ rotulo: 'Apagar conta', valor: 'apagar', tipo: 'perigo' }, { rotulo: 'Sair', valor: 'sair' }, { rotulo: 'Sincronizar agora', valor: 'sync', tipo: 'primario' }] });
     if (r === 'sync') { await sincronizar(); ctx.toast(estado === 'ok' ? 'Tudo sincronizado' : 'Não deu para sincronizar', estado === 'ok' ? 'sucesso' : 'erro'); }
     if (r === 'sair') sair();
+    if (r === 'apagar') apagarConta();
   });
 
   pintar();

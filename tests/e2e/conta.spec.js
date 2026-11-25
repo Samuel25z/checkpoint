@@ -17,6 +17,7 @@ export function createClient() {
       async signInWithOAuth() { const id = localStorage.getItem('fake-proximo') || 'u1'; sessao = { user: { id, email: id + '@exemplo.com', user_metadata: { full_name: 'Jogador ' + id } } }; localStorage.setItem('fake-sessao', JSON.stringify(sessao)); ouvintes.forEach((f) => f('SIGNED_IN', sessao)); return { error: null }; },
       async signOut() { sessao = null; localStorage.removeItem('fake-sessao'); ouvintes.forEach((f) => f('SIGNED_OUT', null)); return { error: null }; }
     },
+    async rpc(nome) { if (nome === 'apagar_minha_conta' && sessao) { localStorage.removeItem(chave()); localStorage.setItem('fake-apagou', quem()); return { error: null }; } return { error: { message: 'negado' } }; },
     from() {
       return {
         select() { return { in: async () => ({ data: Object.entries(nuvem()).map(([chave, v]) => ({ chave, valor: v.valor, atualizado_em: v.em })), error: null }) }; },
@@ -85,5 +86,47 @@ test.describe('com-conta', () => {
     expect(nuvemU2['diario:jogos']?.valor || []).toEqual([]);
     await semBotaoMorto(page);
     expect(erros).toEqual([]);
+  });
+});
+
+test.describe('apagar-conta', () => {
+  test('o perfil sincroniza e "Apagar conta" apaga a conta, a nuvem e o navegador', async ({ page }) => {
+    await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: "export const SUPABASE = { url: 'https://teste.supabase.co', chaveAnon: 'chave-publica-de-teste' }; export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';" }));
+    await page.route(SDK, (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE, headers: { 'access-control-allow-origin': '*' } }));
+    const erros = await abrir(page, 'perfil', { dados: {
+      'diario:jogos': [{ id: 'j1', nome: 'Celeste', jogoId: 'celeste', status: 'platinado', nota: 5, horas: 14, criadoEm: '2026-05-01T00:00:00Z', atualizadoEm: '2026-05-02T00:00:00Z' }],
+      'perfil:dados': { nome: 'Samuel', frase: 'Só mais uma run.', favoritos: ['j1'], coroado: 'j1' },
+    } });
+    await page.locator('#botao-conta').click();
+    await expect(page.getByRole('dialog')).toContainText('Como cuidamos dos seus dados');
+    await page.getByRole('button', { name: 'Entrar com Google' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    const perfilNaNuvem = await page.evaluate(() => JSON.parse(localStorage.getItem('fake-nuvem'))['perfil:dados'].valor.nome);
+    expect(perfilNaNuvem).toBe('Samuel');
+
+    await page.locator('#botao-conta').click();
+    await page.getByRole('dialog', { name: 'Sua conta' }).getByRole('button', { name: 'Apagar conta' }).click();
+    const confirma = page.getByRole('dialog', { name: 'Apagar sua conta?' });
+    await expect(confirma).toContainText('Não dá para desfazer');
+    await confirma.getByRole('button', { name: 'Apagar tudo' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'desligado');
+    await expect(page.getByText('Seu perfil começa no Diário')).toBeVisible();
+    const sobrou = await page.evaluate(() => ({ nuvem: localStorage.getItem('fake-nuvem'), apagou: localStorage.getItem('fake-apagou'), diario: localStorage.getItem('checkpoint:diario:jogos'), perfil: localStorage.getItem('checkpoint:perfil:dados') }));
+    expect(sobrou).toEqual({ nuvem: null, apagou: 'u1', diario: null, perfil: null });
+    expect(erros).toEqual([]);
+  });
+
+  test('cancelar o "Apagar conta" não apaga nada', async ({ page }) => {
+    await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: "export const SUPABASE = { url: 'https://teste.supabase.co', chaveAnon: 'chave-publica-de-teste' }; export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';" }));
+    await page.route(SDK, (r) => r.fulfill({ contentType: 'text/javascript', body: FAKE, headers: { 'access-control-allow-origin': '*' } }));
+    await abrir(page, 'diario', { dados: { 'diario:jogos': [{ id: 'j1', nome: 'Celeste', status: 'jogando', nota: null, horas: 1, atualizadoEm: '2026-05-02T00:00:00Z' }] } });
+    await page.locator('#botao-conta').click();
+    await page.getByRole('button', { name: 'Entrar com Google' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    await page.locator('#botao-conta').click();
+    await page.getByRole('button', { name: 'Apagar conta' }).click();
+    await page.getByRole('dialog', { name: 'Apagar sua conta?' }).getByRole('button', { name: 'Cancelar' }).click();
+    await expect(page.locator('#botao-conta')).toHaveAttribute('data-estado', 'ok');
+    await expect(page.locator('.carta', { hasText: 'Celeste' })).toBeVisible();
   });
 });

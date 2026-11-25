@@ -6,7 +6,8 @@
 **Criada:** 2026-11-18 19:56
 **Ativada:** 2026-11-18 20:44
 **Concluída:** —
-**Pausada em:** 2026-11-18 20:47 — aguardando o Samuel criar a conta Supabase e ligar o Google para o teste real
+**Pausada em:** 2026-11-25 12:00 — aguardando o Samuel criar o projeto no Supabase e o login do Google e mandar URL + chave anon
+**Reativada em:** 2026-11-25 11:40
 **Commit final:** —
 **Keywords:** login, conta, supabase, google, sincronizacao, rls
 **Features:** conta
