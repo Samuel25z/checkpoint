@@ -1,13 +1,13 @@
 # SPEC-20261125-1743: aba video
 
-**Status:** active
+**Status:** done
 **Porte:** P
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 17:43
 **Ativada:** 2026-11-25 17:43
-**Concluída:** —
+**Concluída:** 2026-11-25 17:48
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `1b4276d`
 **Keywords:** video, apresentacao, aba
 **Features:** base
 **Branch:** spec/aba-video
@@ -51,4 +51,4 @@ js/modules/video/index.js + estilo.css + 1 linha no registry; capa assets/video-
 
 ## Critério de aceite
 
-- [ ] aba mostra o vídeo com capa e leva ao site | verify: `npx playwright test tests/e2e/video.spec.js`
+- [x] aba mostra o vídeo com capa e leva ao site (2026-11-25 17:48, commit `1b4276d`, verify: exit 0) | verify: `npx playwright test tests/e2e/video.spec.js`

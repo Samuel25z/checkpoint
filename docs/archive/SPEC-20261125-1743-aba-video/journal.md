@@ -47,3 +47,7 @@
 
 Aba Apresentação entregue. 1/1 critério verificado.
 ⎿ commit 6bb14f2+dirty · 3 files changed, 37 insertions(+), 31 deletions(-)
+
+## 2026-11-25 17:48 — [nota] verify: 1/1 critérios passaram (commit `1b4276d`)
+
+- PASS: aba mostra o vídeo com capa e leva ao site | verify: `npx p…
