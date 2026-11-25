@@ -10,13 +10,61 @@ import {
   lerPerfil, validarPerfil, iniciais, numeros, xp, nivel, medalhas, distribuicaoNotas, generos, radar, mapaAtividade,
   destaques, resumoDoAno, recentes, desde
 } from './logic.js';
+import { CHAVE_IMAGENS, LIMITES, kb, lerImagens, validarLink, prepararArquivo, linkAbre } from './imagens.js';
 
 const CHAVE = 'perfil:dados';
 const fmt = (n) => Number(n).toLocaleString('pt-BR');
 const nota = (n) => String(n).replace('.', ',');
 
 /* ---------- edição ---------- */
+/** Bloco de escolha de foto ou banner: arquivo do aparelho, link ou remover. Mexe em imgs[alvo]. */
+function seletorImagem(alvo, imgs, perfil) {
+  const nomeAlvo = alvo === 'avatar' ? 'Foto' : 'Banner';
+  const previa = h('div', { class: `pf-previa pf-previa-${alvo}` });
+  const aviso = h('p', { class: 'campo-erro', 'data-erro': `img-${alvo}`, 'aria-live': 'polite' });
+  const arquivo = h('input', { type: 'file', accept: 'image/gif,image/png,image/jpeg,image/webp', class: 'sr', 'aria-label': `Arquivo do ${nomeAlvo.toLowerCase()}`, 'data-arquivo': alvo });
+  const linkCampo = h('input', { class: 'entrada', type: 'url', inputmode: 'url', placeholder: 'https://…/imagem.gif', 'aria-label': `Link do ${nomeAlvo.toLowerCase()}`, 'data-link': alvo });
+  const caixaLink = h('div', { class: 'pf-link-caixa', hidden: true }, linkCampo,
+    h('button', { type: 'button', class: 'btn btn-pequeno', 'data-usar-link': alvo, onclick: async () => {
+      const v = validarLink(linkCampo.value);
+      if (!v.ok) { aviso.textContent = v.erro; return; }
+      aviso.textContent = 'Conferindo o link…';
+      if (!await linkAbre(v.url)) { aviso.textContent = 'Não deu para abrir essa imagem. Confira se o link é da imagem em si (termina em .gif, .png, .jpg ou .webp).'; return; }
+      imgs[alvo] = { origem: 'link', url: v.url }; aviso.textContent = ''; caixaLink.hidden = true; pintar();
+    } }, 'Usar link'));
+  const pintar = () => {
+    const atual = imgs[alvo];
+    previa.replaceChildren(atual
+      ? h('img', { src: atual.url, alt: `${nomeAlvo} escolhido`, referrerpolicy: 'no-referrer' })
+      : alvo === 'avatar' ? h('span', { class: 'pf-previa-iniciais' }, iniciais(perfil.nome)) : h('span', { class: 'texto-3' }, 'Sem banner: usa a arte do jogo coroado'));
+    remover.hidden = !atual;
+    origem.textContent = atual ? (atual.origem === 'link' ? 'Por link' : 'Arquivo enviado') : '';
+  };
+  const origem = h('span', { class: 'texto-3' });
+  const remover = h('button', { type: 'button', class: 'btn btn-pequeno btn-fantasma', 'data-remover': alvo, onclick: () => { delete imgs[alvo]; aviso.textContent = ''; pintar(); } }, 'Remover');
+  arquivo.addEventListener('change', async () => {
+    const f = arquivo.files?.[0];
+    arquivo.value = '';
+    if (!f) return;
+    aviso.textContent = 'Preparando a imagem…';
+    const r = await prepararArquivo(f, alvo);
+    if (r.erro) { aviso.textContent = r.erro; return; }
+    imgs[alvo] = { origem: 'arquivo', url: r.url }; aviso.textContent = ''; pintar();
+  });
+  pintar();
+  return h('div', { class: 'pf-imagem', 'data-imagem': alvo },
+    h('div', { class: 'pf-imagem-topo' }, h('strong', {}, nomeAlvo), origem),
+    previa,
+    h('div', { class: 'pf-imagem-acoes' },
+      h('button', { type: 'button', class: 'btn btn-pequeno', 'data-enviar': alvo, onclick: () => arquivo.click(), html: `${icone('mais')}<span>Enviar arquivo</span>` }),
+      h('button', { type: 'button', class: 'btn btn-pequeno', 'data-abrir-link': alvo, onclick: () => { caixaLink.hidden = !caixaLink.hidden; if (!caixaLink.hidden) linkCampo.focus(); } }, 'Usar um link'),
+      remover, arquivo),
+    caixaLink, aviso,
+    h('p', { class: 'texto-3' }, `Foto é reduzida sozinha. GIF até ${kb(LIMITES[alvo])}; maior que isso, use um link.`));
+}
+
 async function editar(ctx, perfil, diario) {
+  const imgs = { ...lerImagens(ctx.storage.ler(CHAVE_IMAGENS, {})) };
   const escolhidos = new Set(perfil.favoritos);
   let coroado = perfil.coroado;
   const lista = h('div', { class: 'pf-escolha', role: 'group', 'aria-label': 'Jogos favoritos' });
@@ -36,6 +84,8 @@ async function editar(ctx, perfil, diario) {
   const form = h('form', { class: 'form-perfil', novalidate: true },
     h('label', { class: 'campo' }, h('span', {}, 'Nome'), h('input', { class: 'entrada', name: 'nome', value: perfil.nome, maxlength: 40, placeholder: 'Como você quer aparecer' }), h('span', { class: 'campo-erro', 'data-erro': 'nome' })),
     h('label', { class: 'campo' }, h('span', {}, 'Frase'), h('input', { class: 'entrada', name: 'frase', value: perfil.frase, maxlength: 140, placeholder: 'Uma frase sua, de jogo ou de personagem' }), h('span', { class: 'campo-erro', 'data-erro': 'frase' })),
+    h('div', { class: 'campo' }, h('span', { class: 'pf-rotulo' }, 'Foto e banner'), h('p', { class: 'texto-3' }, 'Pode ser GIF. Link não ocupa espaço nenhum.'),
+      h('div', { class: 'pf-imagens' }, seletorImagem('avatar', imgs, perfil), seletorImagem('banner', imgs, perfil))),
     h('div', { class: 'campo' }, h('span', { class: 'pf-rotulo' }, 'Jogos favoritos ', contador), h('p', { class: 'texto-3' }, 'Escolha até 5 do seu Diário. A coroa marca o destaque principal, que vira a capa do perfil.'),
       diario.length ? lista : h('p', { class: 'texto-2' }, 'Seu Diário está vazio. Adicione jogos para escolher favoritos.'), h('span', { class: 'campo-erro', 'data-erro': 'favoritos' })),
     h('div', { class: 'modal-acoes form-acoes' },
@@ -51,24 +101,35 @@ async function editar(ctx, perfil, diario) {
   const v = await modal({ titulo: 'Editar perfil', conteudo: form, acoes: [], largo: true });
   if (!v) return false;
   ctx.storage.gravar(CHAVE, v);
+  try { ctx.storage.gravar(CHAVE_IMAGENS, lerImagens(imgs)); } catch { toast('Sem espaço no navegador para a imagem. Use um link.', 'erro'); }
   toast('Perfil salvo', 'sucesso');
   return true;
 }
 
 /* ---------- peças ---------- */
-function topo(perfil, diario, n, lv, aoEditar) {
+function topo(perfil, diario, n, lv, aoEditar, imgs = {}) {
   const coroa = diario.find((r) => r.id === perfil.coroado);
-  const hero = coroa ? arteDoRegistro(coroa).hero : null;
+  const arteJogo = coroa ? arteDoRegistro(coroa).hero : null;
+  const hero = imgs.banner?.url || arteJogo;
   const fundo = h('div', { class: 'pf-capa-fundo padrao-hex' });
   if (hero) {
     const i = h('img', { src: hero, alt: '', loading: 'eager', referrerpolicy: 'no-referrer' });
-    i.addEventListener('error', () => i.remove());
+    // banner que não abre (link fora do ar) volta para a arte do jogo
+    i.addEventListener('error', () => { if (imgs.banner && arteJogo && i.src !== arteJogo) i.src = arteJogo; else i.remove(); });
+    if (imgs.banner) fundo.classList.add('com-banner');
     fundo.append(i);
+  }
+  const avatar = h('div', { class: 'pf-avatar', 'aria-hidden': 'true' }, iniciais(perfil.nome));
+  if (imgs.avatar) {
+    const foto = h('img', { src: imgs.avatar.url, alt: '', referrerpolicy: 'no-referrer' });
+    foto.addEventListener('error', () => { foto.remove(); avatar.classList.remove('com-foto'); });
+    avatar.classList.add('com-foto');
+    avatar.append(foto);
   }
   const quando = desde(diario);
   return h('section', { class: 'pf-capa', 'aria-label': 'Cartão do jogador' }, fundo,
     h('div', { class: 'pf-capa-conteudo' },
-      h('div', { class: 'pf-avatar', 'aria-hidden': 'true' }, iniciais(perfil.nome)),
+      avatar,
       h('div', { class: 'pf-quem' },
         h('h2', {}, perfil.nome || 'Jogador sem nome', h('span', { class: 'pf-titulo' }, lv.titulo)),
         perfil.frase ? h('p', { class: 'pf-frase' }, `“${perfil.frase}”`) : null,
@@ -165,7 +226,7 @@ function desenhar(el, ctx) {
   const n = numeros(diario);
   const lv = nivel(xp(diario));
   el.replaceChildren(cab,
-    topo(perfil, diario, n, lv, aoEditar),
+    topo(perfil, diario, n, lv, aoEditar, lerImagens(ctx.storage.ler(CHAVE_IMAGENS, {}))),
     h('div', { class: 'pf-grade' },
       h('div', { class: 'pf-principal' },
         favoritos(perfil, diario, aoEditar),

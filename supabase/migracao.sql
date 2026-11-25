@@ -6,7 +6,7 @@ create table if not exists public.checkpoint_dados (
   user_id uuid not null references auth.users (id) on delete cascade,
   chave text not null check (chave in (
     'diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista',
-    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'sync:removidos'
+    'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'perfil:imagens', 'sync:removidos'
   )),
   valor jsonb not null,
   atualizado_em timestamptz not null default now(),
@@ -40,7 +40,7 @@ revoke all on public.checkpoint_dados from anon;
 alter table public.checkpoint_dados drop constraint if exists checkpoint_dados_chave_check;
 alter table public.checkpoint_dados add constraint checkpoint_dados_chave_check check (chave in (
   'diario:jogos', 'diario:atividades', 'speedrun:rotas', 'torneio:lista',
-  'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'sync:removidos'
+  'hardware:pcs', 'recomps:seguidos', 'recomendador:respostas', 'perfil:dados', 'perfil:imagens', 'sync:removidos'
 ));
 
 -- Direito de apagar tudo (LGPD): o usuário logado apaga a PRÓPRIA conta.

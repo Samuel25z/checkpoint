@@ -93,3 +93,22 @@
 .pf-coroar.ativo { background: #f5c542; border-color: #f5c542; color: #3a2a00; }
 .pf-coroar .ic { width: 16px; height: 16px; }
 @media (prefers-reduced-motion: reduce) { .pf-jogo-capa { transition: none; } }
+
+/* foto e banner */
+.pf-avatar { position: relative; overflow: hidden; }
+.pf-avatar.com-foto { color: transparent; }
+.pf-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pf-capa-fundo.com-banner img { object-position: center; }
+.pf-imagens { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--esp-3); }
+@media (max-width: 640px) { .pf-imagens { grid-template-columns: 1fr; } }
+.pf-imagem { display: grid; gap: 8px; align-content: start; padding: 12px; border-radius: 12px; border: 1px solid var(--linha); background: var(--superficie-2); min-width: 0; }
+.pf-imagem-topo { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.pf-previa { display: grid; place-items: center; overflow: hidden; border-radius: 10px; background: var(--superficie); border: 1px solid var(--linha); }
+.pf-previa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pf-previa-avatar { width: 96px; height: 96px; border-radius: 22px; }
+.pf-previa-iniciais { font: 800 1.8rem/1 var(--fonte-titulo); color: var(--acento); }
+.pf-previa-banner { aspect-ratio: 3 / 1; width: 100%; padding: 6px; text-align: center; }
+.pf-imagem-acoes { display: flex; flex-wrap: wrap; gap: 6px; }
+.pf-link-caixa { display: flex; gap: 6px; }
+.pf-link-caixa[hidden] { display: none; }
+.pf-link-caixa .entrada { flex: 1; min-width: 0; }
