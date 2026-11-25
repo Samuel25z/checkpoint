@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-25 00:03
+**Última atualização:** 2026-11-25 00:04
 **Onde tô:** aba Almanaque entregue: capa com Fato do Dia e Me surpreenda, capítulos Prêmios (TGA, BAFTA, GDC, D.I.C.E.), Recordes (speedrun ao vivo, mais vendidos, mais jogados), Neste Dia e Curiosidades; dados semanais por GitHub Actions
 **Próximo passo:** fechar a SPEC e seguir para a próxima do programa (specctl next)
 **Última decisão:** foto dos dados em js/data/almanaque.json atualizada por script semanal; só o speedrun é ao vivo; curiosidades escritas à mão com fonte em js/data/curiosidades.js
@@ -65,3 +65,9 @@
 
 Almanaque entregue. 3/3 critérios verificados.
 ⎿ commit 737929a+dirty · 6 files changed, 38 insertions(+)
+
+## 2026-11-25 00:04 — [nota] verify: 3/3 critérios passaram (commit `5021b55`)
+
+- PASS: lógica do almanaque (fato do dia, sorteio, rankings, neste …
+- PASS: script monta o JSON a partir de respostas salvas, sem inter…
+- PASS: aba com capa, 4 capítulos, Me surpreenda e controle funcion…

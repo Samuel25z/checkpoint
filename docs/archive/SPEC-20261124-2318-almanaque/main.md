@@ -1,13 +1,13 @@
 # SPEC-20261124-2318: almanaque
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel25z
 **Criada:** 2026-11-24 23:18
 **Ativada:** 2026-11-24 23:18
-**Concluída:** —
+**Concluída:** 2026-11-25 00:04
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `5021b55`
 **Keywords:** almanaque, premios, game-awards, recordes, curiosidades, neste-dia, wikidata
 **Features:** almanaque
 **Branch:** spec/almanaque
@@ -65,6 +65,6 @@ Alternativa rejeitada: buscar tudo ao vivo no navegador (lento, falha, Steam blo
 
 ## Critério de aceite
 
-- [ ] lógica do almanaque (fato do dia, sorteio, rankings, neste dia, curiosidades calculadas) testada | verify: `node --test tests/unit/almanaque.test.js`
-- [ ] script monta o JSON a partir de respostas salvas, sem internet | verify: `node --test tests/unit/almanaque-script.test.js`
-- [ ] aba com capa, 4 capítulos, Me surpreenda e controle funciona no PC e celular | verify: `npx playwright test tests/e2e/almanaque.spec.js`
+- [x] lógica do almanaque (fato do dia, sorteio, rankings, neste dia, curiosidades calculadas) testada (2026-11-25 00:03, commit `5021b55`, verify: exit 0) | verify: `node --test tests/unit/almanaque.test.js`
+- [x] script monta o JSON a partir de respostas salvas, sem internet (2026-11-25 00:03, commit `5021b55`, verify: exit 0) | verify: `node --test tests/unit/almanaque-script.test.js`
+- [x] aba com capa, 4 capítulos, Me surpreenda e controle funciona no PC e celular (2026-11-25 00:04, commit `5021b55`, verify: exit 0) | verify: `npx playwright test tests/e2e/almanaque.spec.js`
