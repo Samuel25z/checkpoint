@@ -356,10 +356,11 @@ export function iniciarConta(ctx) {
         const antes = usuario?.id;
         usuario = sessao?.user || null;
         pintar();
+        if (usuario?.id !== antes) window.dispatchEvent(new CustomEvent('checkpoint:conta', { detail: { usuario } }));
         if (usuario && usuario.id !== antes) sincronizar();
       });
     }).catch((e) => { console.warn('[conta] SDK indisponível', e); estado = 'erro'; pintar(); });
   }
   window.addEventListener('online', () => { if (usuario && fila.size) enviarFila(); });
-  return { sincronizar, get usuario() { return usuario; } };
+  return { sincronizar, cliente: carregarCliente, configurado, get usuario() { return usuario; } };
 }
