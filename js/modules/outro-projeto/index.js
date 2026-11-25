@@ -8,6 +8,8 @@ export const PROJETO = {
   arquivo: 'assets/drift-tela.mp4',
   capa: 'assets/drift-tela-capa.jpg',
   duracao: '1:10',
+  baixar: 'https://drift-app-production-9075.up.railway.app/app/Drift-setup.exe',
+  navegador: 'https://drift-app-production-9075.up.railway.app/tela',
 };
 
 export default {
@@ -21,6 +23,8 @@ export default {
       h('section', { class: 'vd-palco padrao-hex' }, h('div', { class: 'vd-moldura' }, player)),
       h('div', { class: 'vd-acoes' },
         h('button', { type: 'button', class: 'btn btn-primario', id: 'outro-tocar', onclick: () => { telaCheia(); player.play?.(); }, html: `${icone('play')}<span>Assistir em tela cheia</span>` }),
+        h('a', { class: 'btn', id: 'outro-baixar', href: p.baixar, rel: 'noopener', html: `${icone('download')}<span>Baixar para Windows</span>` }),
+        h('a', { class: 'btn', id: 'outro-navegador', href: p.navegador, target: '_blank', rel: 'noopener', html: `${icone('externo')}<span>Abrir no navegador</span>` }),
         h('span', { class: 'texto-3' }, `${p.nome} · ${p.duracao}`)));
   }
 };
