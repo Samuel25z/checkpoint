@@ -371,3 +371,16 @@ textarea.entrada { min-height: 88px; resize: vertical; }
 ::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active { background-color: var(--rolagem-hover); }
 ::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
 ::-webkit-scrollbar-corner { background: transparent; }
+
+/* janela de entrar (Google ou e-mail e senha) */
+.conta-form { display: grid; gap: var(--esp-3); }
+.conta-google { width: 100%; justify-content: center; font-weight: 700; }
+.conta-ou { display: flex; align-items: center; gap: 10px; margin: 0; }
+.conta-ou::before, .conta-ou::after { content: ''; flex: 1; height: 1px; background: var(--linha); }
+.conta-senha { display: flex; gap: 6px; }
+.conta-senha .entrada { flex: 1; min-width: 0; }
+.conta-botoes { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.conta-aviso { min-height: 1.2em; margin: 0; font-size: .9rem; color: var(--texto-2); }
+.conta-aviso:empty { display: none; }
+.conta-aviso.erro { color: var(--perigo); }
+.conta-aviso.ok { color: var(--st-zerado); }

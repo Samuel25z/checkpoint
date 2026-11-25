@@ -4,8 +4,8 @@
 // Enquanto url e chaveAnon estiverem vazios, o site funciona só com o armazenamento do navegador.
 
 export const SUPABASE = {
-  url: '',
-  chaveAnon: ''
+  url: 'https://vczwghrqekvqrwhshwbe.supabase.co',
+  chaveAnon: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjendnaHJxZWt2cXJ3aHNod2JlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU2Mjk0NzQsImV4cCI6MjExMTIwNTQ3NH0.EngTzeUbo0XAG2cfCXEHZTiLsHSavWoO0R8L8uPg2QU'
 };
 
 // Endereço do ajudante da Steam (servidor/steam-worker, publicado no Cloudflare).
