@@ -82,6 +82,8 @@ export const EN = {
   'Apagar conta': 'Delete account', 'Apagar sua conta?': 'Delete your account?', 'Apagar tudo': 'Delete everything', 'Como cuidamos dos seus dados': 'How we handle your data', 'Privacidade e seus dados': 'Privacy and your data',
   'Isso apaga para sempre a sua conta e tudo o que está salvo nela: diário, recordes, torneios, PCs e perfil. Não dá para desfazer. Os dados também saem deste navegador.': 'This permanently deletes your account and everything saved in it: journal, records, tournaments, PCs and profile. It cannot be undone. The data also leaves this browser.',
   'Sua conta e seus dados foram apagados.': 'Your account and your data were deleted.', 'Não deu para apagar a conta agora. Tente de novo.': "Couldn't delete the account right now. Try again.",
+  // apresentação
+  'Apresentação': 'Presentation', 'O vídeo de demonstração do Checkpoint. Assista antes de explorar o site.': 'The Checkpoint demo video. Watch it before exploring the site.', 'Assistir em tela cheia': 'Watch full screen', 'Ir para o site': 'Go to the site', 'Checkpoint em 1 minuto e meio': 'Checkpoint in a minute and a half',
   // amigos
   'Amigos': 'Friends', 'Siga outros jogadores e veja o que eles andam jogando.': 'Follow other players and see what they are playing.', 'O login ainda não foi ligado': 'Sign-in is not set up yet',
   'Os amigos precisam de conta. Tudo o resto do site funciona normalmente.': 'Friends need an account. Everything else on the site works normally.', 'Entre para seguir seus amigos': 'Sign in to follow your friends',

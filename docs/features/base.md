@@ -13,6 +13,7 @@
 
 ## Specs desta feature
 ### Concluídas
+- SPEC-20261125-1743-aba-video | 2026-11-25 | `6bb14f2` | Aba Apresentação com o vídeo
 - SPEC-20261121-0014-barra-rolagem | 2026-11-21 | `d13b728` | Barra de rolagem moderna
 - SPEC-20261120-1736-identidade-v2 | 2026-11-20 | `eaaf13e` | Identidade v2: Deck, Palco e Joy
 - SPEC-20261118-1956-controle-idioma | 2026-11-18 | `8b8f1aa` | Controle de videogame e idioma inglês
@@ -31,6 +32,9 @@ Visual em storage 'pref:visual' (deck|palco|joy) aplicado antes de desenhar (scr
 ### Delta de estado (SPEC-20261121-0014-barra-rolagem, 2026-11-21 00:16)
 Barra de rolagem: tokens --rolagem/--rolagem-hover em css/style.css; modal com margem no trilho para não cortar o canto.
 
+### Delta de estado (SPEC-20261125-1743-aba-video, 2026-11-25 17:48)
+Vídeo da aba Apresentação: VIDEOS[0] em js/modules/video/index.js.
+
 ## Decisões arquiteturais ativas
 - DEC-20261118-2013-abas-plugaveis [ativa] (SPEC-20261118-1956-fundacao) — abas como módulos registrados em registry.js com import preguiçoso; erro num módulo só afeta a própria aba
 - DEC-20261118-2013-css-por-aba [ativa] (SPEC-20261118-1956-fundacao) — cada aba carrega seu CSS da própria pasta; style.css só tem casca e componentes
@@ -42,6 +46,8 @@ Barra de rolagem: tokens --rolagem/--rolagem-hover em css/style.css; modal com m
 - DEC-20261120-1747-logo-hex-rosa [ativa] (SPEC-20261120-1736-identidade-v2) — logo hexagonal rosa e branca fixa em todos os visuais
 
 - DEC-20261121-0016-barra-rolagem-webkit [ativa] (SPEC-20261121-0014-barra-rolagem) — ::-webkit-scrollbar no Chrome/Edge; scrollbar-width/color só via @supports no Firefox
+
+- DEC-20261125-1748-video-no-pages [ativa] (SPEC-20261125-1743-aba-video) — vídeo servido pelo GitHub Pages, sem serviço de vídeo externo
 
 ## Alternativas consideradas e rejeitadas
 - SPEC-20261118-1956-fundacao | framework (React/Vue) — rejeitado: disciplina exige JS puro e sem build
