@@ -128,3 +128,10 @@
 - **Aplicação:** aba Meu Perfil com capa do jogo coroado, nível e XP, números, 5 favoritos, 6 medalhas de bronze a ouro, gráfico das notas, radar de gêneros em SVG, mapa de atividade dos últimos 90 dias e destaques, tudo calculado do Diário.
 - **Adaptações:** o grupo escolheu começar pelo perfil ("Pode começar por ela"); a parte social (seguir amigos, feed) e o status "Pausado" ficaram para depois.
 
+## P19 — Login seguro e foto/banner no perfil
+- **Objetivo:** ligar o login para os amigos e deixar o perfil com a cara de cada um.
+- **Prompt:** "Vamos criar o login. Me fala aí toda a segurança e tudo que precisa ter pro login." e, depois, "faltou colocar no perfil foto e banner, que pode ser GIF... de preferência GIFs com muito poucos kbytes, e a opção de botar em link, que aí não custa para ninguém."
+- **Resposta da IA:** listou a segurança já presente (login só pelo Google, fluxo PKCE, regras do banco por usuário, só a chave pública no site, limite de tamanho, limpeza ao sair) e o que faltava pela LGPD: botão de apagar conta e uma página de privacidade. Para as imagens, propôs reduzir fotos no navegador, aceitar GIF com limite (200 KB a foto, 450 KB o banner) e oferecer link sem limite.
+- **Aplicação:** botão "Apagar conta" com função segura no banco, página privacidade.html, perfil e imagens sincronizando com a conta, e foto/banner por arquivo ou link, conferindo a assinatura do arquivo (SVG recusado, links só https).
+- **Adaptações:** o Samuel cria as contas do Supabase e do Google; a chave secreta do Google vai só no painel do Supabase, nunca no código.
+

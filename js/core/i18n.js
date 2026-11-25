@@ -98,6 +98,10 @@ export const EN = {
   'Plataforma mais jogada': 'Most played platform', 'Tempo médio por jogo': 'Average time per game', 'Jogos platinados': 'Platinum games', 'Ver o Wrapped do ano': "See this year's Wrapped",
   'Dê notas no Diário para ver o gráfico.': 'Rate games in the Journal to see the chart.', 'Com 3 gêneros diferentes no Diário, o radar aparece aqui.': 'With 3 different genres in the Journal, the radar shows up here.',
   'Progresso até o próximo nível': 'Progress to the next level',
+  'Foto e banner': 'Photo and banner', 'Pode ser GIF. Link não ocupa espaço nenhum.': 'It can be a GIF. A link takes no space at all.', 'Foto': 'Photo', 'Banner': 'Banner',
+  'Enviar arquivo': 'Upload file', 'Usar um link': 'Use a link', 'Usar link': 'Use link', 'Remover': 'Remove', 'Por link': 'By link', 'Arquivo enviado': 'Uploaded file',
+  'Sem banner: usa a arte do jogo coroado': 'No banner: uses the crowned game art', 'Preparando a imagem…': 'Preparing the image…', 'Conferindo o link…': 'Checking the link…',
+  'Sem espaço no navegador para a imagem. Use um link.': 'No room in the browser for the image. Use a link.',
   // almanaque
   'Almanaque': 'Almanac', 'O livro dos recordes dos games: prêmios, recordes, curiosidades e o que aconteceu neste dia.': 'The gaming record book: awards, records, trivia and what happened on this day.',
   'Me surpreenda': 'Surprise me', 'Não deu para abrir o Almanaque': "Couldn't open the Almanac", 'Abrindo o Almanaque…': 'Opening the Almanac…', 'Confira a internet e tente de novo.': 'Check your connection and try again.',

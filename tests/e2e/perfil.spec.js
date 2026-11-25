@@ -62,3 +62,52 @@ test('estatísticas, nível e medalhas aparecem calculados do Diário', async ({
   await semBotaoMorto(page);
   expect(erros).toEqual([]);
 });
+
+// PNG 1x1 de verdade e um GIF falso grande (só a assinatura conta para recusar pelo tamanho)
+const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==', 'base64');
+const GIF_PEQUENO = Buffer.from('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==', 'base64');
+const GIF_GRANDE = Buffer.concat([Buffer.from('GIF89a'), Buffer.alloc(300 * 1024)]);
+
+test('foto por arquivo, GIF grande recusado, banner por link, remover e tudo fica salvo', async ({ page }) => {
+  await page.route(/exemplo-imagens\.test\/banner\.gif/, (r) => r.fulfill({ contentType: 'image/gif', body: GIF_PEQUENO }));
+  const erros = await abrir(page, 'perfil', { dados: { 'diario:jogos': diario } });
+  await page.locator('#botao-editar-perfil').click();
+  const d = page.getByRole('dialog', { name: 'Editar perfil' });
+
+  // GIF acima do limite: recusa e sugere link
+  await d.locator('[data-arquivo="avatar"]').setInputFiles({ name: 'grande.gif', mimeType: 'image/gif', buffer: GIF_GRANDE });
+  await expect(d.locator('[data-erro="img-avatar"]')).toContainText(/limite.*200 KB.*link/);
+
+  // arquivo que não é imagem
+  await d.locator('[data-arquivo="avatar"]').setInputFiles({ name: 'foto.png', mimeType: 'image/png', buffer: Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"></svg>') });
+  await expect(d.locator('[data-erro="img-avatar"]')).toContainText('não é uma imagem aceita');
+
+  // foto de verdade: reduzida e aceita
+  await d.locator('[data-arquivo="avatar"]').setInputFiles({ name: 'eu.png', mimeType: 'image/png', buffer: PNG });
+  await expect(d.locator('.pf-previa-avatar img')).toHaveAttribute('src', /^data:image\/(webp|jpeg);base64,/);
+  await expect(d.locator('[data-imagem="avatar"]')).toContainText('Arquivo enviado');
+
+  // banner por link: http é recusado, https que abre é aceito
+  await d.locator('[data-abrir-link="banner"]').click();
+  await d.locator('[data-link="banner"]').fill('http://exemplo-imagens.test/banner.gif');
+  await d.locator('[data-usar-link="banner"]').click();
+  await expect(d.locator('[data-erro="img-banner"]')).toContainText('https://');
+  await d.locator('[data-link="banner"]').fill('https://exemplo-imagens.test/banner.gif');
+  await d.locator('[data-usar-link="banner"]').click();
+  await expect(d.locator('[data-imagem="banner"]')).toContainText('Por link');
+  await d.getByRole('button', { name: 'Salvar perfil' }).click();
+
+  await expect(page.locator('.pf-avatar.com-foto img')).toHaveAttribute('src', /^data:image\//);
+  await expect(page.locator('.pf-capa-fundo img')).toHaveAttribute('src', 'https://exemplo-imagens.test/banner.gif');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.pf-capa-fundo img')).toHaveAttribute('src', 'https://exemplo-imagens.test/banner.gif');
+
+  // remover a foto volta para as iniciais
+  await page.locator('#botao-editar-perfil').click();
+  await page.getByRole('dialog', { name: 'Editar perfil' }).locator('[data-remover="avatar"]').click();
+  await page.getByRole('dialog', { name: 'Editar perfil' }).getByRole('button', { name: 'Salvar perfil' }).click();
+  await expect(page.locator('.pf-avatar img')).toHaveCount(0);
+  await expect(page.locator('.pf-avatar')).not.toHaveClass(/com-foto/);
+  expect(erros).toEqual([]);
+});
+
