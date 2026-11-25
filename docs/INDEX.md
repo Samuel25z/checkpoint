@@ -10,6 +10,7 @@
 - **diario** — diario, jogos, capa, wikipedia, status, nota
 - **entrega** — entrega, github-pages, readme, relatorio, slides, capturas
 - **hardware** — hardware, requisitos, gpu, cpu, webgl, pc
+- **perfil** — perfil, favoritos, estatisticas, medalhas, nivel, mapa-de-atividade
 - **recomendador** — recomendador, sugestao, etiquetas, humor, trailer
 - **recomps** — recomps, ports, decomp, github, releases, golpe
 - **speedrun** — speedrun, cronometro, splits, pb, ranking, speedrun.com

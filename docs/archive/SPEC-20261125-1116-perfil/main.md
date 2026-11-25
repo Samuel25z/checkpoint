@@ -1,13 +1,13 @@
 # SPEC-20261125-1116: perfil
 
-**Status:** active
+**Status:** done
 **Porte:** M
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 11:16
 **Ativada:** 2026-11-25 11:16
-**Concluída:** —
+**Concluída:** 2026-11-25 11:25
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `53ecf38`
 **Keywords:** perfil, favoritos, estatisticas, medalhas, nivel, mapa-de-atividade, generos
 **Features:** perfil
 **Branch:** spec/perfil
@@ -62,5 +62,5 @@ Módulo js/modules/perfil/ (index.js, logic.js, estilo.css) + 1 linha no registr
 
 ## Critério de aceite
 
-- [ ] números, nível, medalhas, gêneros, notas e mapa de atividade calculados e testados | verify: `node --test tests/unit/perfil.test.js`
-- [ ] tela do perfil com edição, favoritos, coroa e estados vazios no PC e celular | verify: `npx playwright test tests/e2e/perfil.spec.js`
+- [x] números, nível, medalhas, gêneros, notas e mapa de atividade calculados e testados (2026-11-25 11:25, commit `53ecf38`, verify: exit 0) | verify: `node --test tests/unit/perfil.test.js`
+- [x] tela do perfil com edição, favoritos, coroa e estados vazios no PC e celular (2026-11-25 11:25, commit `53ecf38`, verify: exit 0) | verify: `npx playwright test tests/e2e/perfil.spec.js`

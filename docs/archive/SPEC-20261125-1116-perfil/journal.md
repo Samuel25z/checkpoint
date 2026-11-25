@@ -56,3 +56,8 @@
 
 Meu perfil entregue. 2/2 critérios verificados.
 ⎿ commit 11039c2+dirty · 6 files changed, 33 insertions(+)
+
+## 2026-11-25 11:25 — [nota] verify: 2/2 critérios passaram (commit `53ecf38`)
+
+- PASS: números, nível, medalhas, gêneros, notas e mapa de atividad…
+- PASS: tela do perfil com edição, favoritos, coroa e estados vazio…
