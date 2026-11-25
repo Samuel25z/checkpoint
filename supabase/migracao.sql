@@ -36,6 +36,10 @@ create policy "apagar os próprios dados" on public.checkpoint_dados
 -- Visitantes sem login não têm acesso nenhum.
 revoke all on public.checkpoint_dados from anon;
 
+-- Projetos novos do Supabase não liberam tabelas para a API sozinhos: libera só para quem está logado.
+-- (As regras acima continuam valendo: cada um só mexe nas próprias linhas.)
+grant select, insert, update, delete on public.checkpoint_dados to authenticated;
+
 -- Quem já tinha rodado a versão antiga: atualiza a lista de dados aceitos (inclui o perfil).
 alter table public.checkpoint_dados drop constraint if exists checkpoint_dados_chave_check;
 alter table public.checkpoint_dados add constraint checkpoint_dados_chave_check check (chave in (
