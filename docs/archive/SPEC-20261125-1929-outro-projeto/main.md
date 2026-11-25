@@ -1,13 +1,13 @@
 # SPEC-20261125-1929: outro projeto
 
-**Status:** active
+**Status:** done
 **Porte:** P
 **Owner:** @samuel25z
 **Criada:** 2026-11-25 19:29
 **Ativada:** 2026-11-25 19:29
-**Concluída:** —
+**Concluída:** 2026-11-25 19:32
 **Pausada em:** —
-**Commit final:** —
+**Commit final:** `629404f`
 **Keywords:** outro-projeto, drift-tela, video, aba
 **Features:** base
 **Branch:** spec/outro-projeto
@@ -50,4 +50,4 @@ js/modules/outro-projeto/index.js reaproveitando o estilo da aba Apresentação;
 
 ## Critério de aceite
 
-- [ ] aba no fim do menu mostra o vídeo do Drift Tela | verify: `npx playwright test tests/e2e/outro-projeto.spec.js`
+- [x] aba no fim do menu mostra o vídeo do Drift Tela (2026-11-25 19:32, commit `629404f`, verify: exit 0) | verify: `npx playwright test tests/e2e/outro-projeto.spec.js`

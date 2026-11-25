@@ -49,3 +49,7 @@
 
 Aba Outro projeto entregue. 1/1 critério verificado.
 ⎿ commit 7e9d616+dirty · 4 files changed, 9 insertions(+), 2 deletions(-)
+
+## 2026-11-25 19:32 — [nota] verify: 1/1 critérios passaram (commit `629404f`)
+
+- PASS: aba no fim do menu mostra o vídeo do Drift Tela | verify: `…

@@ -25,3 +25,4 @@ SPEC-20261125-1201-perfil-imagens | done | perfil | perfil, foto, avatar, banner
 SPEC-20261125-1713-amigos | done | amigos | amigos, social, seguir, perfil-publico, usuario, feed, supabase | Parte social no modelo "seguir": perfil público com @, busca, seguir/deixar de seguir, amigos (seguem de volta), feed do que os amigos jogam e perfil privado.
 SPEC-20261125-1740-medalhas | done | perfil | medalhas, simbolos, perfil, svg | Cada medalha ganha um símbolo próprio no hexágono da marca (grau na cor da borda e em pontinhos), no lugar do hexágono laranja igual para todas.
 SPEC-20261125-1743-aba-video | done | base | video, apresentacao, aba | Aba Apresentação com o vídeo de demonstração, logo abaixo da Início, para abrir antes de mostrar o site.
+SPEC-20261125-1929-outro-projeto | done | base | outro-projeto, drift-tela, video, aba | Aba Outro projeto no fim do menu com o vídeo do Drift Tela.
