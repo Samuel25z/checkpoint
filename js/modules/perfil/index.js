@@ -12,6 +12,7 @@ import {
 } from './logic.js';
 import { CHAVE_IMAGENS, LIMITES, kb, lerImagens, validarLink, prepararArquivo, linkAbre } from './imagens.js';
 import { criarSocial } from '../../services/social.js';
+import { svgMedalha } from './simbolos.js';
 import { atualizarPublico } from '../amigos/publicar.js';
 
 const CHAVE = 'perfil:dados';
@@ -170,7 +171,7 @@ function medalhasBloco(diario) {
   return h('section', { class: 'pf-bloco' },
     h('div', { class: 'pf-bloco-topo' }, h('h3', {}, 'Medalhas'), h('span', { class: 'texto-3' }, `${lista.filter((m) => m.grau).length} de ${lista.length} conquistadas`)),
     h('ul', { class: 'pf-medalhas' }, lista.map((m) => h('li', { class: `pf-medalha ${m.grau || 'bloqueada'}`, 'data-medalha': m.id },
-      h('span', { class: 'pf-medalha-icone', 'aria-hidden': 'true', html: '<svg viewBox="0 0 34 34"><path d="M17 1.8 30.2 9.4v15.2L17 32.2 3.8 24.6V9.4Z"/></svg>' }),
+      h('span', { class: 'pf-medalha-icone', 'aria-hidden': 'true', html: svgMedalha(m.id, m.grau) }),
       h('div', {},
         h('strong', {}, m.nome),
         h('span', { class: 'pf-grau' }, m.grau ? { bronze: 'Bronze', prata: 'Prata', ouro: 'Ouro' }[m.grau] : 'Bloqueada'),
