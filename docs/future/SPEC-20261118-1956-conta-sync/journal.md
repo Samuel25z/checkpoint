@@ -2,7 +2,7 @@
 
 ## SNAPSHOT (sobrescrever — DEVE caber nas primeiras 60 linhas do arquivo)
 
-**Última atualização:** 2026-11-25 12:00
+**Última atualização:** 2026-11-25 16:47
 **Onde tô:** início — nada feito ainda
 **Próximo passo:** <primeiro passo concreto>
 **Última decisão:** —
@@ -49,3 +49,7 @@
 ## 2026-11-25 11:40 — [unblock] Retomada (resume)
 
 ## 2026-11-25 12:00 — [nota] Pausada: aguardando o Samuel criar o projeto no Supabase e o login do Google e mandar URL + chave anon
+
+## 2026-11-25 16:10 — [unblock] Retomada (resume)
+
+## 2026-11-25 16:47 — [nota] Pausada: login publicado; falta o Samuel testar a conta de verdade (e-mail e Google) para fechar

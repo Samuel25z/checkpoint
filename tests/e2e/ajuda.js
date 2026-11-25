@@ -2,8 +2,13 @@
 import { expect } from '@playwright/test';
 
 /** Abre o site limpo (sem dados salvos) e registra erros de console. */
-export async function abrir(page, rota = 'inicio', { dados = {} } = {}) {
+// Config de teste sem login: os testes nunca falam com o Supabase de verdade.
+// Quem testa a conta passa { manterConfig: true } e simula a própria config antes de abrir.
+const CONFIG_SEM_LOGIN = "export const SUPABASE = { url: '', chaveAnon: '' }; export const STEAM_AJUDANTE = ''; export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';";
+
+export async function abrir(page, rota = 'inicio', { dados = {}, manterConfig = false } = {}) {
   const erros = [];
+  if (!manterConfig) await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: CONFIG_SEM_LOGIN }));
   page.on('pageerror', (e) => erros.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource|net::ERR/.test(m.text())) erros.push(m.text()); });
   await page.addInitScript((d) => {

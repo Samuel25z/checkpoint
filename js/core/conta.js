@@ -146,6 +146,104 @@ export function iniciarConta(ctx) {
     }
   }
 
+  /** Erros do Supabase em português, sem jargão. */
+  function erroLegivel(e) {
+    const m = String(e?.message || e || '');
+    if (/invalid login credentials/i.test(m)) return 'E-mail ou senha incorretos.';
+    if (/email not confirmed/i.test(m)) return 'Falta confirmar o e-mail: abra o link que mandamos para a sua caixa de entrada (veja o spam também).';
+    if (/already registered|already been registered|user already exists/i.test(m)) return 'Já existe uma conta com esse e-mail. Use "Entrar" ou "Esqueci a senha".';
+    if (/rate limit|too many|over_email_send_rate_limit|security purposes/i.test(m)) return 'Muitas tentativas agora. Espere alguns minutos e tente de novo.';
+    if (/password should be at least|weak/i.test(m)) return 'Senha fraca: use pelo menos 8 caracteres, misturando letras e números.';
+    if (/signups? not allowed|signup is disabled/i.test(m)) return 'O cadastro por e-mail está desligado no momento.';
+    if (/failed to fetch|network/i.test(m)) return 'Sem conexão com o servidor. Confira a internet.';
+    return 'Não deu certo agora. Tente de novo em instantes.';
+  }
+
+  const emailValido = (t) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(t).trim());
+
+  /** Janela de entrar: Google ou e-mail e senha (entrar, criar conta, esqueci a senha). */
+  function janelaEntrar() {
+    const aviso = h('p', { class: 'conta-aviso', role: 'status', 'aria-live': 'polite' });
+    const email = h('input', { class: 'entrada', type: 'email', name: 'email', autocomplete: 'email', required: true, placeholder: 'voce@exemplo.com', 'aria-label': 'E-mail' });
+    const senha = h('input', { class: 'entrada', type: 'password', name: 'senha', autocomplete: 'current-password', required: true, minlength: 8, placeholder: 'Sua senha', 'aria-label': 'Senha' });
+    const mostrar = h('button', { type: 'button', class: 'btn btn-pequeno btn-fantasma', 'aria-pressed': 'false', onclick: () => {
+      const ver = senha.type === 'password';
+      senha.type = ver ? 'text' : 'password';
+      mostrar.setAttribute('aria-pressed', String(ver));
+      mostrar.textContent = ver ? 'Esconder' : 'Mostrar';
+    } }, 'Mostrar');
+    const ocupado = (sim) => form.querySelectorAll('button').forEach((b) => { b.disabled = sim; });
+    const conferir = (exigirSenha = true) => {
+      if (!emailValido(email.value)) { aviso.textContent = 'Digite um e-mail válido.'; email.focus(); return false; }
+      if (exigirSenha && senha.value.length < 8) { aviso.textContent = 'A senha precisa ter pelo menos 8 caracteres.'; senha.focus(); return false; }
+      return true;
+    };
+    async function comEmail(acao) {
+      if (!conferir(acao !== 'esqueci')) return;
+      aviso.className = 'conta-aviso'; aviso.textContent = 'Um instante…';
+      ocupado(true);
+      try {
+        await carregarCliente();
+        const volta = location.origin + location.pathname;
+        if (acao === 'entrar') {
+          const { error } = await cliente.auth.signInWithPassword({ email: email.value.trim(), password: senha.value });
+          if (error) throw error;
+          modal.fecharAtual(null);
+          ctx.toast('Você entrou na sua conta', 'sucesso');
+          return;
+        }
+        if (acao === 'criar') {
+          const { data, error } = await cliente.auth.signUp({ email: email.value.trim(), password: senha.value, options: { emailRedirectTo: volta } });
+          if (error) throw error;
+          if (data?.session) { modal.fecharAtual(null); ctx.toast('Conta criada. Bem-vindo!', 'sucesso'); return; }
+          aviso.className = 'conta-aviso ok';
+          aviso.textContent = `Conta criada! Mandamos um link para ${email.value.trim()}. Abra e confirme para poder entrar (veja o spam também).`;
+          return;
+        }
+        const { error } = await cliente.auth.resetPasswordForEmail(email.value.trim(), { redirectTo: volta });
+        if (error) throw error;
+        aviso.className = 'conta-aviso ok';
+        aviso.textContent = `Se existir uma conta com ${email.value.trim()}, chega um link para criar uma senha nova.`;
+      } catch (e) {
+        console.warn('[conta]', e);
+        aviso.className = 'conta-aviso erro';
+        aviso.textContent = erroLegivel(e);
+      } finally { ocupado(false); }
+    }
+    const form = h('form', { class: 'conta-form', novalidate: true },
+      h('button', { type: 'button', class: 'btn conta-google', id: 'entrar-google', onclick: () => { modal.fecharAtual(null); entrar(); } }, 'Entrar com Google'),
+      h('p', { class: 'conta-ou texto-3' }, 'ou com e-mail'),
+      h('label', { class: 'campo' }, h('span', {}, 'E-mail'), email),
+      h('div', { class: 'campo' }, h('span', {}, 'Senha'), h('div', { class: 'conta-senha' }, senha, mostrar), h('span', { class: 'texto-3' }, 'Pelo menos 8 caracteres.')),
+      aviso,
+      h('div', { class: 'conta-botoes' },
+        h('button', { type: 'submit', class: 'btn btn-primario', id: 'entrar-email' }, 'Entrar'),
+        h('button', { type: 'button', class: 'btn', id: 'criar-conta', onclick: () => comEmail('criar') }, 'Criar conta'),
+        h('button', { type: 'button', class: 'btn btn-fantasma btn-pequeno', id: 'esqueci-senha', onclick: () => comEmail('esqueci') }, 'Esqueci a senha')),
+      h('p', { class: 'texto-2' }, 'O que já está neste navegador sobe para a sua conta. Nada é apagado.'),
+      linkPrivacidade());
+    form.addEventListener('submit', (e) => { e.preventDefault(); comEmail('entrar'); });
+    return modal({ titulo: 'Entrar no Checkpoint', conteudo: form, acoes: [] });
+  }
+
+  /** Voltou pelo link de "esqueci a senha": pede a senha nova. */
+  async function novaSenha() {
+    const aviso = h('p', { class: 'conta-aviso', role: 'status', 'aria-live': 'polite' });
+    const senha = h('input', { class: 'entrada', type: 'password', autocomplete: 'new-password', minlength: 8, 'aria-label': 'Senha nova', placeholder: 'Senha nova' });
+    const form = h('form', { class: 'conta-form', novalidate: true },
+      h('label', { class: 'campo' }, h('span', {}, 'Senha nova'), senha, h('span', { class: 'texto-3' }, 'Pelo menos 8 caracteres.')), aviso,
+      h('div', { class: 'conta-botoes' }, h('button', { type: 'submit', class: 'btn btn-primario' }, 'Salvar senha nova')));
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (senha.value.length < 8) { aviso.textContent = 'A senha precisa ter pelo menos 8 caracteres.'; return; }
+      const { error } = await cliente.auth.updateUser({ password: senha.value });
+      if (error) { aviso.className = 'conta-aviso erro'; aviso.textContent = erroLegivel(error); return; }
+      modal.fecharAtual(null);
+      ctx.toast('Senha nova salva', 'sucesso');
+    });
+    return modal({ titulo: 'Criar senha nova', conteudo: form, acoes: [] });
+  }
+
   async function sair() {
     if (!await confirmar('Sair da conta?', 'Seus jogos, recordes e torneios saem deste navegador e continuam salvos na sua conta. Assim, a próxima pessoa que usar este computador não vê nada seu.', 'Sair')) return;
     clearTimeout(tempo);
@@ -197,11 +295,7 @@ export function iniciarConta(ctx) {
       return;
     }
     if (!usuario) {
-      const r = await modal({ titulo: 'Entrar no Checkpoint', conteudo: h('div', { class: 'conta-info' },
-        h('p', {}, 'Entre com sua conta Google para levar seu diário, recordes e torneios para qualquer computador.'),
-        h('p', { class: 'texto-2' }, 'O que já está neste navegador sobe para a sua conta. Nada é apagado.'), linkPrivacidade()),
-      acoes: [{ rotulo: 'Agora não', valor: null }, { rotulo: 'Entrar com Google', valor: 'entrar', tipo: 'primario' }] });
-      if (r === 'entrar') entrar();
+      janelaEntrar();
       return;
     }
     const ultima = storage.ler(META_ULTIMA);
@@ -219,6 +313,7 @@ export function iniciarConta(ctx) {
   if (configurado()) {
     carregarCliente().then((c) => {
       c.auth.onAuthStateChange((evento, sessao) => {
+        if (evento === 'PASSWORD_RECOVERY') setTimeout(novaSenha);
         const antes = usuario?.id;
         usuario = sessao?.user || null;
         pintar();

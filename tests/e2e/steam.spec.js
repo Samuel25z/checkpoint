@@ -19,7 +19,7 @@ test.describe('importar', () => {
     await page.route(`${AJUDANTE}/perfil**`, (r) => r.fulfill(json({ steamid: '76561198000000001', nome: 'Samuel', avatar: null, publico: true })));
     await page.route(`${AJUDANTE}/jogos**`, (r) => r.fulfill(json({ jogos: JOGOS })));
     await page.route(`${AJUDANTE}/conquistas**`, (r) => r.fulfill(json({ conquistas: { 367520: { total: 63, feitas: 63, ultima: '2026-03-01T12:00:00.000Z' }, 1145350: { total: 49, feitas: 10, ultima: null }, 1245620: { total: 42, feitas: 30, ultima: null }, 504230: null } })));
-    const erros = await abrir(page, 'diario', { dados: { 'diario:jogos': [{ id: 'm1', nome: 'Celeste', jogoId: 'celeste', status: 'zerado', nota: 5, horas: 9, atualizadoEm: '2026-04-20' }] } });
+    const erros = await abrir(page, 'diario', { manterConfig: true, dados: { 'diario:jogos': [{ id: 'm1', nome: 'Celeste', jogoId: 'celeste', status: 'zerado', nota: 5, horas: 9, atualizadoEm: '2026-04-20' }] } });
 
     await page.locator('#botao-steam').click();
     await page.getByLabel('Link do perfil da Steam').fill('https://steamcommunity.com/id/samuel');
@@ -61,7 +61,7 @@ test.describe('importar', () => {
     await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: CONFIG }));
     await page.route(`${AJUDANTE}/perfil**`, (r) => r.fulfill(json({ steamid: '76561198000000001', nome: 'Samuel', publico: false })));
     await page.route(`${AJUDANTE}/jogos**`, (r) => r.fulfill(json({ erro: 'A biblioteca deste perfil está privada.', privado: true }, 403)));
-    await abrir(page, 'diario');
+    await abrir(page, 'diario', { manterConfig: true });
     await page.locator('#botao-steam').click();
     await page.getByLabel('Link do perfil da Steam').fill('samuel');
     await page.locator('#buscar-steam').click();
