@@ -67,3 +67,70 @@ $$;
 revoke all on function public.apagar_minha_conta() from public, anon;
 grant execute on function public.apagar_minha_conta() to authenticated;
 
+
+-- ============================================================
+-- Parte social: perfil público com @ e "seguir" (modelo Instagram/Backloggd).
+-- Rode de novo o arquivo inteiro: tudo aqui pode ser executado mais de uma vez.
+-- ============================================================
+
+create table if not exists public.perfis (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  usuario text not null unique check (usuario ~ '^[a-z0-9_]{3,20}$'),
+  nome text not null default '' check (char_length(nome) <= 40),
+  frase text not null default '' check (char_length(frase) <= 140),
+  avatar_url text check (avatar_url is null or char_length(avatar_url) <= 300000),
+  banner_url text check (banner_url is null or char_length(banner_url) <= 650000),
+  privado boolean not null default false,
+  resumo jsonb not null default '{}'::jsonb check (pg_column_size(resumo) < 262144),
+  atualizado_em timestamptz not null default now()
+);
+
+alter table public.perfis enable row level security;
+
+-- Perfil público: qualquer um vê (é o link que a pessoa compartilha). Privado: só o dono.
+drop policy if exists "ver perfis públicos" on public.perfis;
+create policy "ver perfis públicos" on public.perfis
+  for select to anon, authenticated using (privado = false or (select auth.uid()) = user_id);
+
+drop policy if exists "criar o próprio perfil" on public.perfis;
+create policy "criar o próprio perfil" on public.perfis
+  for insert to authenticated with check ((select auth.uid()) = user_id);
+
+drop policy if exists "editar o próprio perfil" on public.perfis;
+create policy "editar o próprio perfil" on public.perfis
+  for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+
+drop policy if exists "apagar o próprio perfil" on public.perfis;
+create policy "apagar o próprio perfil" on public.perfis
+  for delete to authenticated using ((select auth.uid()) = user_id);
+
+grant select on public.perfis to anon;
+grant select, insert, update, delete on public.perfis to authenticated;
+
+create table if not exists public.seguindo (
+  seguidor uuid not null references auth.users (id) on delete cascade,
+  seguido uuid not null references auth.users (id) on delete cascade,
+  criado_em timestamptz not null default now(),
+  primary key (seguidor, seguido),
+  check (seguidor <> seguido)
+);
+create index if not exists seguindo_seguido on public.seguindo (seguido);
+
+alter table public.seguindo enable row level security;
+
+-- Quem segue quem é visível para quem está logado (como no Instagram), para mostrar seguidores e amigos.
+drop policy if exists "ver quem segue quem" on public.seguindo;
+create policy "ver quem segue quem" on public.seguindo
+  for select to authenticated using (true);
+
+-- Só dá para seguir/deixar de seguir em nome de si mesmo.
+drop policy if exists "seguir em meu nome" on public.seguindo;
+create policy "seguir em meu nome" on public.seguindo
+  for insert to authenticated with check ((select auth.uid()) = seguidor);
+
+drop policy if exists "deixar de seguir em meu nome" on public.seguindo;
+create policy "deixar de seguir em meu nome" on public.seguindo
+  for delete to authenticated using ((select auth.uid()) = seguidor);
+
+revoke all on public.seguindo from anon;
+grant select, insert, delete on public.seguindo to authenticated;

@@ -135,3 +135,10 @@
 - **Aplicação:** botão "Apagar conta" com função segura no banco, página privacidade.html, perfil e imagens sincronizando com a conta, e foto/banner por arquivo ou link, conferindo a assinatura do arquivo (SVG recusado, links só https).
 - **Adaptações:** o Samuel cria as contas do Supabase e do Google; a chave secreta do Google vai só no painel do Supabase, nunca no código.
 
+## P20 — Amigos: seguir outros jogadores
+- **Objetivo:** poder adicionar amigos e ver o perfil e o que eles andam jogando.
+- **Prompt:** "Fazer as configurações de perfil certinho e poder adicionar amigos pra poder ver os outros amigos." Depois, sobre o modelo: "A, pode seguir."
+- **Resposta da IA:** comparou dois modelos, seguir (como Instagram e Backloggd) e pedido de amizade (como Steam), e recomendou seguir por ser mais simples. Propôs perfil público com @ único, busca, amigos como quem segue de volta, feed do que estão jogando e perfil privado, com as regras de segurança no banco.
+- **Aplicação:** aba Amigos e perfil público por link (#/amigos/@usuario), com tabelas perfis e seguindo protegidas por regras: ninguém segue em nome de outra pessoa e perfil privado não aparece para os outros. O perfil público não leva resenhas nem datas exatas.
+- **Adaptações:** o Samuel pediu também para ligar formas de entrar na mesma conta, "igual o Roblox faz": quem entra pelo Google pode criar senha, e quem entra por e-mail pode ligar o Google.
+

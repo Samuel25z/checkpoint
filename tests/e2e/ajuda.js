@@ -6,7 +6,7 @@ import { expect } from '@playwright/test';
 // Quem testa a conta passa { manterConfig: true } e simula a própria config antes de abrir.
 const CONFIG_SEM_LOGIN = "export const SUPABASE = { url: '', chaveAnon: '' }; export const STEAM_AJUDANTE = ''; export const SUPABASE_SDK = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';";
 
-export async function abrir(page, rota = 'inicio', { dados = {}, manterConfig = false } = {}) {
+export async function abrir(page, rota = 'inicio', { dados = {}, manterConfig = false, brutos = {} } = {}) {
   const erros = [];
   if (!manterConfig) await page.route(/\/js\/config\.js$/, (r) => r.fulfill({ contentType: 'text/javascript', body: CONFIG_SEM_LOGIN }));
   page.on('pageerror', (e) => erros.push(e.message));
@@ -14,9 +14,10 @@ export async function abrir(page, rota = 'inicio', { dados = {}, manterConfig = 
   await page.addInitScript((d) => {
     if (sessionStorage.getItem('__limpo')) return;
     localStorage.clear();
-    for (const [k, v] of Object.entries(d)) localStorage.setItem('checkpoint:' + k, JSON.stringify(v));
+    for (const [k, v] of Object.entries(d.dados)) localStorage.setItem('checkpoint:' + k, JSON.stringify(v));
+    for (const [k, v] of Object.entries(d.brutos)) localStorage.setItem(k, JSON.stringify(v));
     sessionStorage.setItem('__limpo', '1');
-  }, dados);
+  }, { dados, brutos });
   await page.goto('/#/' + rota, { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#palco .aba')).toBeVisible();
   return erros;

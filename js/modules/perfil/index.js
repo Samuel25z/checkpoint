@@ -11,6 +11,8 @@ import {
   destaques, resumoDoAno, recentes, desde
 } from './logic.js';
 import { CHAVE_IMAGENS, LIMITES, kb, lerImagens, validarLink, prepararArquivo, linkAbre } from './imagens.js';
+import { criarSocial } from '../../services/social.js';
+import { atualizarPublico } from '../amigos/publicar.js';
 
 const CHAVE = 'perfil:dados';
 const fmt = (n) => Number(n).toLocaleString('pt-BR');
@@ -103,6 +105,7 @@ async function editar(ctx, perfil, diario) {
   ctx.storage.gravar(CHAVE, v);
   try { ctx.storage.gravar(CHAVE_IMAGENS, lerImagens(imgs)); } catch { toast('Sem espaço no navegador para a imagem. Use um link.', 'erro'); }
   toast('Perfil salvo', 'sucesso');
+  if (ctx.conta?.usuario) atualizarPublico(criarSocial(ctx.conta), ctx.storage).catch(() => {});
   return true;
 }
 

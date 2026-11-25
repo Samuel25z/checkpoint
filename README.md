@@ -8,6 +8,7 @@ O Checkpoint é um hub de utilidades para quem joga. Ele junta num lugar só:
 |---|---|
 | **Diário** | Registra o que você joga, zera e quer jogar. A capa e o resumo vêm sozinhos da Wikipedia. |
 | **Meu perfil** | Cartão de visitas do jogador: capa com o jogo coroado, foto e banner (arquivo ou link, GIF aceito), nível e XP, números, 5 favoritos, medalhas de bronze a ouro, gráfico das notas, radar de gêneros, mapa de atividade e destaques, tudo calculado do Diário. |
+| **Amigos** | Perfil público com @, busca por @, seguir e deixar de seguir, amigos (quem segue de volta), o que os amigos andam jogando e perfil privado. Precisa de conta. |
 | **Wrapped** | Mostra o seu ano em jogos em telas animadas, no estilo Spotify, e gera um card para postar. |
 | **Speedrun** | Mostra os recordes mundiais ao vivo do speedrun.com e tem um cronômetro com splits, recorde pessoal e modo foco. |
 | **Recomps** | Catálogo de recomps e ports de código aberto, atualizado direto do GitHub, com alerta de golpe. |
