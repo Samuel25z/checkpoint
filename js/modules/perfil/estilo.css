@@ -1,0 +1,95 @@
+/* Meu Perfil — cartão do jogador (segue tokens de cada visual e tema) */
+.pf-capa { position: relative; overflow: hidden; border-radius: 18px; border: 1px solid var(--linha); background: var(--superficie); }
+.pf-capa-fundo { position: absolute; inset: 0 0 auto 0; height: 220px; }
+.pf-capa-fundo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.pf-capa-fundo::after { background: linear-gradient(180deg, transparent 10%, var(--superficie) 96%), radial-gradient(600px 220px at 85% 0%, color-mix(in srgb, var(--acento) 30%, transparent), transparent 70%); z-index: 1; }
+.pf-capa-conteudo { position: relative; z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--esp-4); align-items: end; padding: 140px clamp(18px, 3vw, 32px) var(--esp-4); }
+@media (max-width: 640px) { .pf-capa-conteudo { grid-template-columns: 1fr; padding-top: 110px; } .pf-editar { justify-self: start; } }
+.pf-avatar { width: 112px; height: 112px; border-radius: 28px; display: grid; place-items: center; font: 800 2.4rem/1 var(--fonte-titulo); color: var(--acento-texto); background: var(--acento);
+  border: 4px solid var(--superficie); box-shadow: 0 12px 30px -12px color-mix(in srgb, var(--acento) 70%, transparent); }
+.pf-quem { display: grid; gap: 6px; min-width: 0; }
+.pf-quem h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: 800 clamp(1.5rem, 3vw, 2.2rem)/1.1 var(--fonte-titulo); text-transform: var(--titulo-caixa, none); }
+.pf-titulo { font: 700 .74rem/1 var(--fonte-titulo); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 6px; color: var(--acento); background: color-mix(in srgb, var(--acento) 15%, transparent); border: 1px solid color-mix(in srgb, var(--acento) 40%, transparent); }
+.pf-frase { color: var(--texto-2); font-style: italic; }
+.pf-nivel { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.pf-nivel strong { font: 700 1rem/1 var(--fonte-titulo); }
+.pf-xp { display: block; width: min(220px, 40vw); height: 8px; border-radius: 8px; background: var(--superficie-2); overflow: hidden; }
+.pf-xp i { display: block; height: 100%; background: var(--acento); border-radius: 8px; }
+.pf-numeros { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; border-top: 1px solid var(--linha); }
+@media (max-width: 640px) { .pf-numeros { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pf-numeros > div { display: grid; gap: 2px; padding: 14px clamp(12px, 2vw, 24px); border-right: 1px solid var(--linha); }
+.pf-numeros > div:last-child { border-right: 0; }
+.pf-numeros dd { margin: 0; font: 800 1.5rem/1.1 var(--fonte-titulo); }
+.pf-numeros dt { font-size: .8rem; color: var(--texto-3); }
+
+.pf-grade { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--esp-5); margin-top: var(--esp-5); align-items: start; }
+@media (max-width: 1100px) { .pf-grade { grid-template-columns: 1fr; } }
+.pf-principal { display: grid; gap: var(--esp-5); min-width: 0; }
+.pf-bloco-topo { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: var(--esp-3); }
+.pf-bloco h3, .pf-painel h3 { font: 700 1rem/1.2 var(--fonte-titulo); letter-spacing: .05em; text-transform: var(--titulo-caixa, none); padding-left: 10px; border-left: 3px solid var(--acento); }
+
+/* favoritos e recentes */
+.pf-favoritos, .pf-recentes { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--esp-3); }
+.pf-recentes { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@media (max-width: 760px) { .pf-favoritos { grid-template-columns: repeat(3, minmax(0, 1fr)); } .pf-recentes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pf-jogo { position: relative; display: grid; gap: 4px; color: var(--texto); text-decoration: none; min-width: 0; }
+.pf-jogo-capa { width: 100%; border-radius: var(--raio-capa, 8px); transition: transform var(--rapido, .15s) var(--curva, ease); }
+.pf-jogo:hover .pf-jogo-capa, .pf-jogo:focus-visible .pf-jogo-capa { transform: translateY(-3px); }
+.pf-jogo-nome { font-weight: 700; font-size: .88rem; line-height: 1.25; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.pf-jogo.coroado .pf-jogo-capa { outline: 3px solid #f5c542; outline-offset: 3px; box-shadow: 0 0 28px -6px #f5c542; }
+.pf-coroa { position: absolute; z-index: 2; left: 50%; top: -14px; transform: translateX(-50%); width: 30px; height: 30px; display: grid; place-items: center; border-radius: 30px; background: #f5c542; color: #3a2a00; }
+.pf-coroa .ic { width: 18px; height: 18px; }
+.pf-vazio { display: grid; justify-items: start; gap: 10px; padding: 20px; border-radius: 14px; border: 1px dashed var(--linha-forte); }
+
+/* medalhas */
+.pf-medalhas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--esp-3); }
+.pf-medalha { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; align-items: center; padding: 14px; border-radius: 12px; background: var(--superficie); border: 1px solid var(--linha); }
+.pf-medalha > div { display: grid; gap: 2px; min-width: 0; }
+.pf-medalha-icone svg { width: 44px; height: 44px; display: block; }
+.pf-medalha-icone path { fill: var(--grau, var(--superficie-2)); stroke: color-mix(in srgb, var(--grau, var(--linha-forte)) 70%, white); stroke-width: 1.6; }
+.pf-medalha.bronze { --grau: #c98a52; } .pf-medalha.prata { --grau: #b9c4d2; } .pf-medalha.ouro { --grau: #f5c542; }
+.pf-medalha.bloqueada { opacity: .7; }
+.pf-grau { font: 700 .72rem/1 var(--fonte-titulo); letter-spacing: .1em; text-transform: uppercase; color: var(--grau, var(--texto-3)); }
+.pf-barra { display: block; height: 5px; border-radius: 5px; background: var(--superficie-2); overflow: hidden; margin-top: 4px; }
+.pf-barra i { display: block; height: 100%; background: var(--grau, var(--acento)); }
+
+/* lateral */
+.pf-lateral { display: grid; gap: var(--esp-3); }
+.pf-painel { display: grid; gap: 10px; padding: 18px; border-radius: 14px; background: var(--superficie); border: 1px solid var(--linha); }
+.pf-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+.pf-mini dd { margin: 0; font: 800 1.4rem/1 var(--fonte-titulo); }
+.pf-mini dt { font-size: .78rem; color: var(--texto-3); }
+.pf-link { color: var(--acento); text-decoration: none; font-weight: 700; }
+.pf-notas { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; align-items: end; height: 90px; }
+.pf-notas span { height: 100%; display: flex; align-items: flex-end; }
+.pf-notas i { width: 100%; border-radius: 4px 4px 2px 2px; background: var(--acento); }
+.pf-notas i.zero { background: var(--superficie-2); }
+.pf-notas-legenda { display: flex; justify-content: space-between; }
+.pf-radar svg { width: 100%; max-width: 260px; display: block; margin: 0 auto; overflow: visible; }
+.pf-radar-grade { fill: none; stroke: var(--linha-forte); stroke-width: 1; }
+.pf-radar-area { fill: color-mix(in srgb, var(--acento) 35%, transparent); stroke: var(--acento); stroke-width: 2; }
+.pf-radar-ponto { fill: var(--acento); }
+.pf-radar text { font: 600 9px var(--fonte-texto, sans-serif); fill: var(--texto-2); }
+.pf-mapa { display: grid; grid-template-rows: repeat(7, 1fr); grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; }
+.pf-mapa span { aspect-ratio: 1; border-radius: 3px; background: var(--superficie-2); }
+.pf-mapa span.vazio { background: transparent; }
+.pf-mapa span.ativo { background: color-mix(in srgb, var(--acento) calc(var(--n) * 100%), var(--superficie-2)); }
+.pf-destaques { display: grid; gap: 10px; margin: 0; }
+.pf-destaques div { display: flex; justify-content: space-between; gap: 10px; }
+.pf-destaques dt { color: var(--texto-3); font-size: .88rem; }
+.pf-destaques dd { margin: 0; font-weight: 700; text-align: right; }
+
+/* edição */
+.form-perfil { display: grid; gap: var(--esp-3); }
+.pf-rotulo { font-weight: 600; }
+.pf-escolha { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; max-height: 320px; overflow: auto; padding: 2px; }
+.pf-opcao { display: flex; align-items: center; gap: 6px; border-radius: 10px; border: 1px solid var(--linha); background: var(--superficie-2); }
+.pf-opcao.marcada { border-color: var(--acento); background: color-mix(in srgb, var(--acento) 12%, var(--superficie)); }
+.pf-opcao-jogo { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 8px; border: 0; background: none; color: var(--texto); font-weight: 600; text-align: left; cursor: pointer; }
+.pf-opcao-jogo:disabled { opacity: .45; cursor: not-allowed; }
+.pf-opcao-jogo span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pf-opcao .capa-mini { width: 32px; flex: none; }
+.pf-coroar { margin-right: 6px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--linha); background: var(--superficie); color: var(--texto-3); cursor: pointer; }
+.pf-coroar.ativo { background: #f5c542; border-color: #f5c542; color: #3a2a00; }
+.pf-coroar .ic { width: 16px; height: 16px; }
+@media (prefers-reduced-motion: reduce) { .pf-jogo-capa { transition: none; } }
